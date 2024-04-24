@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class RText extends Model
 {
     use HasFactory;
+
+        /**
+     * fillable
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'teks',
+    ];
 }

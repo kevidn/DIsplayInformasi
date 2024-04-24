@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Header extends Model
 {
     use HasFactory;
+
+        /**
+     * fillable
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'logo1',
+        'logo2',
+    ];
 }
