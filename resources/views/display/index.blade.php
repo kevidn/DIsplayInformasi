@@ -17,7 +17,15 @@
                 <!--cuaca-->
                 <div class="row" style="height: 14%; width: 100%">
                     <div class="col-12 bg-info p-4 " style="display: flex; justify-content:center;">
-                        Cuaca
+
+                    <p>
+                        <img style="height: 43px; width: auto;" class="mt-1" src="{{ asset('/images/jam.png') }}" alt="">
+                    </p>
+                    <p>
+                        {{ $cuaca['days'][0]['datetime'] }}
+                        <br>
+                        {{ $cuaca['days'][0]['conditions'] }}
+                    </p>
                     </div>
                 </div>
 
@@ -113,6 +121,17 @@
             </div>
 
         </div>
+
+        {{-- <p>
+            <h1>Cuaca di {{ $cuaca['resolvedAddress'] }}</h1>
+            <p><strong>Deskripsi:</strong> {{ $cuaca['description'] }}</p>
+
+            <h2>Prakiraan Cuaca</h2>
+            <div>
+                <p><strong>Tanggal:</strong> {{ $cuaca['days'][0]['datetime'] }}</p>
+                <p><strong>Deskripsi Cuaca:</strong> {{ $cuaca['days'][0]['conditions'] }}</p>
+            </div>
+        </p> --}}
 
     </div>
 </body>
