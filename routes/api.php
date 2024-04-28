@@ -10,3 +10,6 @@ Route::get('/user', function (Request $request) {
 
 //beritas
 Route::apiResource('/beritas', App\Http\Controllers\Api\BeritaController::class);
+
+//header
+Route::apiResource('/header', App\Http\Controllers\Api\HeaderController::class);
