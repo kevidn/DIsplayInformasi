@@ -18,10 +18,12 @@ Route::get('/', function () {
 // });
 
 use App\Http\Controllers\CuacaController;
+use App\Http\Controllers\Api\BeritaController;
 
 // Route dengan namespace displays
 Route::namespace('Displays')->group(function () {
     Route::get('/index', [CuacaController::class, 'index'])->name('index');
+    Route::get('/index', [BeritaController::class, 'index'])->name('index');
 });
 
 

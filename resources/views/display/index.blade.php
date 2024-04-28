@@ -15,7 +15,7 @@
             <div class="col-3">
 
                 <!--cuaca-->
-                <div class="row" style="height: 14%; width: 100%">
+                {{-- <div class="row" style="height: 14%; width: 100%">
                     <div class="col-12 bg-info p-4 " style="display: flex; justify-content:center;">
 
                     <p>
@@ -27,17 +27,19 @@
                         {{ $cuaca['days'][0]['conditions'] }}
                     </p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!--berita-->
                 <div class="row" style="height: 74%; width: 100%;">
-                    <div class="col-12 bg-danger">
-
-                        <div class="container mt-3" style="background-color: white; width: 100%; height: 93%"></div>
-
-                    </div>
-
-
+                    @foreach ($berita as $item)
+                        <div class="card p-3">
+                            <img class="card-img-top" src="{{ asset('/storage/beritas/upload/'.$item->gambar) }}"></img>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->judul }}</h5>
+                                <div class="card-text">{{ $item->isi }}</div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
 
                 <!--jam-->
