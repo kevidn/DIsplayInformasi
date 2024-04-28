@@ -43,8 +43,9 @@
                 <!--jam-->
                 <div class="row" style="height: 12%; width: 100%;">
                     <div class="col-12 bg-success" style="display: flex; justify-content:center;">
-
-                        <img style="height: 70px; width: 230px;" class="mt-1" src="{{ asset('/images/jam.png') }}" alt="">
+                        <h2>
+                            {{ $jam }}
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -122,17 +123,12 @@
 
         </div>
 
-        {{-- <p>
-            <h1>Cuaca di {{ $cuaca['resolvedAddress'] }}</h1>
-            <p><strong>Deskripsi:</strong> {{ $cuaca['description'] }}</p>
-
-            <h2>Prakiraan Cuaca</h2>
-            <div>
-                <p><strong>Tanggal:</strong> {{ $cuaca['days'][0]['datetime'] }}</p>
-                <p><strong>Deskripsi Cuaca:</strong> {{ $cuaca['days'][0]['conditions'] }}</p>
-            </div>
-        </p> --}}
-
+        {{-- <h1>Cuaca dan Jam</h1>
+    <div>
+        <h2>Waktu Saat Ini:</h2>
+        <p>{{ $jam }}</p>
     </div>
+
+    </div> --}}
 </body>
 </html>
