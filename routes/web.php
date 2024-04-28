@@ -12,4 +12,3 @@ Route::get('/', function () {
 
 
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
-Route::get('/index', [BeritaController::class, 'index'])->name('index');

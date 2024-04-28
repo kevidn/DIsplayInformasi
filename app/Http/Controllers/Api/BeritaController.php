@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
-{    
+{
     /**
      * index
      *
@@ -29,26 +29,12 @@ class BeritaController extends Controller
     public function index()
     {
         //get all beritas
-        $berita = Berita::all();
-
-        //return collection of beritas as a resource
-        return view('display.index', compact('berita'));
-    }
-
-    /**
-     * index api
-     *
-     * @return void
-     */
-    public function index_api()
-    {
-        //get all beritas
         $berita = Berita::latest()->paginate(1);
 
         //return collection of beritas as a resource
         return new BeritaResource(true, 'List Data Berita', $berita);
     }
-    
+
     /**
      * store
      *
@@ -141,9 +127,9 @@ class BeritaController extends Controller
         } else {
 
             //update berita without image
-            $post->update([
-                'title'     => $request->title,
-                'content'   => $request->content,
+            $berita->update([
+                'judul'     => $request->judul,
+                'isi'   => $request->isi,
             ]);
         }
 
