@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\Cuaca;
 use App\Services\Jam;
 use App\Models\Berita;
+use App\Models\Header;
+
 use Illuminate\Http\Request;
 
 class DisplayController extends Controller
@@ -27,7 +29,8 @@ class DisplayController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
         $berita = Berita::all();
         $jam = $this->jamService->getCurrentTime();
+        $header = Header::all();
 
-        return view('display.index', compact('cuaca', 'jam', 'berita'));
+        return view('display.index', compact('cuaca', 'jam', 'berita', 'header'));
     }
 }

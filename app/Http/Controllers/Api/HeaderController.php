@@ -96,54 +96,78 @@ class HeaderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //define validation rules
+        // Define validation rules
         $validator = Validator::make($request->all(), [
-            'logo1'     => 'required',
-            'logo2'     => 'required',
+            'logo1' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'logo2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        //check if validation fails
+        // Check if validation fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        //find header by ID
+        // Find header by ID
         $header = Header::find($id);
 
-        //check if logo is not empty
-        if ($request->hasFile('logo1')) {
+        // Check if both logo1 and logo2 are present in the request
+        if ($request->hasFile('logo1') && $request->hasFile('logo2')) {
 
-            //upload image
+            // Upload logo1
             $logo1 = $request->file('logo1');
-            $logo1->storeAs('public/beritas/upload/', $logo1->hashName());
+            $logo1->storeAs('public/header/upload/', $logo1->hashName());
 
-            //delete old image
-            Storage::delete('public/beritas/upload/' . basename($header->logo1));
-
-            //update header with new logo1
-            $header->update([
-                'logo1'     => $logo1->hashName(),
-                'logo2'     => $header->logo2,
-            ]);
-        } else if ($request->hasFile('logo2')) {
-
-            //upload image
+            // Upload logo2
             $logo2 = $request->file('logo2');
-            $logo2->storeAs('public/beritas/upload/', $logo2->hashName());
+            $logo2->storeAs('public/header/upload/', $logo2->hashName());
 
-            //delete old image
-            Storage::delete('public/beritas/upload/' . basename($header->logo2));
+            // Delete old images
+            Storage::delete('public/header/upload/' . basename($header->logo1));
+            Storage::delete('public/header/upload/' . basename($header->logo2));
 
-            //update header with new logo2
+            // Update header with new logos
             $header->update([
-                'logo1'     => $header->logo1,
-                'logo2'     => $logo2->hashName(),
+                'logo1' => $logo1->hashName(),
+                'logo2' => $logo2->hashName(),
             ]);
+        } else {
+            // Check if logo1 is present in the request
+            if ($request->hasFile('logo1')) {
+
+                // Upload image
+                $logo1 = $request->file('logo1');
+                $logo1->storeAs('public/header/upload/', $logo1->hashName());
+
+                // Delete old image
+                Storage::delete('public/header/upload/' . basename($header->logo1));
+
+                // Update header with new logo1
+                $header->update([
+                    'logo1' => $logo1->hashName(),
+                ]);
+            }
+
+            // Check if logo2 is present in the request
+            if ($request->hasFile('logo2')) {
+
+                // Upload image
+                $logo2 = $request->file('logo2');
+                $logo2->storeAs('public/header/upload/', $logo2->hashName());
+
+                // Delete old image
+                Storage::delete('public/header/upload/' . basename($header->logo2));
+
+                // Update header with new logo2
+                $header->update([
+                    'logo2' => $logo2->hashName(),
+                ]);
+            }
         }
 
-        //return response
+        // Return response
         return new HeaderResource(true, 'Logo Header Berhasil Diubah!', $header);
     }
+
 
     /**
      * destroy
