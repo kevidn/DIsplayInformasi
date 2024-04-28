@@ -29,7 +29,21 @@ class BeritaController extends Controller
     public function index()
     {
         //get all beritas
-        $berita = Berita::latest()->paginate(5);
+        $berita = Berita::all();
+
+        //return collection of beritas as a resource
+        return view('display.index', compact('berita'));
+    }
+
+    /**
+     * index api
+     *
+     * @return void
+     */
+    public function index_api()
+    {
+        //get all beritas
+        $berita = Berita::latest()->paginate(1);
 
         //return collection of beritas as a resource
         return new BeritaResource(true, 'List Data Berita', $berita);
