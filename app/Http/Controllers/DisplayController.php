@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Cuaca;
 use App\Services\Jam;
+use App\Models\Berita;
 use Illuminate\Http\Request;
 
 class DisplayController extends Controller
@@ -24,9 +25,9 @@ class DisplayController extends Controller
     {
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-
+        $berita = Berita::all();
         $jam = $this->jamService->getCurrentTime();
 
-        return view('display.index', compact('cuaca', 'jam'));
+        return view('display.index', compact('cuaca', 'jam', 'berita'));
     }
 }
