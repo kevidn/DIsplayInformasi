@@ -14,43 +14,49 @@
 
         <div class="row">
             <div class="col-3">
+                <div class="d-flex flex-column">
 
-                <!--cuaca-->
-                {{-- <div class="row" style="height: 14%; width: 100%">
-                    <div class="col-12 bg-info p-4 " style="display: flex; justify-content:center;">
-
-                    <p>
-                        <img style="height: 43px; width: auto;" class="mt-1" src="{{ asset('/images/jam.png') }}" alt="">
-                    </p>
-                    <p>
-                        {{ $cuaca['days'][0]['datetime'] }}
-                        <br>
-                        {{ $cuaca['days'][0]['conditions'] }}
-                    </p>
+                    <!--cuaca-->
+                    <div class="row mb-3" style="height: 14%; width: 100%">
+                        <div class="col-12 bg-info p-2" style="display: flex; justify-content:center;">
+                            <p>
+                                <img style="height: 43px; width: auto;" class="mt-1" src="{{ asset('/images/jam.png') }}" alt="">
+                            </p>
+                            <p>
+                                {{ $cuaca['days'][0]['datetime'] }}
+                                <br>
+                                {{ $cuaca['days'][0]['conditions'] }}
+                            </p>
+                        </div>
                     </div>
-                </div> --}}
+    
+                    <!--berita-->
 
-                <!--berita-->
-                <div class="row" style="height: 74%; width: 100%;">
-                    <div>
-                        @foreach ($berita as $item)
-                        <div class="card p-3">
-                            <img class="card-img-top" src="{{ asset('/storage/beritas/upload/'.$item->gambar) }}"></img>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->judul }}</h5>
-                                <div class="card-text">{{ $item->isi }}</div>
+                    <div class="container" style="height: 470px; width: 100%;">     
+                        <div class="row" style="width: 100%;">
+                            <div id="news-container">
+                                @foreach ($berita as $item)
+                                <div class="card p-3">
+                                    <img class="card-img-top" src="{{ asset('/storage/beritas/upload/'.$item->gambar) }}"></img>
+                                    <div class="card-body" style="font-size: 15px;">
+                                        <h5 class="card-title">{{ $item->judul }}</h5>
+                                        <div class="card-text">{{ $item->isi }}</div>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
-                        @endforeach
                     </div>
-                </div>
-
-                <!--jam-->
-                <div class="row" style="height: 12%; width: 100%;">
-                    <div class="col-12 bg-success" style="display: flex; justify-content:center;">
-                        <h2>
-                            {{ $jam }}
-                        </h2>
+    
+                    <!--jam-->
+                    <div class="container" style="height: 50px;">
+                        <div class="row" style="height: 12%; width: 100%;">
+                            <div class="col-12 bg-success" style="display: flex; justify-content:center;">
+                                <h2>
+                                    {{ $jam }}
+                                </h2>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,52 +141,31 @@
             </div>
 
         </div>
-
-        {{-- <h1>Cuaca dan Jam</h1>
-    <div>
-        <h2>Waktu Saat Ini:</h2>
-        <p>{{ $jam }}</p>
     </div>
 
-    </div> --}}
-
-
     <script>
-        $(document).ready(function(berita) {
-        var currentNewsIndex = 0;
+        $(document).ready(function() {
+            var currentNewsIndex = 0;
 
-        function updateNews() {
-            if (currentNewsIndex >= berita.length) {
-            currentNewsIndex = 0; // Reset index if all news displayed
+            function updateNews() {
+                var $newsContainers = $('.card.p-3'); // Ambil semua container card berita
+                var totalNews = $newsContainers.length;
+
+                // Sembunyikan berita saat ini dengan efek fadeOut
+                $($newsContainers[currentNewsIndex]).fadeOut(500, function() {
+                    // Geser ke berita selanjutnya
+                    currentNewsIndex = (currentNewsIndex + 1) % totalNews;
+                    // Tampilkan berita selanjutnya dengan efek fadeIn
+                    $($newsContainers[currentNewsIndex]).fadeIn(500);
+                });
             }
 
-            var currentNews = berita[currentNewsIndex];
-            var newsHtml = `
-            <div class="card p-3">
-                <img class="card-img-top" src="{{ asset('/storage/beritas/upload/') }}/${currentNews.gambar}"></img>
-                <div class="card-body">
-                <h5 class="card-title">${currentNews.judul}</h5>
-                <div class="card-text">${currentNews.isi}</div>
-                </div>
-            </div>
-            `;
+            // Panggil fungsi pertama kali
+            updateNews();
 
-            // Update the news container with the current news HTML with fadeIn and fadeOut animation
-            $("#news-container").fadeOut(500, function() {
-            $(this).html(newsHtml).fadeIn(500);
-            });
-
-            currentNewsIndex++;
-        }
-
-        // Initial display
-        updateNews();
-
-        // Update news every 5 seconds using setInterval
-        setInterval(updateNews, 5000);
+            // Update berita setiap 5 detik menggunakan setInterval
+            setInterval(updateNews, 5000);
         });
-
     </script>
-    
 </body>
 </html>
