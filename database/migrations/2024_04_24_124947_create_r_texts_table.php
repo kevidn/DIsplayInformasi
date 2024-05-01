@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('r_texts', function (Blueprint $table) {
             $table->id();
-            $table->text('teks');
+            $table->text('content');
             $table->timestamps();
         });
     }

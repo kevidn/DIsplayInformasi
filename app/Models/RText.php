@@ -15,6 +15,6 @@ class RText extends Model
      * @var array
      */
     protected $fillable = [
-        'teks',
+        'RText',
     ];
 }

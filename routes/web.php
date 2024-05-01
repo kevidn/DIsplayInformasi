@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisplayController;
-use App\Http\Controllers\Api\BeritaController;
+
 
 
 Route::get('/', function () {
@@ -12,3 +12,6 @@ Route::get('/', function () {
 
 
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
+
+Route::apiResource('/RTexts', App\Http\Controllers\Api\RTextController::class);
+    
