@@ -10,6 +10,7 @@
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.5"
         "vildanbina/laravel-model-json": "^2.0"
     },
     "require-dev": {
