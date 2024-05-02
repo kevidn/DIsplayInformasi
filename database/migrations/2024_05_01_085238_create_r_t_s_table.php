@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('r_texts', function (Blueprint $table) {
+        Schema::create('r_t_s', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
+            $table->text('RT');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('r_texts');
+        Schema::dropIfExists('r_t_s');
     }
 };

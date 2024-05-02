@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RText extends Model
+class RT extends Model
 {
     use HasFactory;
 
-        /**
-     * fillable
-     *
-     * @var array
-     */
+    protected $table = 'r_t_s';
+
     protected $fillable = [
-        'RText',
+        'RT',
     ];
+
 }

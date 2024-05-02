@@ -20,19 +20,20 @@
                     <div class="row mb-3" style="height: 14%; width: 100%">
                         <div class="col-12 bg-info p-2" style="display: flex; justify-content:center;">
                             <p>
-                                <img style="height: 43px; width: auto;" class="mt-1" src="{{ asset('/images/jam.png') }}" alt="">
+                                {{-- <img style="height: 43px; width: auto;" class="mt-1" src="{{ asset('/images/jam.png') }}" alt=""> --}}
                             </p>
                             <p>
+
                                 {{ $cuaca['days'][0]['datetime'] }}
                                 <br>
                                 {{ $cuaca['days'][0]['conditions'] }}
                             </p>
                         </div>
                     </div>
-    
+
                     <!--berita-->
 
-                    <div class="container" style="height: 470px; width: 100%;">     
+                    <div class="container" style="height: 470px; width: 100%;">
                         <div class="row" style="width: 100%;">
                             <div id="news-container">
                                 @foreach ($berita as $item)
@@ -47,13 +48,14 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <!--jam-->
-                    <div class="container" style="height: 50px;">
+                    <div class="container" style="height: 50px; width: 375px;">
                         <div class="row" style="height: 12%; width: 100%;">
                             <div class="col-12 bg-success" style="display: flex; justify-content:center;">
                                 <h2>
-                                    {{ $jam }}
+                                    <div class="p-2"></div>
+                                    @include("slicing.jam")
                                 </h2>
                             </div>
                         </div>
@@ -76,7 +78,7 @@
 
                             @if($header->count() > 0)
                                     <img src="{{ asset('/storage/header/upload/' . $header[0]->logo2) }}" alt="Logo 2" style="height: 50px; width: 50px;">
-                            @endif 
+                            @endif
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
                             <iframe width="600" height="285"
@@ -134,8 +136,14 @@
                 <div class="row">
                     <div class="col-12 bg-primary" style="height: 70px;">
                         <div class="container" style="background-color: white; width: 100%; height: 50px; margin: 10px; color:black; text-align:center;">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur.
-                        </div>
+                        <marquee behavior="" scrollamount='' direction="" class="p-2">
+
+                            @foreach ( $RTs as $item )
+                            {{ $item->RT }}
+                            @endforeach
+
+                        </marquee>
+                    </div>
                     </div>
                 </div>
             </div>
