@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Services\Cuaca;
-use App\Services\Jam;
+use App\Models\RT;
 use App\Models\Berita;
+use App\Services\Cuaca;
 use App\Models\Header;
 
 use Illuminate\Http\Request;
@@ -19,8 +18,7 @@ class DisplayController extends Controller
         $cuacaApiKey = 'UU7VZRFUZENDLYEFXLH3KYLHQ'; // Masukkan kunci API Cuaca Anda di sini
         $this->cuacaService = new Cuaca($cuacaApiKey);
 
-        $jamApiKey = 'BVTM2UVRF64L'; // Masukkan kunci API Jam Anda di sini
-        $this->jamService = new Jam($jamApiKey);
+
     }
 
     public function index(Request $request)
@@ -28,9 +26,9 @@ class DisplayController extends Controller
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
         $berita = Berita::all();
-        $jam = $this->jamService->getCurrentTime();
         $header = Header::all();
+        $RTs = RT::all();
 
-        return view('display.index', compact('cuaca', 'jam', 'berita', 'header'));
+        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs'));
     }
 }
