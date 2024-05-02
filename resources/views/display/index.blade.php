@@ -50,7 +50,7 @@
                     </div>
 
                     <!--jam-->
-                    <div class="container" style="height: 50px;">
+                    <div class="container" style="height: 50px; width: 375px;">
                         <div class="row" style="height: 12%; width: 100%;">
                             <div class="col-12 bg-success" style="display: flex; justify-content:center;">
                                 <h2>
@@ -136,8 +136,14 @@
                 <div class="row">
                     <div class="col-12 bg-primary" style="height: 70px;">
                         <div class="container" style="background-color: white; width: 100%; height: 50px; margin: 10px; color:black; text-align:center;">
-                           <marquee behavior="" scrollamount="1000" direction="" class="p-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur.
-                        </marquee> </div>
+                        <marquee behavior="" scrollamount='' direction="" class="p-2">
+
+                            @foreach ( $RTs as $item )
+                            {{ $item->RT }}
+                            @endforeach
+
+                        </marquee>
+                    </div>
                     </div>
                 </div>
             </div>

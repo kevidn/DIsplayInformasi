@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Services\Cuaca;
-use App\Services\Jam;
+use App\Models\RT;
 use App\Models\Berita;
+use App\Services\Cuaca;
 use App\Models\Header;
 
 use Illuminate\Http\Request;
@@ -28,7 +27,8 @@ class DisplayController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
         $berita = Berita::all();
         $header = Header::all();
+        $RTs = RT::all();
 
-        return view('display.index', compact('cuaca', 'berita', 'header'));
+        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs'));
     }
 }

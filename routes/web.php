@@ -12,6 +12,3 @@ Route::get('/', function () {
 
 
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
-
-Route::apiResource('/RTexts', App\Http\Controllers\Api\RTextController::class);
-    
