@@ -43,7 +43,7 @@
         </li>
         <li class="nav-item">
         
-    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+    <form id="logout-form" action="" method="POST">
         @csrf
         <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="now-ui-icons media-1_button-power"></i>
