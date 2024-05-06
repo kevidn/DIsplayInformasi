@@ -47,7 +47,7 @@
                   </div>
                   <a class="btn btn-success" href="{{ route('akun') }}">UPDATE PROFILE</a>
                   <a class="btn btn-warning" href="{{ route('akun') }}">RESET</a>
-                  <a class="btn btn-danger" href="{{ route('logout') }}">LOGOUT</a>
+                  <a class="btn btn-danger" href="">LOGOUT</a>
 
                 </form>
               </div>

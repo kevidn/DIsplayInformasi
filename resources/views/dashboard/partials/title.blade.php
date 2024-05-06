@@ -18,4 +18,6 @@
   <link href="{{ asset('/css/now-ui-dashboard.css?v=1.5.0')}}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{{ asset('/demo/demo.css" rel="stylesheet') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-y+5OXgkTZ5F/KhQe7F4Y7w8C0npfPmsyVz0c9T3+L3h9cXxTRklChgT5UMpiKgpCLaxXkLa5y9sz/1gMZyBgDQ==" crossorigin="anonymous"
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </head>

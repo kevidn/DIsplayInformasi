@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset ('/images/logomonitortrans.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset ('/images/logomonitortrans.png') }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Display - Index</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -82,7 +84,7 @@
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
                             <iframe width="600" height="285"
-                                src="https://www.youtube.com/embed/e-B0VKTt5_Q?si=FKDpJryN6XjU7ona"
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
                                 allow = "autoplay;">
                             </iframe>
                         </div>
@@ -101,11 +103,34 @@
                     </div>
                 </div>
 
-                <!--agenda-->
-                <div class="row">
-                    <div class="col-12 bg-info d-flex flex-row" style="height: 150px;">
+               <!--agenda-->
+<div class="row">
+    <div class="col-12 bg-info d-flex flex-row" style="height: 150px;">
+        @php
+        $counter = 0;
+        @endphp
+        @foreach ($agenda as $item_agenda)
+            @if ($counter < 3)
+                <div class="col-4"> <!-- Tambahkan class col-4 untuk membuat card lebih panjang -->
+                    <div class="card" style="height: 140px; font-size: 14px; margin: 5px;"> <!-- Tambahkan class card dan p-3 -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $item_agenda->nama_kegiatan }}</h5>
+                            <p class="card-text">&#128205; Tempat: {{ $item_agenda->tempat }}</p>
+                            <p>&#128197; Tanggal: {{ date('Y-m-d', strtotime($item_agenda->tanggal)) }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @php
+            $counter++;
+            @endphp
+        @endforeach
 
-                        <div class="card" style="width: 30%; height: 140px; font-size: 15px; margin: 5px;">
+
+
+
+
+                        {{-- <div class="card" style="width: 30%; height: 140px; font-size: 15px; margin: 5px;">
                             <div class="card-body">
                                 <div class="card-title"><b>Kegiatan Parenting Wali Murid</b></div>
                                 <hr>
@@ -119,15 +144,7 @@
                                 <hr>
                                 <div class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
                             </div>
-                        </div>
-
-                        <div class="card" style="width: 30%; height: 140px; font-size: 15px; margin: 5px;">
-                            <div class="card-body">
-                                <div class="card-title"><b>Kegiatan Parenting Wali Murid</b></div>
-                                <hr>
-                                <div class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                            </div>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -175,5 +192,7 @@
             setInterval(updateNews, 5000);
         });
     </script>
+
+
 </body>
 </html>
