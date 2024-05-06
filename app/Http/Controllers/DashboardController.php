@@ -46,8 +46,9 @@ class DashboardController extends Controller
         $total_video = count($video);
         $header = Header::all();
         $RTs = RT::all();
+        $jadwalSholat = $this->getJadwalSholat();
 
-        return view('dashboard.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video'));
+        return view('dashboard.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
     public function berita(Request $request)
@@ -318,5 +319,29 @@ class DashboardController extends Controller
 
     return redirect()->route('video')->with('success', 'Video Berhasil Di Tampilkan Ke Display');
 }
+
+
+    public function getJadwalSholat()
+    {
+        $url = "https://api.myquran.com/v2/sholat/jadwal/1204/2024/05";
+
+        $response = Http::get($url);
+
+        if ($response->successful()) {
+            $data = $response->json();
+
+            $tanggalHariIni = date('Y-m-d'); // Tanggal hari ini
+
+            $jadwalHariIni = collect($data['data']['jadwal'])->firstWhere('date', $tanggalHariIni);
+
+            if ($jadwalHariIni) {
+                return $jadwalHariIni;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 
 }
