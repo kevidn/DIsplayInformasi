@@ -19,23 +19,23 @@
                 <div class="d-flex flex-column">
 
                     <!--cuaca-->
-                    <div class="row mb-3" style="height: 14%; width: 100%">
-                        <div class="col-12 bg-info p-2" style="display: flex; justify-content:center;">
-                            <p>
-                                {{-- <img style="height: 43px; width: auto;" class="mt-1" src="{{ asset('/images/jam.png') }}" alt=""> --}}
-                            </p>
-                            <p>
+                    <div class="row mb-3" style="height: 100%; width: 100%">
+                        <div style="width: 100%; height: 16%; margin-bottom: 4mm;" class="col-11 bg-info p-2 d-flex align-items-center justify-content-center text-white">
 
+                            <!-- Menampilkan icon cuaca -->
+                        <img id="weather-icon-indeks" class="mr-2" src="" alt="Weather Icon" style="height: 50px; width: 50px;">
+                            <!-- Menampilkan datetime dan conditions -->
+                            <p class="m-0 ">
                                 {{ $cuaca['days'][0]['datetime'] }}
                                 <br>
-                                {{ $cuaca['days'][0]['conditions'] }}
+                                {{ str($cuaca['currentConditions']['conditions']) }}
                             </p>
                         </div>
                     </div>
 
                     <!--berita-->
 
-                    <div class="container" style="height: 470px; width: 100%;">
+                    <div class="container" style="height: 476px; width: 100%;">
                         <div class="row" style="width: 100%;">
                             <div id="news-container">
                                 @foreach ($berita as $item)
@@ -52,16 +52,28 @@
                     </div>
 
                     <!--jam-->
-                    <div class="container" style="height: 50px; width: 375px;">
-                        <div class="row" style="height: 12%; width: 100%;">
+
+
+                    <div class="row mb-3" style="height: 100%; width: 100%">
+                        <div style="width: 100%; height: 15%; margin-bottom: 4mm;" class="col-11 bg-success d-flex align-items-center justify-content-center text-white">
+                            <h6>
+                                <div class="p-2"></div>
+                                @include("partials.jam")
+                            </h6>
+                        </div>
+                    </div>
+
+
+                    {{-- <div class="container" style="height: 50px; width: 112%;">
+                        <div class="row" style="height: 11%; width: 100%;">
                             <div class="col-12 bg-success" style="display: flex; justify-content:center;">
                                 <h2>
                                     <div class="p-2"></div>
-                                    @include("slicing.jam")
+                                    @include("partials.jam")
                                 </h2>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -98,8 +110,21 @@
                         <div style="font-size: 20px; text-align: center; color: antiquewhite; margin: 15px;">
                             JADWAL SHALAT
                         </div>
-
-                        <div class="container" style="background-color: white; width: 100%; height: 300px"></div>
+                        <div class="container" style="font-size: 130%; background-color: white; width: 100%; height: 300px">
+                            @if($jadwalSholat)
+                                    <ul>
+                                        <br>
+                                        <li>Subuh: {{ $jadwalSholat['subuh'] }}</li>
+                                        <li>Dhuha: {{ $jadwalSholat['dhuha'] }}</li>
+                                        <li>Dzuhur: {{ $jadwalSholat['dzuhur'] }}</li>
+                                        <li>Ashar: {{ $jadwalSholat['ashar'] }}</li>
+                                        <li>Maghrib: {{ $jadwalSholat['maghrib'] }}</li>
+                                        <li>Isya: {{ $jadwalSholat['isya'] }}</li>
+                                    </ul>
+                                    @else
+                                        <p>Jadwal sholat untuk hari ini tidak tersedia.</p>
+                                    @endif
+                        </div>
                     </div>
                 </div>
 
@@ -169,6 +194,9 @@
     </div>
 
     <script>
+
+        // Berita
+
         $(document).ready(function() {
             var currentNewsIndex = 0;
 
@@ -191,6 +219,40 @@
             // Update berita setiap 5 detik menggunakan setInterval
             setInterval(updateNews, 5000);
         });
+
+
+
+    // Cuaca
+
+
+    function setWeatherIcon(weatherCondition) {
+        let iconUrl;
+
+        switch (weatherCondition) {
+            case 'Partially Cloudy':
+                iconUrl = 'https://via.placeholder.com/50?text=Sunny';
+                break;
+            case 'cloudy':
+                iconUrl = 'https://via.placeholder.com/50?text=Cloudy';
+                break;
+            case 'rainy':
+                iconUrl = 'https://via.placeholder.com/50?text=Rainy';
+                break;
+            default:
+                iconUrl = 'https://via.placeholder.com/50?text=Unknown';
+        }
+
+        // Mengubah src gambar dengan id 'weather-icon-indeks'
+        document.getElementById('weather-icon-indeks').src = iconUrl;
+    }
+
+    // Panggil fungsi saat halaman dimuat
+    window.onload = function() {
+        // Misalnya, $cuaca['days'][0]['conditions'] berisi kondisi cuaca dari API
+        let weatherCondition = "{{ str($cuaca['currentConditions']['conditions']) }}";
+        setWeatherIcon(weatherCondition);
+    };
+
     </script>
 
 

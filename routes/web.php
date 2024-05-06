@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\AgendaController;
 
 
-
-
 Route::get('/', function () {
     return view('welcome');
 
 });
 
-
+// ROUTE KHUSUS DISPLAY
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
 
 
