@@ -83,11 +83,15 @@
                             @endif
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
-                            <iframe width="600" height="285"
-                                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                allow = "autoplay;">
-                            </iframe>
+                            @foreach ($video as $singleVideo)
+                                {{-- @if ($singleVideo->tampil == 1) --}}
+                                    <iframe width="600" height="285" src="{{ $singleVideo->youtubelinks }}" allow="autoplay;"></iframe>
+                                {{-- @endif --}}
+                            @endforeach
                         </div>
+
+
+
                         <div style="text-align: center; font-size: 25px; font-family: Georgia; font-weight: bold; color: antiquewhite; margin: 15px;">
                             SELAMAT DATANG
                         </div>

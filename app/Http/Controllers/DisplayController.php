@@ -6,6 +6,7 @@ use App\Models\Berita;
 use App\Services\Cuaca;
 use App\Models\Header;
 use App\Models\Agenda;
+use App\Models\Video;
 
 use Illuminate\Http\Request;
 
@@ -28,10 +29,17 @@ class DisplayController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
         $berita = Berita::paginate(1);
         $agenda = Agenda::paginate(3);
-
+        $video = Video::paginate(1);
         $header = Header::all();
         $RTs = RT::all();
 
-        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda'));
+        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'video'));
+    }
+
+    public function video()
+    {
+        $video = Video::all(); // Mengambil semua data video dari database
+
+        return view('display.index', compact('video'));
     }
 }

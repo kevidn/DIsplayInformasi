@@ -7,28 +7,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <<div class="card-header d-flex justify-content-between align-items-center">
-
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <form action="{{ route('simpanVideo') }}" method="POST" class="d-flex">
                         @csrf
                         <input type="text" name="link_youtube" class="form-control mr-2" value="" placeholder="Silahkan Masukkan Link Youtube Disini!">
                         <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
-
-
-
-                <style>
-                    .custom-badge {
-                    font-size: 12px; /* Atur ukuran teks sesuai kebutuhan */
-                    padding: 10px 15px; /* Atur padding sesuai kebutuhan */
-                    }
-                    .form-control {
-                    width: 1010px; /* Sesuaikan lebar input form */
-                    margin-right: 10px; /* Sesuaikan jarak antara input dan tombol */
-}
-
-                </style>
                     </form>
-
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -40,14 +24,21 @@
                                         <iframe class="embed-responsive-item" src="{{ $singleVideo->youtubelinks }}" allow="autoplay;"></iframe>
                                     </div>
                                     <div class="mt-3">
+                                        <form action="{{ route('tampilkanVideoKeDisplay', $singleVideo->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+
+                                            {{-- Tombol "Tampilkan Video Ke Display" --}}
+                                            <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda yakin ingin menampilkan video ini di display?')">
+                                                Tampilkan Video Ke Display
+                                            </button>
+
+                                        </form>
                                         <form action="{{ route('hapusVideo', $singleVideo->id) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
 
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus video ini?')">&#128465; Hapus Video</button>
                                         </form>
-
-
                                     </div>
                                 </div>
                             </div>
