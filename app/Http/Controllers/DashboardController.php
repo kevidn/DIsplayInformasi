@@ -34,7 +34,7 @@ class DashboardController extends Controller
     public function agenda(Request $request)
     {
         return view('dashboard.agenda');
-        
+
     }
     public function akun(Request $request)
     {
@@ -71,7 +71,7 @@ class DashboardController extends Controller
     // public function buattes(Request $request)
     // {
     //     return view('dashboard.tesaagenda');
-        
+
     // }
-    
+
 }

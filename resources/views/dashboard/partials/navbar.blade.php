@@ -32,7 +32,7 @@
         <li class="nav-item">
         @if(Request::is('dashboard') || Request::is('akun'))
           <a class="nav-link" href="{{ route('akun') }}">
-         
+
             <i class="now-ui-icons users_single-02"></i>
             <p>
               <span class="d-lg-none d-md-block">Account</span>
@@ -42,8 +42,8 @@
           @endif <!-- End if -->
         </li>
         <li class="nav-item">
-        
-    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+
+    <form id="logout-form">
         @csrf
         <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="now-ui-icons media-1_button-power"></i>

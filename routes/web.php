@@ -7,14 +7,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
-
-
 Route::get('/', function () {
     return view('welcome');
 
 });
 
-
+// ROUTE KHUSUS DISPLAY
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
 
 

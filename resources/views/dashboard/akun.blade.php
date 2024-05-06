@@ -33,7 +33,7 @@
                         <input type="text" class="form-control" placeholder="User Full Name" >
                       </div>
                     </div>
-                    
+
                   </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
@@ -43,11 +43,11 @@
                       </div>
                     </div>
 
-                  
+
                   </div>
                   <a class="btn btn-success" href="{{ route('akun') }}">UPDATE PROFILE</a>
                   <a class="btn btn-warning" href="{{ route('akun') }}">RESET</a>
-                  <a class="btn btn-danger" href="{{ route('logout') }}">LOGOUT</a>
+                  <a class="btn btn-danger" href="">LOGOUT</a>
 
                 </form>
               </div>
@@ -75,12 +75,12 @@
                 </p>
               </div>
               <hr>
-              
+
             </div>
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 @include('dashboard.partials.corejs')
