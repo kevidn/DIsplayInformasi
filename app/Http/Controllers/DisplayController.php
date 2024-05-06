@@ -38,7 +38,7 @@ class DisplayController extends Controller
         // Mendapatkan data jadwal sholat
         $jadwalSholat = $this->getJadwalSholat();
 
-        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'jadwalSholat'));
+        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'jadwalSholat', 'agenda'));
     }
 
     public function getJadwalSholat()
