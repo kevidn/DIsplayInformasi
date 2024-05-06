@@ -7,6 +7,7 @@ use App\Services\Cuaca;
 use App\Models\Header;
 use Illuminate\Support\Facades\Http;
 use App\Models\Agenda;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class DisplayController extends Controller
@@ -31,14 +32,18 @@ class DisplayController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
         $berita = Berita::paginate(1);
         $agenda = Agenda::paginate(3);
-
+        $video = Video::paginate(1);
         $header = Header::all();
         $RTs = RT::all();
 
-        // Mendapatkan data jadwal sholat
-        $jadwalSholat = $this->getJadwalSholat();
+        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'video', 'jadwalSholat'));
+    }
 
-        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'jadwalSholat', 'agenda'));
+    public function video()
+    {
+        $video = Video::all(); // Mengambil semua data video dari database
+
+        return view('display.index', compact('video'));
     }
 
     public function getJadwalSholat()

@@ -40,13 +40,12 @@ class DashboardController extends Controller
         $total_berita = count($berita);
         $agenda = Agenda::all();
         $total_agenda = count($agenda);
-        $video = Video::all();
+        $video = Video::paginate(1);
         $total_video = count($video);
-
         $header = Header::all();
         $RTs = RT::all();
 
-        return view('dashboard.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video'));
+        return view('dashboard.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video'));
     }
 
     public function berita(Request $request)
@@ -309,4 +308,13 @@ class DashboardController extends Controller
         // Return response
         return redirect()->route('runningtext')->with('success', 'RunningText berhasil diperbaharui.');
     }
+    public function updateTampilStatus($id)
+{
+    $video = Video::findOrFail($id);
+    $video->tampil = !$video->tampil; // Toggle status tampil
+    $video->save();
+
+    return redirect()->route('video')->with('success', 'Video Berhasil Di Tampilkan Ke Display');
+}
+
 }

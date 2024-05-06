@@ -46,6 +46,8 @@ Route::delete('/hapusrunningtext/{id}', [DashboardController::class, 'destroyRun
 Route::put('/updateagenda/{id}', [DashboardController::class, 'updateagenda'])->name('updateAgenda');
 Route::put('/updateberita/{id}', [DashboardController::class, 'updateberita'])->name('updateBerita');
 Route::put('/updatert/{id}', [DashboardController::class, 'updatert'])->name('updateRt');
+Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'updateTampilStatus'])->name('tampilkanVideoKeDisplay');
+
 
 
 
