@@ -2,38 +2,68 @@
 @include('dashboard.partials.sidebar')
 @include('dashboard.partials.navbar')
 
-<div class="panel-header panel-header-sm">
-</div>
+<div class="panel-header panel-header-sm"></div>
 <div class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">RUNNING TEXT</h4>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0">RUNNING TEXT</h4>
+
+
+                        <div class="form-group mb-0">
+
+
+
+                        </div>
+
+                    </form>
                 </div>
                 <div class="card-body">
                     <div class="running-text-container">
-                        <div class="running-text">
-                            <!-- Tambahkan teks running text di sini -->
-                            Bersyukurlah untuk setiap hari, karena setiap hari adalah kesempatan baru untuk menjadi lebih baik. || Jadilah pribadi yang memberi inspirasi, bukan hanya sekadar mengikuti arus.
-                            || Keberanian bukanlah ketiadaan rasa takut, melainkan tindakan di tengah-tengah ketakutan.
+                        @foreach ($runningtext as $item_rt)
+                            <div class="running-text">
+                                <marquee>{{ $item_rt->RT }}</marquee>
+                            </div>
+                        @endforeach
+                    </div>
+                    <form action="{{ route('updateRt', ['id' => $runningtext[0]->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="runningtext"></label>
+                                    <textarea class="form-control" id="runningText" name="RT" rows="5">{{ $runningtext[0]->RT }}</textarea>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="badge badge-warning custom-badge">Perbaharui Running Text</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="nama_kendaraan"></label>
-                        <input type="text" id="nama_kendaraan" name="nama_kendaraan" class="form-control" value="Bersyukurlah untuk setiap hari, karena setiap hari adalah kesempatan baru untuk menjadi lebih baik. || Jadilah pribadi yang memberi inspirasi, bukan hanya sekadar mengikuti arus.
-                            || Keberanian bukanlah ketiadaan rasa takut, melainkan tindakan di tengah-tengah ketakutan.">
-                    </div>
+                    </form>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-warning">Perbaharui Running Text</button>
-                        <button type="submit" class="btn btn-danger">Hapus Running Text</button>
-                    </div>
+
+                    <style>
+                        .custom-badge {
+                        font-size: 12px; /* Atur ukuran teks sesuai kebutuhan */
+                        color: white;
+                        padding: 10px 15px; /* Atur padding sesuai kebutuhan */
+                        }
+                        .form-control {
+                        width: 1010px; /* Sesuaikan lebar input form */
+                        margin-right: 10px; /* Sesuaikan jarak antara input dan tombol */
+                        }
+
+                    </style>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!-- CSS RUNNING TEXT -->
 <style>
@@ -46,16 +76,6 @@
         height: 60px; /* Sesuaikan tinggi running text */
         display: flex; /* Menggunakan flexbox untuk posisi tengah */
         align-items: center; /* Posisikan teks di tengah secara vertikal */
-    }
-    .running-text {
-        position: absolute;
-        animation: marquee linear infinite;
-        animation-duration: 20s; /* Sesuaikan kecepatan berjalan */
-        animation-timing-function: linear;
-    }
-    @keyframes marquee {
-        0% { left: 100%; }
-        100% { left: -100%; }
     }
 </style>
 @include('dashboard.partials.corejs')

@@ -30,20 +30,20 @@
           </a>
         </li>
         <li class="nav-item">
-        @if(Request::is('dashboard') || Request::is('akun'))
-          <a class="nav-link" href="{{ route('akun') }}">
+            @if(Request::is('dashboard') || Request::is('akun'))
+              <a class="nav-link" href="{{ route('akun') }}">
+                <img src="{{ asset('/images/gambaruser.jpeg') }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                <p>
+                  <span class="d-lg-none d-md-block">Account</span>
+                  Username
+                </p>
+              </a>
+            @endif <!-- End if -->
+          </li>
 
-            <i class="now-ui-icons users_single-02"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Account</span>
-              Account Name
-            </p>
-          </a>
-          @endif <!-- End if -->
-        </li>
         <li class="nav-item">
 
-    <form id="logout-form">
+    <form id="logout-form" action="">
         @csrf
         <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="now-ui-icons media-1_button-power"></i>
