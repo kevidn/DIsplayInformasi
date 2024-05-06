@@ -8,88 +8,44 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-             <div class="card-header">
-                <h4 class="card-title">DAFTAR AGENDA</h4>
-                
-                <a class="btn btn-success" href="{{ route('tambahagenda') }}">TAMBAH AGENDA</a>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0">DAFTAR AGENDA</h4>
+                    <a href="{{ route('tambahagenda') }}" class="badge badge-success custom-badge">TAMBAH AGENDA</a>
+                <style>
+                    .custom-badge {
+                    font-size: 12px; /* Atur ukuran teks sesuai kebutuhan */
+                    padding: 10px 15px; /* Atur padding sesuai kebutuhan */
+                    }
 
-              </div> 
-              
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Kegiatan Parenting Wali Murid</h5>
-                      <p class="card-text">&#128205; SMK FATAHILLAH</p>
-                      <p>&#128197; 2024-12-03</p>
-                      <a href="#" class="btn btn-warning"> &#9998; Edit Agenda</a>
-                  <a href="#" class="btn btn-danger">&#128465; Hapus Agenda</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Kegiatan Parenting Wali Murid</h5>
-                      <p class="card-text">&#128205; SMK FATAHILLAH</p>
-                      <p>&#128197; 2024-12-03</p>
-                      <a href="#" class="btn btn-warning"> &#9998; Edit Agenda</a>
-                  <a href="#" class="btn btn-danger">&#128465; Hapus Agenda</a>
-                    </div>
-                  </div>
-                </div>
+                </style>
+
               </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Kegiatan Parenting Wali Murid</h5>
-                      <p class="card-text">&#128205; SMK FATAHILLAH</p>
-                      <p>&#128197; 2024-12-03</p>
-                      <a href="#" class="btn btn-warning"> &#9998; Edit Agenda</a>
-                  <a href="#" class="btn btn-danger">&#128465; Hapus Agenda</a>
+              <div class="card-body">
+
+                <div class="row">
+                @foreach ($agenda as $singleAgenda)
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $singleAgenda->nama_kegiatan }}</h5>
+                                <p class="card-text">&#128205; Tempat: {{ $singleAgenda->tempat }}</p>
+                                <p>&#128197; Tanggal: {{ $singleAgenda->tanggal }}</p>
+                                <form action="{{ route('hapusAgenda', $singleAgenda->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <a href="{{ route('editagenda', ['id' => $singleAgenda->id]) }}" class="btn btn-warning">&#9998; Edit Agenda</a>
+
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus agenda ini?')">&#128465; Hapus Agenda</button>
+
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Kegiatan Parenting Wali Murid</h5>
-                      <p class="card-text">&#128205; SMK FATAHILLAH</p>
-                      <p>&#128197; 2024-12-03</p>
-                      <a href="#" class="btn btn-warning"> &#9998; Edit Agenda</a>
-                  <a href="#" class="btn btn-danger">&#128465; Hapus Agenda</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Kegiatan Parenting Wali Murid</h5>
-                      <p class="card-text">&#128205; SMK FATAHILLAH</p>
-                      <p>&#128197; 2024-12-03</p>
-                      <a href="#" class="btn btn-warning"> &#9998; Edit Agenda</a>
-                  <a href="#" class="btn btn-danger">&#128465; Hapus Agenda</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Kegiatan Parenting Wali Murid</h5>
-                      <p class="card-text">&#128205; SMK FATAHILLAH</p>
-                      <p>&#128197; 2024-12-03</p>
-                      <a href="#" class="btn btn-warning"> &#9998; Edit Agenda</a>
-                  <a href="#" class="btn btn-danger">&#128465; Hapus Agenda</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-               
-@include('dashboard.partials.corejs')    
-              
-             
-  
-  
+                @endforeach
+            </div>
+
+@include('dashboard.partials.corejs')
+
+
+
+

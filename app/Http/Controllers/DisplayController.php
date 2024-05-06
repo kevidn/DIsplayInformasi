@@ -5,6 +5,7 @@ use App\Models\RT;
 use App\Models\Berita;
 use App\Services\Cuaca;
 use App\Models\Header;
+use App\Models\Agenda;
 
 use Illuminate\Http\Request;
 
@@ -25,10 +26,12 @@ class DisplayController extends Controller
     {
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-        $berita = Berita::all();
+        $berita = Berita::paginate(1);
+        $agenda = Agenda::paginate(3);
+
         $header = Header::all();
         $RTs = RT::all();
 
-        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs'));
+        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda'));
     }
 }

@@ -3,7 +3,7 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
     <div class="logo">
-       
+
         <a href="" class="simple-text">
           <img class="avatar border-gray" src="{{ asset ('/images/logobulet.png') }}" width="20%" alt="...">
           Display Informasi
@@ -17,13 +17,13 @@
             <p>Dashboard</p>
         </a>
     </li>
-    <li class="{{ Request::is('berita*') || Request::is('tambahberita') || Request::is('editberita') ? 'active' : '' }}">
+    <li class="{{ Request::is('berita*') || Request::is('tambahberita') || Request::is('editberita/*') ? 'active' : '' }}">
     <a href="{{ route('berita') }}">
         <i class="now-ui-icons education_paper"></i>
         <p>List Berita</p>
     </a>
 </li>
-    <li class="{{ Request::is('agenda') || Request::is('tambahagenda') || Request::is('editagenda') ? 'active' : '' }}">
+    <li class="{{ Request::is('agenda') || Request::is('tambahagenda') || Request::is('editagenda/*') ? 'active' : '' }}">
         <a href="{{ route('agenda') }}">
             <i class="now-ui-icons design_bullet-list-67"></i>
             <p> List Agenda</p>
@@ -41,7 +41,7 @@
               <p>Jadwal Sholat</p>
             </a>
           </li> -->
-          <li class="{{ Request::is('video') ? 'active' : '' }}"> 
+          <li class="{{ Request::is('video') ? 'active' : '' }}">
             <a href="{{ route('video') }}">
               <i class="now-ui-icons media-1_button-play"></i>
               <p>Video</p>
@@ -59,4 +59,3 @@
     </div>
     <div class="main-panel" id="main-panel">
     <!-- SIDEBAR END -->
-      
