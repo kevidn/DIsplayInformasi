@@ -35,6 +35,8 @@ class DisplayController extends Controller
         $video = Video::paginate(1);
         $header = Header::all();
         $RTs = RT::all();
+        $jadwalSholat = $this->getJadwalSholat();
+
 
         return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'video', 'jadwalSholat'));
     }
