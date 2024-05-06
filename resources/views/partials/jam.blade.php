@@ -9,14 +9,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: ;
       background-color: #f2f2f2;
     }
 
     .clock {
       font-family: Arial, sans-serif;
-      width: 190px;
-      height: 50px;
+      width: 180px;
+      height: 49px;
       background-color: #fff;
       border-radius: 50px;
       display: flex;

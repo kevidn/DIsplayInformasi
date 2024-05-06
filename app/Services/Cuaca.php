@@ -16,7 +16,8 @@ class Cuaca
     }
 
     public function getWeather($city)
-    {
+{
+    try {
         $response = $this->client->request('GET', 'timeline/' . $city, [
             'query' => [
                 'unitGroup' => 'us',
@@ -26,5 +27,10 @@ class Cuaca
         ]);
 
         return json_decode($response->getBody()->getContents(), true);
+    } catch (\Exception $e) {
+        // Tangani kesalahan dengan mencetak pesan kesalahan atau mengembalikan nilai default
+        return ['error' => $e->getMessage()];
     }
+}
+
 }
