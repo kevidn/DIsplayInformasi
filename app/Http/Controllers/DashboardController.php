@@ -12,6 +12,8 @@ use App\Models\Berita;
 use App\Models\Agenda;
 use App\Models\Video;
 
+use Illuminate\Support\Facades\Http;
+
 //import facade Validator
 use Illuminate\Support\Facades\Validator;
 
