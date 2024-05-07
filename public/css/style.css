@@ -1,5 +1,0 @@
-#grad1 {
-    height: 200px;
-    background-color: rgb(80, 80, 255); /* For browsers that do not support gradients */
-    background-image: linear-gradient(rgb(80, 80, 255), antiquewhite);
-  }

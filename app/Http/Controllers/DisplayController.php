@@ -30,7 +30,7 @@ class DisplayController extends Controller
         //Ambil Data
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-        $berita = Berita::paginate(1);
+        $berita = Berita::all();
         $agenda = Agenda::paginate(3);
         $video = Video::paginate(1);
         $header = Header::all();

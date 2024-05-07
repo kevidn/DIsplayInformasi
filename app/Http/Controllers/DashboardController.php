@@ -36,7 +36,6 @@ class DashboardController extends Controller
     {
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-        $berita = Berita::paginate(1);
         $agenda = Agenda::paginate(3);
         $berita = Berita::all();
         $total_berita = count($berita);
@@ -311,15 +310,14 @@ class DashboardController extends Controller
         // Return response
         return redirect()->route('runningtext')->with('success', 'RunningText berhasil diperbaharui.');
     }
-    public function updateTampilStatus($id)
-{
-    $video = Video::findOrFail($id);
-    $video->tampil = !$video->tampil; // Toggle status tampil
-    $video->save();
+        public function updateTampilStatus($id)
+    {
+        $video = Video::findOrFail($id);
+        // $video->tampil = !$video->tampil; // Toggle status tampil
+        $video->save();
 
-    return redirect()->route('video')->with('success', 'Video Berhasil Di Tampilkan Ke Display');
-}
-
+        return redirect()->route('video')->with('success', 'Video Berhasil Di Tampilkan Ke Display');
+    }
 
     public function getJadwalSholat()
     {
