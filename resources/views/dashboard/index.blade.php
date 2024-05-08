@@ -10,7 +10,7 @@
 <div class="content">
     <div class="row mx-auto mt-4 mb-4">
         <div class="col-md-12">
-            <div class="card" style="background-image: url('/images/bg.jpg'); background-size: 100%;">
+            <div class="card" style="background-image: url('/images/bg.jpg'); background-size: 140%; font-size: small;">
                 <div class="card-body">
                     @include('display.index')
                 </div>
