@@ -14,6 +14,8 @@ Route::get('/', function () {
 
 });
 
+
+
 // ROUTE KHUSUS DISPLAY
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
 
@@ -57,3 +59,28 @@ Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'up
 //KHUSUS BUAT TES/COBA-COBA
 // Route::get('/buattes', [DashboardController::class, 'buattes'])->name('buattes');
 
+
+Auth::routes();
+
+/*------------------------------------------
+--------------------------------------------
+All Normal Users Routes List
+--------------------------------------------
+--------------------------------------------*/
+Route::middleware(['auth', 'user-access:user'])->group(function () {
+  
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
+  
+/*------------------------------------------
+--------------------------------------------
+All Admin Routes List
+--------------------------------------------
+--------------------------------------------*/
+Route::middleware(['auth', 'user-access:admin'])->group(function () {
+  
+    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+});
+
+
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
