@@ -9,9 +9,10 @@
           <span class="navbar-toggler-bar bar3"></span>
         </button>
       </div>
-      @if(Request::is('dashboard')) <!-- Check if current page is dashboard -->
-      <a class="navbar-brand" href="">Hai, Selamat Datang </a>
-      @endif <!-- End if -->
+     @if(Request::is('dashboard')) <!-- Check if current page is dashboard -->
+    <a class="navbar-brand" href="">Hai, Selamat Datang {{ Auth::user()->name }}</a> <!-- Display welcome message and username -->
+@endif <!-- End if -->
+
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -30,28 +31,31 @@
           </a>
         </li>
         <li class="nav-item">
-            @if(Request::is('dashboard') || Request::is('akun'))
-              <a class="nav-link" href="{{ route('akun') }}">
-                <img src="{{ asset('/images/gambaruser.jpeg') }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                <p>
-                  <span class="d-lg-none d-md-block">Account</span>
-                  Username
-                </p>
-              </a>
-            @endif <!-- End if -->
+           @if(Request::is('dashboard') || Request::is('akun'))
+    @if(Auth::check()) <!-- Check if user is logged in -->
+        <a class="nav-link" href="{{ route('akun') }}">
+            <img src="{{ asset('/images/gambaruser.jpeg') }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+            <p>
+                <span class="d-lg-none d-md-block">Account</span>
+                {{ Auth::user()->name }} <!-- Display username of the logged in user -->
+            </p>
+        </a>
+    @endif <!-- End if -->
+@endif <!-- End if -->
+
           </li>
 
         <li class="nav-item">
 
-    <form id="logout-form" action="">
-        @csrf
-        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="now-ui-icons media-1_button-power"></i>
-            <p>
-                <span class="d-lg-none d-md-block">Account</span>Logout
-            </p>
-        </a>
-    </form>
+  <form id="logout-form" action="{{ route('logout') }}" method="POST">
+    @csrf
+    <a class="nav-link" href="{{ route('login') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="now-ui-icons media-1_button-power"></i>
+        <p>
+            <span class="d-lg-none d-md-block">Account</span>Logout
+        </p>
+    </a>
+</form>
 </li>
 
         @endif <!-- End if -->
