@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Agenda;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DisplayController extends Controller
 {
     protected $cuacaService;
-    protected $jamService;
 
     public function __construct()
     {
@@ -26,19 +26,25 @@ class DisplayController extends Controller
     public function index(Request $request)
     {
 
+        //array untuk cuaca
+        $currentHour = Carbon::now('Asia/Jakarta')->format('H'); // Mendapatkan jam saat ini dalam format 24 jam dari zona waktu Asia/Jakarta
+
+        // Buat array jam dari 1 sampai 24
+        $jam = range(1, 24);
 
         //Ambil Data
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-        $berita = Berita::all();
+        $berita = Berita::paginate(1);
         $agenda = Agenda::paginate(3);
         $video = Video::paginate(1);
         $header = Header::all();
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
 
+        // dd($cuaca);
 
-        return view('display.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'video', 'jadwalSholat'));
+        return view('display.index', compact('jam','currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'video', 'jadwalSholat'));
     }
 
     public function video()
