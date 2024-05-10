@@ -18,16 +18,27 @@
                 <div class="d-flex flex-column">
 
                     <!--cuaca-->
-                    <div class="row mb-3" style="height: 100%; width: 100%;">
-                        <div style="width: 100%; height: 16%; margin-bottom: 4mm;" class="col-11 p-2 d-flex align-items-center justify-content-center text-white">
-                            <img id="weather-icon-indeks" class="mr-2" src="" alt="Weather Icon" style="height: 50px; width: 50px;">
-                            <div class="m-0" style="font-family: 'Segoe UI';">
-                                {{ $cuaca['days'][0]['datetime'] }}
-                                <br>
-                                {{ str($cuaca['currentConditions']['conditions']) }}
-                            </div>
-                        </div>
+            <div class="row mb-3" style="height: 100%; width: 100%;">
+                <div style="width: 100%; height: 16%; margin-bottom: 4mm;" class="col-11 p-2 d-flex align-items-center justify-content-center text-white">
+                    <img id="weather-icon-indeks" class="mr-2" src="" alt="Weather Icon" style="height: 50px; width: 50px;">
+                    <div class="m-0" style="font-family: 'Segoe UI';">
+                        {{ $cuaca['days'][0]['datetime'] }}
+                        <br>
+                        <script>
+                            // Mendapatkan jam saat ini dari PHP
+                            var currentHour = {!! json_encode($currentHour) !!};
+
+                            // Tampilkan kondisi cuaca berdasarkan jam saat ini
+                            var weatherConditions = {!! json_encode($cuaca['days'][0]['hours']) !!};
+                            var currentWeatherCondition = weatherConditions[currentHour] ? weatherConditions[currentHour]['conditions'] : '';
+
+                            // Tampilkan kondisi cuaca saat ini
+                            document.write(currentWeatherCondition);
+                            document.write('<br>');
+                        </script>
                     </div>
+                </div>
+            </div>
 
                     <!--berita-->
                     <div class="container" style="height: 590px; width: 100%;">
@@ -78,7 +89,7 @@
                                     <iframe width="580" height="350" src="{{ $singleVideo->youtubelinks }}" allow="autoplay;"></iframe>
                             @endforeach
                         </div>
-                        
+
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
                         </div>
@@ -174,34 +185,52 @@
             setInterval(updateNews, 5000);
         });
 
-        // Cuaca
-        function setWeatherIcon(weatherCondition) {
-            let iconUrl;
+        // Mengambil kondisi cuaca dari array cuaca
+        var weatherConditions = {!! json_encode($cuaca['days'][0]['hours']) !!};
 
-            switch (weatherCondition) {
-                case 'Partially Cloudy':
-                    iconUrl = 'https://via.placeholder.com/50?text=Sunny';
-                    break;
-                case 'cloudy':
-                    iconUrl = 'https://via.placeholder.com/50?text=Cloudy';
-                    break;
-                case 'rainy':
-                    iconUrl = 'https://via.placeholder.com/50?text=Rainy';
-                    break;
-                default:
-                    iconUrl = 'https://via.placeholder.com/50?text=Unknown';
-            }
+        // Update weather condition based on current hour
+        function updateCurrentWeather() {
+            var now = new Date();
+            var currentHour = now.getHours();
 
-            // Mengubah src gambar dengan id 'weather-icon-indeks'
-            document.getElementById('weather-icon-indeks').src = iconUrl;
+            var currentWeather = weatherConditions[currentHour]['conditions'];
+            document.getElementById('current-weather-condition').innerText = currentWeather;
+
+            // Panggil fungsi untuk mengatur ikon cuaca berdasarkan kondisi
+            setWeatherIcon(currentWeather);
         }
 
-        // Panggil fungsi saat halaman dimuat
-        window.onload = function() {
-            // Misalnya, $cuaca['days'][0]['conditions'] berisi kondisi cuaca dari API
-            let weatherCondition = "{{ str($cuaca['currentConditions']['conditions']) }}";
-            setWeatherIcon(weatherCondition);
-        };
+        updateCurrentWeather();
+        setInterval(updateCurrentWeather, 3600000);
+
+
+// Define a function to set the image source based on the weather condition
+function setWeatherIcon(condition) {
+    var imgElement = document.getElementById('weather-icon-indeks');
+    var imagePath = '';
+
+    // Check the weather condition and set the image path accordingly
+    switch (condition.toLowerCase()) {
+        case 'clear':
+            imagePath = 'https://via.placeholder.com/50?text=Sunny';
+            break;
+        case 'cloudy':
+            imagePath = 'path_to_cloudy_image.jpg';
+            break;
+        // Add more cases for other weather conditions as needed
+        default:
+            imagePath = 'path_to_default_image.jpg';
+            break;
+    }
+
+    // Set the image source
+    imgElement.src = imagePath;
+}
+
+// Call the function to set the image based on the weather condition
+setWeatherIcon(weatherCondition);
+
+
     </script>
 </body>
 </html>
