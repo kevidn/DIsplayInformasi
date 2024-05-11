@@ -86,3 +86,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', function () {
+        return view('profile');
+    })->name('profile');
+
+    Route::post('/update_profile', [DashboardController::class, 'update'])->name('update_profile');
+    Route::post('/delete_account', [DashboardController::class, 'hapusakun'])->name('hapusakun');
+
+});

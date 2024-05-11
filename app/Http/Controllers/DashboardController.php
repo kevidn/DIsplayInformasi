@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -386,6 +387,55 @@ public function hapusTampilStatus($id)
         } else {
             return null;
         }
+    }
+     /**
+     * Update the user's profile.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+     public function update(Request $request)
+    {
+        $user = \App\Models\User::find(Auth::id());
+
+        // Validasi request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        // Perbarui nama pengguna
+        $user->name = $request->name;
+
+        // Perbarui password jika dimasukkan
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully!');
+    }
+     // Fungsi lain di sini
+
+    /**
+     * Delete the user's account.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function hapusakun()
+    {
+        $user = \App\Models\User::find(Auth::id());
+
+        // Hapus user dari database
+        $user->delete();
+
+        // Logout user setelah menghapus akun
+        Auth::logout();
+
+        // Redirect ke halaman lain, misalnya halaman beranda
+        return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
     }
 
 }
