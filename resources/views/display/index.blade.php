@@ -24,18 +24,8 @@
                     <div class="m-0" style="font-family: 'Segoe UI';">
                         {{ $cuaca['days'][0]['datetime'] }}
                         <br>
-                        <script>
-                            // Mendapatkan jam saat ini dari PHP
-                            var currentHour = {!! json_encode($currentHour) !!};
-
-                            // Tampilkan kondisi cuaca berdasarkan jam saat ini
-                            var weatherConditions = {!! json_encode($cuaca['days'][0]['hours']) !!};
-                            var currentWeatherCondition = weatherConditions[currentHour] ? weatherConditions[currentHour]['conditions'] : '';
-
-                            // Tampilkan kondisi cuaca saat ini
-                            document.write(currentWeatherCondition);
-                            document.write('<br>');
-                        </script>
+                        {{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}
+                        <br>
                     </div>
                 </div>
             </div>

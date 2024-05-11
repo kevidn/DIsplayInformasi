@@ -29,9 +29,6 @@ class DisplayController extends Controller
         //array untuk cuaca
         $currentHour = Carbon::now('Asia/Jakarta')->format('H'); // Mendapatkan jam saat ini dalam format 24 jam dari zona waktu Asia/Jakarta
 
-        // Buat array jam dari 1 sampai 24
-        $jam = range(1, 24);
-
         //Ambil Data
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
