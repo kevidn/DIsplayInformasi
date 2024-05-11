@@ -11,6 +11,7 @@ use App\Models\RT;
 use App\Models\Berita;
 use App\Models\Agenda;
 use App\Models\Video;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Http;
 
@@ -34,6 +35,11 @@ class DashboardController extends Controller
 
     public function dashboard(Request $request)
     {
+
+        //array untuk cuaca
+        $currentHour = Carbon::now('Asia/Jakarta')->format('H'); // Mendapatkan jam saat ini dalam format 24 jam dari zona waktu Asia/Jakarta
+        // Buat array jam dari 1 sampai 24
+        $jam = range(1, 24);
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
         $agenda = Agenda::paginate(3);
@@ -47,7 +53,7 @@ class DashboardController extends Controller
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
 
-        return view('dashboard.index', compact('cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
+        return view('dashboard.index', compact('jam', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
     public function berita(Request $request)
