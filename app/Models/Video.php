@@ -15,7 +15,8 @@ class Video extends Model
      * @var array
      */
     protected $fillable = [
-        'youtubelinks'
+        'youtubelinks',
+        'tampil'
 
     ];
 }

@@ -10,35 +10,53 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <form action="{{ route('simpanVideo') }}" method="POST" class="d-flex">
                         @csrf
-                        <input type="text" name="link_youtube" class="form-control mr-2" value="" placeholder="Silahkan Masukkan Link Youtube Disini!">
+                        <input type="text" name="link_youtube" class="form-control mr-2 custom-input" value="" placeholder="Silahkan Masukkan URL YouTube Disini!">
                         <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
                     </form>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        @foreach ($video as $singleVideo)
+                        @foreach ($videos as $singleVideo)
                         <div class="col-md-6 mb-4">
                             <div class="card h-100">
                                 <div class="card-body">
+                                    {{-- Badge "Video Ada di Display" --}}
+                                    @if ($singleVideo->tampil == 1)
+                                    <span class="badge badge-success mb-3">Ditampilkan Ke Display</span><br>
+                                    @endif
+                                    @if ($singleVideo->tampil == 0)
+                                    <span class="badge badge-danger mb-3">Tidak Ditampilkan Ke Display</span><br>
+                                    @endif
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <iframe class="embed-responsive-item" src="{{ $singleVideo->youtubelinks }}" allow="autoplay;"></iframe>
                                     </div>
                                     <div class="mt-3">
+                                        {{-- Tombol "Tampilkan Video Ke Display" hanya muncul jika kolom tampil memiliki nilai 0 --}}
+                                        @if ($singleVideo->tampil == 0)
                                         <form action="{{ route('tampilkanVideoKeDisplay', $singleVideo->id) }}" method="POST" style="display: inline;">
                                             @csrf
-
-                                            {{-- Tombol "Tampilkan Video Ke Display" --}}
                                             <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda yakin ingin menampilkan video ini di display?')">
                                                 Tampilkan Video Ke Display
                                             </button>
-
                                         </form>
+                                        @endif
+
+                                        {{-- Tombol "Hapus dari Display" hanya muncul jika kolom tampil memiliki nilai 1 --}}
+                                        @if ($singleVideo->tampil == 1)
+                                        <form action="{{ route('hapusVideoKeDisplay', $singleVideo->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus video ini dari display?')">
+                                                Hapus dari Display
+                                            </button>
+                                        </form>
+                                        @endif
+                                        @if ($singleVideo->tampil == 0)
                                         <form action="{{ route('hapusVideo', $singleVideo->id) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus video ini?')">&#128465; Hapus Video</button>
                                         </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -53,33 +71,10 @@
 
 
 
+<style>
+    .custom-input {
+    width: 1060px; /* Sesuaikan lebar sesuai kebutuhan */
+}
 
-
-<!-- SCIRPT API BUAT JUDUL LINK YT -->
-<!-- <script>
-    // Fungsi untuk mendapatkan judul video berdasarkan ID video
-    function getVideoTitle(videoId) {
-        // Ganti 'YOUR_API_KEY' dengan API Key YouTube Anda
-        const apiKey = 'YOUR_API_KEY';
-        // URL endpoint untuk mengambil informasi video
-        const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${apiKey}`;
-
-        // Kirim permintaan fetch ke API YouTube
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                // Ambil judul dari data yang diterima
-                const title = data.items[0].snippet.title;
-                // Set judul video ke dalam card
-                document.getElementById('video-title').innerText = title;
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    // Panggil fungsi saat dokumen dimuat
-    document.addEventListener('DOMContentLoaded', function () {
-        // Panggil fungsi getVideoTitle dengan ID video yang diperoleh dari link YouTube
-        getVideoTitle('e-B0VKTt5_Q');
-    });
-</script> -->
+</style>
 

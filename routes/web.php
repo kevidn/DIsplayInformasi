@@ -37,18 +37,20 @@ Route::get('/editberita/{id}', [DashboardController::class, 'editberita'])->name
 Route::post('/simpanVideo', [DashboardController::class, 'simpanVideo'])->name('simpanVideo');
 Route::post('/simpanAgenda', [DashboardController::class, 'simpanAgenda'])->name('simpanAgenda');
 Route::post('/simpanBerita', [DashboardController::class, 'simpanBerita'])->name('simpanBerita');
+Route::post('/simpanRT', [DashboardController::class, 'simpanRT'])->name('simpanRT');
 
 //ROUTE KHUSUS MENGHAPUS
 Route::delete('/hapusberita/{id}', [DashboardController::class, 'destroyberita'])->name('hapusBerita');
 Route::delete('/hapusagenda/{id}', [DashboardController::class, 'destroyagenda'])->name('hapusAgenda');
 Route::delete('/hapusvideo/{id}', [DashboardController::class, 'destroyVideo'])->name('hapusVideo');
-Route::delete('/hapusrunningtext/{id}', [DashboardController::class, 'destroyRunningtext'])->name('hapusRunningtext');
+Route::delete('/hapusRT/{id}', [DashboardController::class, 'destroyRT'])->name('hapusRT');
 
 //ROUTE KHUSUS UPDATE
 Route::put('/updateagenda/{id}', [DashboardController::class, 'updateagenda'])->name('updateAgenda');
 Route::put('/updateberita/{id}', [DashboardController::class, 'updateberita'])->name('updateBerita');
 Route::put('/updatert/{id}', [DashboardController::class, 'updatert'])->name('updateRt');
 Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'updateTampilStatus'])->name('tampilkanVideoKeDisplay');
+Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusTampilStatus'])->name('hapusVideoKeDisplay');
 
 
 
@@ -68,17 +70,17 @@ All Normal Users Routes List
 --------------------------------------------
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:user'])->group(function () {
-  
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
-  
+
 /*------------------------------------------
 --------------------------------------------
 All Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
-  
+
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 });
 
