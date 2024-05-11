@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -44,6 +45,7 @@ class DashboardController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
         $agenda = Agenda::paginate(3);
         $berita = Berita::all();
+        $videodisplay = Video::where('tampil', 1)->first();
         $total_berita = count($berita);
         $agenda = Agenda::all();
         $total_agenda = count($agenda);
@@ -53,7 +55,7 @@ class DashboardController extends Controller
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
 
-        return view('dashboard.index', compact('jam', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
+        return view('dashboard.index', compact('jam', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'videodisplay', 'jadwalSholat'));
     }
 
     public function berita(Request $request)
@@ -80,8 +82,10 @@ class DashboardController extends Controller
 
     public function video(Request $request)
     {
-        $video = Video::all();
-        return view('dashboard.video', compact('video'));
+        $video_ada_display = Video::where('tampil', 1)->get();
+        $video_tidak_display = Video::where('tampil', 0)->get();
+        $videos = $video_ada_display->merge($video_tidak_display);
+        return view('dashboard.video', compact('videos'));
     }
 
     public function tambahagenda(Request $request)
@@ -107,15 +111,49 @@ class DashboardController extends Controller
     }
 
     public function simpanVideo(Request $request)
-    {
-        // Simpan link YouTube ke database
-        $video = new Video;
-        $video->youtubelinks = $request->input('link_youtube');
-        $video->save();
+{
+    // Mendapatkan ID video dari link YouTube
+    $videoId = $this->getId($request->input('link_youtube'));
 
-        // Redirect atau kirim respons sesuai kebutuhan aplikasi
-        return redirect()->route('video');
+    // Jika berhasil mendapatkan ID video
+    if ($videoId) {
+        // Membuat kode embed dari ID video
+        $embedCode = '//www.youtube.com/embed/' . $videoId . '';
+
+        // Simpan kode embed ke database
+        $video = new Video;
+        $video->youtubelinks = $embedCode;
+        $video->tampil = 0;
+        $video->save();
     }
+
+    // Redirect atau kirim respons sesuai kebutuhan aplikasi
+    return redirect()->route('video');
+}
+// Fungsi untuk mendapatkan ID video dari link YouTube
+private function getId($url)
+{
+    $regExp = '/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/';
+    preg_match($regExp, $url, $matches);
+
+    return (isset($matches[2]) && strlen($matches[2]) === 11) ? $matches[2] : null;
+}
+public function updateTampilStatus($id)
+{
+    $video = Video::findOrFail($id);
+    $video->tampil = 1;
+    $video->save();
+
+    return redirect()->route('video')->with('success', 'Video Berhasil Di Tampilkan Ke Display');
+}
+public function hapusTampilStatus($id)
+{
+    $video = Video::findOrFail($id);
+    $video->tampil = 0;
+    $video->save();
+
+    return redirect()->route('video')->with('success', 'Video Berhasil Di Hapus Dari Display');
+}
 
     public function simpanAgenda(Request $request)
     {
@@ -158,6 +196,16 @@ class DashboardController extends Controller
         //return response
         return redirect()->route('berita');
     }
+    public function simpanRT(Request $request)
+    {
+        // Simpan link YouTube ke database
+        $RT = new RT;
+        $RT->RT = $request->input('RT');
+        $RT->save();
+
+        // Redirect atau kirim respons sesuai kebutuhan aplikasi
+        return redirect()->route('runningtext');
+    }
 
     public function destroyberita($id)
     {
@@ -198,7 +246,7 @@ class DashboardController extends Controller
         return redirect()->route('video')->with('success', 'Video berhasil dihapus.');
     }
 
-    public function destroyRunningtext($id)
+    public function destroyRT($id)
     {
         //find post by ID
         $RT = RT::find($id);
@@ -316,14 +364,7 @@ class DashboardController extends Controller
         // Return response
         return redirect()->route('runningtext')->with('success', 'RunningText berhasil diperbaharui.');
     }
-        public function updateTampilStatus($id)
-    {
-        $video = Video::findOrFail($id);
-        // $video->tampil = !$video->tampil; // Toggle status tampil
-        $video->save();
 
-        return redirect()->route('video')->with('success', 'Video Berhasil Di Tampilkan Ke Display');
-    }
 
     public function getJadwalSholat()
     {
@@ -346,6 +387,55 @@ class DashboardController extends Controller
         } else {
             return null;
         }
+    }
+     /**
+     * Update the user's profile.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+     public function update(Request $request)
+    {
+        $user = \App\Models\User::find(Auth::id());
+
+        // Validasi request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8',
+        ]);
+
+        // Perbarui nama pengguna
+        $user->name = $request->name;
+
+        // Perbarui password jika dimasukkan
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully!');
+    }
+     // Fungsi lain di sini
+
+    /**
+     * Delete the user's account.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function hapusakun()
+    {
+        $user = \App\Models\User::find(Auth::id());
+
+        // Hapus user dari database
+        $user->delete();
+
+        // Logout user setelah menghapus akun
+        Auth::logout();
+
+        // Redirect ke halaman lain, misalnya halaman beranda
+        return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
     }
 
 }

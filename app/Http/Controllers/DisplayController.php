@@ -32,8 +32,9 @@ class DisplayController extends Controller
         //Ambil Data
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-        $berita = Berita::paginate(1);
-        $agenda = Agenda::paginate(3);
+        $berita = Berita::all();
+        $agenda = Agenda::all();
+        $videodisplay = Video::where('tampil', 1)->first();
         $video = Video::paginate(1);
         $header = Header::all();
         $RTs = RT::all();
@@ -41,7 +42,7 @@ class DisplayController extends Controller
 
         // dd($cuaca);
 
-        return view('display.index', compact('currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'video', 'jadwalSholat'));
+        return view('display.index', compact('currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
     }
 
     public function video()
