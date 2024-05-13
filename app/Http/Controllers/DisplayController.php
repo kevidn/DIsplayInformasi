@@ -42,6 +42,7 @@ class DisplayController extends Controller
 
         // dd($cuaca);
 
+
         return view('display.index', compact('currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
     }
 
