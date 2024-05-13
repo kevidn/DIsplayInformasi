@@ -84,10 +84,12 @@
                                     <img src="{{ asset('/storage/header/upload/' . $header[0]->logo2) }}" alt="Logo 2" style="height: 80px; width: 80px;">
                             @endif
                         </div>
-                        <div style="display: flex; justify-content:center; margin: 15px;">
-                            @foreach ($video as $singleVideo)
-                                    <iframe width="580" height="350" src="{{ $singleVideo->youtubelinks }}" allow="autoplay;"></iframe>
-                            @endforeach
+                        <div style="display: flex; justify-content:center; margin: 10px;">
+                            @if ($videodisplay)
+                                <iframe width="580" height="350" src="{{ $videodisplay->youtubelinks }}"
+                                    allow="autoplay;"></iframe>
+                            @endif
+
                         </div>
 
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
@@ -163,27 +165,28 @@
     <script>
         // Berita
         $(document).ready(function() {
-            var currentNewsIndex = 0;
+    var currentNewsIndex = -1; // Mulai dari -1 untuk menampilkan berita pertama segera setelah fungsi dijalankan
 
-            function updateNews() {
-                var $newsContainers = $('.card.p-3'); // Ambil semua container card berita
-                var totalNews = $newsContainers.length;
+    function updateNews() {
+        var $newsContainers = $('.card.p-3'); // Ambil semua container card berita
+        var totalNews = $newsContainers.length;
 
-                // Sembunyikan berita saat ini dengan efek fadeOut
-                $($newsContainers[currentNewsIndex]).fadeOut(500, function() {
-                    // Geser ke berita selanjutnya
-                    currentNewsIndex = (currentNewsIndex + 1) % totalNews;
-                    // Tampilkan berita selanjutnya dengan efek fadeIn
-                    $($newsContainers[currentNewsIndex]).fadeIn(500);
-                });
-            }
+        // Sembunyikan semua berita dengan efek fadeOut
+        $newsContainers.hide();
 
-            // Panggil fungsi pertama kali
-            updateNews();
+        // Geser ke berita selanjutnya
+        currentNewsIndex = (currentNewsIndex + 1) % totalNews;
 
-            // Update berita setiap 5 detik menggunakan setInterval
-            setInterval(updateNews, 5000);
-        });
+        // Tampilkan berita saat ini dengan efek fadeIn
+        $($newsContainers[currentNewsIndex]).fadeIn(500);
+    }
+
+    // Panggil fungsi pertama kali
+    updateNews();
+
+    // Update berita setiap 5 detik menggunakan setInterval
+    setInterval(updateNews, 5000);
+});
 
         // Mengambil kondisi cuaca dari array cuaca
         var weatherConditions = {!! json_encode($cuaca['days'][0]['hours']) !!};

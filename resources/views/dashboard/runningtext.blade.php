@@ -21,27 +21,53 @@
                 </div>
                 <div class="card-body">
                     <div class="running-text-container">
-                        @foreach ($runningtext as $item_rt)
+                        @if ($runningtext->isEmpty())
                             <div class="running-text">
-                                <marquee>{{ $item_rt->RT }}</marquee>
+
                             </div>
-                        @endforeach
+                        @else
+                            @foreach ($runningtext as $item_rt)
+                                <div class="running-text">
+                                    <marquee>{{ $item_rt->RT }}</marquee>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
-                    <form action="{{ route('updateRt', ['id' => $runningtext[0]->id]) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="runningtext"></label>
-                                    <textarea class="form-control" id="runningText" name="RT" rows="5">{{ $runningtext[0]->RT }}</textarea>
-                                </div>
-                                <div class="col-auto">
-                                    <button type="submit" class="badge badge-warning custom-badge">Perbaharui Running Text</button>
-                                </div>
+
+                    @if ($runningtext->isEmpty())
+                        <form action="{{ route('simpanRT') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="runningtext"></label>
+                                <textarea class="form-control" id="runningText" name="RT" rows="5" placeholder="Tambah Running Text"></textarea>
                             </div>
-                        </div>
-                    </form>
+                            <button type="submit" class="badge badge-success custom-badge buattombol">Tambah Running Text</button>
+                        </form>
+                    @else
+                        <form action="{{ route('updateRt', ['id' => $runningtext[0]->id]) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group">
+                                <label for="runningtext"></label>
+                                <textarea class="form-control" id="runningText" name="RT" rows="5">{{ $runningtext[0]->RT }}</textarea>
+                            </div>
+                            <button type="submit" class="badge badge-warning custom-badge buattombol">Perbaharui Running Text</button>
+                        </form>
+
+                        <form action="{{ route('hapusRT', ['id' => $runningtext[0]->id]) }}" method="POST" style="margin-top: 10px;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="badge badge-danger custom-badge buattombol" onclick="return confirm('Apakah Anda yakin ingin menghapus running text ini?')">&#128465; Hapus Running Text</button>
+                        </form>
+                    @endif
+                </div>
+
+
+
+
+
+
+
 
 
                     <style>
@@ -54,6 +80,10 @@
                         width: 1010px; /* Sesuaikan lebar input form */
                         margin-right: 10px; /* Sesuaikan jarak antara input dan tombol */
                         }
+                        .buattombol {
+                        width: 200px; /* Atur panjang sesuai kebutuhan Anda */
+                        }
+
 
                     </style>
 
