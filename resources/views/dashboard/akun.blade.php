@@ -17,13 +17,23 @@
                         <div class="col-md-6 pr-1">
                             <div class="form-group">
                                 <label for="name">Name</label>
+                                @if(Auth::check() && Auth::user()->name) <!-- Check if user is logged in and has a name -->
                                 <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" required>
+                              @else
+                                <!-- Redirect ke halaman login jika pengguna belum masuk -->
+                                <script>window.location.href = "{{ route('login') }}";</script>
+                              @endif
                             </div>
                         </div>
                         <div class="col-md-6 pr-1">
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="text" class="form-control" id="password" name="password" value="{{ Auth::check() ? '********' : '' }}" required>
+                                @if(Auth::check() && Auth::user()->name) <!-- Check if user is logged in and has a name -->
+                                <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" required>
+                                @else
+                                <!-- Redirect ke halaman login jika pengguna belum masuk -->
+                                <script>window.location.href = "{{ route('login') }}";</script>
+                                @endif
                             </div>
                         </div>
                     </div>

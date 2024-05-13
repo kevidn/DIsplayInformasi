@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BeritaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
+use app\Http\Middleware\UnregisteredUser;
 use App\Http\Controllers\Api\AgendaController;
 
 
@@ -13,6 +14,7 @@ Route::get('/', function () {
     return view('welcome');
 
 });
+
 
 
 
@@ -55,14 +57,32 @@ Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusT
 
 
 
-
-
-
 //KHUSUS BUAT TES/COBA-COBA
 // Route::get('/buattes', [DashboardController::class, 'buattes'])->name('buattes');
 
 
 Auth::routes();
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/berita', function () {
+        return view('dashboard.berita');
+    })->name('berita')->middleware('auth');
+
+    Route::get('/agenda', function () {
+        return view('dashboard.agenda');
+    })->name('agenda')->middleware('auth');
+
+    Route::get('/runningtext', function () {
+        return view('dashboard.runningtext');
+    })->name('runningtext')->middleware('auth');
+
+    Route::get('/video', function () {
+        return view('dashboard.video');
+    })->name('video')->middleware('auth');
+
+});
 
 /*------------------------------------------
 --------------------------------------------
@@ -73,7 +93,6 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
-
 /*------------------------------------------
 --------------------------------------------
 All Admin Routes List
