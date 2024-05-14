@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('youtubelinks');
             $table->boolean('tampil')->default(0);
-
             $table->timestamps();
         });
     }

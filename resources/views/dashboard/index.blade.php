@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    
+
                     <!-- Informasi tambahan -->
                     <div class="row mx-auto mt-4 mb-4 justify-content-center">
                         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
