@@ -66,21 +66,13 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/berita', function () {
-        return view('dashboard.berita');
-    })->name('berita')->middleware('auth');
+    Route::get('/berita', [DashboardController::class, 'berita'])->name('berita');
 
-    Route::get('/agenda', function () {
-        return view('dashboard.agenda');
-    })->name('agenda')->middleware('auth');
+    Route::get('/agenda', [DashboardController::class, 'agenda'])->name('agenda');
 
-    Route::get('/runningtext', function () {
-        return view('dashboard.runningtext');
-    })->name('runningtext')->middleware('auth');
+    Route::get('/runningtext', [DashboardController::class, 'runningtext'])->name('runningtext');
 
-    Route::get('/video', function () {
-        return view('dashboard.video');
-    })->name('video')->middleware('auth');
+    Route::get('/video', [DashboardController::class, 'video'])->name('video');
 
 });
 
