@@ -117,20 +117,21 @@
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 470px; font-family: 'Segoe UI'; font-weight: bold;">
                         <div style="font-size: 25px; text-align: center; color: white; margin: 15px;">
-                            JADWAL SHALAT
+                            JADWAL SHALAT 🕌
                         </div>
                         
                         <div class="container"
                             style="font-size: 140%; border-radius: 15px; background-color: rgba(175, 41, 41, 0.288); width: 100%; height: 400px;">
                             @if ($jadwalSholat)
                                 <div style="color: white; margin: 8px; text-align: center;">
-                                    <br>
+                                    <div style="margin-top: 13px;">_______________</div>
                                     <div style="margin-top: 9px;">Subuh: {{ $jadwalSholat['subuh'] }}</div>
                                     <div style="margin-top: 9px;">Dhuha: {{ $jadwalSholat['dhuha'] }}</div>
                                     <div style="margin-top: 9px;">Dzuhur: {{ $jadwalSholat['dzuhur'] }}</div>
                                     <div style="margin-top: 9px;">Ashar: {{ $jadwalSholat['ashar'] }}</div>
                                     <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
                                     <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
+                                    <div>_______________</div>
                                 </div>
                             @else
                                 <p>Jadwal sholat untuk hari ini tidak tersedia.</p>
@@ -148,7 +149,7 @@
                         @foreach ($agenda as $item_agenda)
                             @if ($counter < 3)
                                 <div class="col-4">
-                                    <div class="card" style="height: 140px; font-size: 13px; margin: 5px;">
+                                    <div class="card" style="height: 140px; margin: 5px;">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $item_agenda->nama_kegiatan }}</h5>
                                             <hr>
