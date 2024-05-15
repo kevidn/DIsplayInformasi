@@ -296,6 +296,7 @@ public function hapusTampilStatus($id)
         //define validation rules
         $validator = Validator::make($request->all(), [
             'judul'     => 'required',
+            'gambar'     => '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'isi'   => 'required',
         ]);
 
