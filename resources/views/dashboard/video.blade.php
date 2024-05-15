@@ -46,7 +46,7 @@
                                         <form action="{{ route('hapusVideoKeDisplay', $singleVideo->id) }}" method="POST" style="display: inline;">
                                             @csrf
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus video ini dari display?')">
-                                                Hapus dari Display
+                                                &#128465; Hapus dari Display
                                             </button>
                                         </form>
                                         @endif

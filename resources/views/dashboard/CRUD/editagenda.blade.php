@@ -37,7 +37,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Update Agenda</button>
-            <a href="{{ route('agenda') }}" class="btn btn-warning">RESET</a>
+
         </form>
     </div>
 

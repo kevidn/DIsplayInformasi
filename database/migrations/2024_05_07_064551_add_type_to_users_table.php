@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->tinyInteger('type')->default(0); // Users: 0=>User, 1=>Admin, 2=>Manager
-            $table->string('quotes')->default('Kamu Bisa Menambahkan Kata Kata Mutiara mu Disini!...');
-            $table->string('gambarakun')->default('/images/defaultakun.jpeg');
-            $table->string('gambarlatar')->default('/images/defaultlatar.jpg');
+            $table->string('quotes')->default('Kamu Bisa Menambahkan Seputar Tentang Dirimu Disini!');
+            $table->string('gambarakun')->default('defaultakun.jpeg');
+            $table->string('gambarlatar')->default('defaultlatar.jpg');
         });
     }
 

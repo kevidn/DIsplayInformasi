@@ -396,27 +396,54 @@ public function hapusTampilStatus($id)
      */
 
      public function update(Request $request)
-    {
-        $user = \App\Models\User::find(Auth::id());
+     {
+         $user = \App\Models\User::find(Auth::id());
 
-        // Validasi request
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8',
-        ]);
+         // Validasi request
+         $request->validate([
+             'name' => 'required|string|max:255',
+             'password' => 'nullable|string|min:8',
+             'quotes' => 'required|string|max:255',
+             'gambar_akun' => 'nullable|file|image|max:2048',
+             'gambar_latar' => 'nullable|file|image|max:2048',
 
-        // Perbarui nama pengguna
-        $user->name = $request->name;
+         ]);
 
-        // Perbarui password jika dimasukkan
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
+         // Perbarui nama pengguna
+         $user->name = $request->name;
+         $user->quotes = $request->quotes;
 
-        $user->save();
+         // Perbarui password jika dimasukkan
+         if ($request->password) {
+             $user->password = Hash::make($request->password);
+         }
 
-        return redirect()->back()->with('success', 'Profile updated successfully!');
-    }
+         // Proses Upload Gambar Akun
+         if ($request->hasFile('gambar_akun')) {
+             $gambarAkun = $request->file('gambar_akun');
+             $namaGambarAkun = $gambarAkun->hashName();
+
+             $gambarAkun->storeAs('public/user_images/', $namaGambarAkun);
+
+             $user->gambarakun = $namaGambarAkun;
+         }
+
+         // Proses Upload Gambar Latar
+         if ($request->hasFile('gambar_latar')) {
+             $gambarLatar = $request->file('gambar_latar');
+             $namaGambarLatar = $gambarLatar->hashName();
+
+             $gambarLatar->storeAs('public/user_backgrounds/', $namaGambarLatar);
+
+             $user->gambarlatar = $namaGambarLatar;
+         }
+
+         // Simpan Perubahan
+         $user->save();
+
+         // Pesan Sukses
+         return redirect()->back()->with('success', 'Profile updated successfully!');
+     }
      // Fungsi lain di sini
 
     /**
