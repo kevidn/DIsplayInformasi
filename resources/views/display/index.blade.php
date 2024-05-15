@@ -23,7 +23,6 @@
                 $weatherIcon = $cuaca['days'][0]['hours'][intval($currentHour)]['icon'];
             @endphp
 
-
             <div class="row mb-3" style="height: 100%; width: 100%;">
                 <div style="width: 100%; height: 16%; margin-bottom: 4mm;" class="col-11 p-2 d-flex align-items-center justify-content-center text-white">
                     <img id="weather-icon-indeks" class="mr-2"
@@ -32,9 +31,9 @@
 
                     alt="Weather Icon" style="height: 50px; width: 50px;">
                     <div class="m-0" style="font-family: 'Segoe UI';">
-                        {{ $cuaca['days'][0]['datetime'] }}
+                        <span id="datetime">{{ $cuaca['days'][0]['datetime'] }}</span>
                         <br>
-                        {{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}
+                        <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
                         <br>
                     </div>
                 </div>
@@ -188,52 +187,30 @@
     setInterval(updateNews, 5000);
 });
 
-        // Mengambil kondisi cuaca dari array cuaca
-        var weatherConditions = {!! json_encode($cuaca['days'][0]['hours']) !!};
 
-        // Update weather condition based on current hour
-        function updateCurrentWeather() {
-            var now = new Date();
-            var currentHour = now.getHours();
+    function updateWeather() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var weatherIcon = response.days[0].hours[parseInt(response.currentHour)].icon;
+                    var datetime = response.days[0].datetime;
+                    var conditions = response.days[0].hours[parseInt(response.currentHour)].conditions;
 
-            var currentWeather = weatherConditions[currentHour]['conditions'];
-            document.getElementById('current-weather-condition').innerText = currentWeather;
-
-            // Panggil fungsi untuk mengatur ikon cuaca berdasarkan kondisi
-            setWeatherIcon(currentWeather);
-        }
-
-        updateCurrentWeather();
-        setInterval(updateCurrentWeather, 3600000);
-
-
-// Define a function to set the image source based on the weather condition
-function setWeatherIcon(condition) {
-    var imgElement = document.getElementById('weather-icon-indeks');
-    var imagePath = '';
-
-    // Check the weather condition and set the image path accordingly
-    switch (condition.toLowerCase()) {
-        case 'clear':
-            imagePath = 'https://via.placeholder.com/50?text=Sunny';
-            break;
-        case 'cloudy':
-            imagePath = 'path_to_cloudy_image.jpg';
-            break;
-        // Add more cases for other weather conditions as needed
-        default:
-            imagePath = 'path_to_default_image.jpg';
-            break;
+                    document.getElementById('weather-icon-indeks').src = "{{ asset('images/icon/') }}" + '/' + weatherIcon + '.png';
+                    document.getElementById('datetime').innerHTML = datetime;
+                    document.getElementById('conditions').innerHTML = conditions;
+                } else {
+                    console.error('Gagal memperbarui cuaca');
+                }
+            }
+        };
+        xhr.open('GET', 'URL_ENDPOINT', true);
+        xhr.send();
     }
 
-    // Set the image source
-    imgElement.src = imagePath;
-}
-
-// Call the function to set the image based on the weather condition
-setWeatherIcon(weatherCondition);
-
-
-    </script>
+    setInterval(updateWeather, 1800000); // Setiap 30 menit (1800000 ms)
+</script>
 </body>
 </html>
