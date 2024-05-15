@@ -37,7 +37,7 @@
                     @endphp
 
                     <div class="row mb-3" style="height: 100%; width: 100%;">
-                        <div style="width: 100%; height: 16%; margin-bottom: 4mm;"
+                        <div style="width: 100%; height: 16%; margin-bottom: 2mm; background-color: rgba(175, 41, 41, 0.288); margin: 10px; border-radius: 15px;"
                             class="col-11 p-2 d-flex align-items-center justify-content-center text-white">
                             <img id="weather-icon-indeks" class="mr-2"
                                 src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon"
@@ -90,9 +90,8 @@
                 <div class="row">
 
                     <!--header & video-->
-                    <div class="col-9" style="height: 590px;">
-                        <div
-                            style="display: flex; justify-content: space-around; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 15px;">
+                    <div class="col-9" style="height: 610px;">
+                        <div style="display: flex; justify-content: space-around; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: rgba(175, 41, 41, 0.288); padding: 5px;">
 
                             <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1"
                                 style="height: 80px; width: 80px;">
@@ -105,14 +104,12 @@
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
                             @if ($videodisplay)
-                                <iframe width="800" height="420" src="{{ $videodisplay->youtubelinks }}"
-                                    allow="autoplay;"></iframe>
+                              <iframe width="800" height="402" src="{{ $videodisplay->youtubelinks }}?autoplay=1&mute=1"></iframe>
                             @endif
-
                         </div>
+                                                  
 
-                        <div
-                            style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
+                        <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
                         </div>
                     </div>
@@ -122,17 +119,18 @@
                         <div style="font-size: 25px; text-align: center; color: white; margin: 15px;">
                             JADWAL SHALAT
                         </div>
+                        
                         <div class="container"
                             style="font-size: 140%; border-radius: 15px; background-color: rgba(175, 41, 41, 0.288); width: 100%; height: 400px;">
                             @if ($jadwalSholat)
-                                <div style="color: white;">
+                                <div style="color: white; margin: 8px; text-align: center;">
                                     <br>
-                                    <div>Subuh: {{ $jadwalSholat['subuh'] }}</div>
-                                    <div>Dhuha: {{ $jadwalSholat['dhuha'] }}</div>
-                                    <div>Dzuhur: {{ $jadwalSholat['dzuhur'] }}</div>
-                                    <div>Ashar: {{ $jadwalSholat['ashar'] }}</div>
-                                    <div>Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
-                                    <div>Isya: {{ $jadwalSholat['isya'] }}</div>
+                                    <div style="margin-top: 9px;">Subuh: {{ $jadwalSholat['subuh'] }}</div>
+                                    <div style="margin-top: 9px;">Dhuha: {{ $jadwalSholat['dhuha'] }}</div>
+                                    <div style="margin-top: 9px;">Dzuhur: {{ $jadwalSholat['dzuhur'] }}</div>
+                                    <div style="margin-top: 9px;">Ashar: {{ $jadwalSholat['ashar'] }}</div>
+                                    <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
+                                    <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
                                 </div>
                             @else
                                 <p>Jadwal sholat untuk hari ini tidak tersedia.</p>
