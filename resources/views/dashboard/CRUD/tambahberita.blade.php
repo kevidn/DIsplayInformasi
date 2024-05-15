@@ -22,11 +22,11 @@
                             <textarea class="form-control" placeholder="Masukan Isi Berita" id="isiBerita" name="isi" rows="5"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="gambar">Masukan Gambar</label>
-                            <input type="file" name="gambar" id="gambar" class="form-control" style="padding: 20px;"><br><br>
+                            <label for="gambar"  class="badge badge-warning"  style="font-size: 12px; color: white;">Pilih Gambar</label>
+                            <input type="file" name="gambar" id="gambar" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-success">TAMBAH BERITA</button>
-                        <a class="btn btn-warning" href="">RESET</a>
+
                     </form>
                 </div>
             </div>

@@ -32,7 +32,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-success">UPDATE BERITA</button>
-                            <a href="{{ route('agenda') }}" class="btn btn-warning">RESET</a>
+
                         </form>
                     </div>
                 </div>

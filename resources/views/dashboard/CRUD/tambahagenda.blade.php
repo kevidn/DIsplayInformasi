@@ -38,7 +38,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-success">TAMBAH AGENDA</button>
-                    <a href="{{ route('agenda') }}" class="btn btn-warning">RESET</a>
+
                     @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
