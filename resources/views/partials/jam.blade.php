@@ -15,10 +15,10 @@
 
     .clock {
       font-family: Arial, sans-serif;
-      width: 180px;
+      width: 200px;
       height: 49px;
       background-color: #fff;
-      border-radius: 50px;
+      border-radius: 15px;
       display: flex;
       justify-content: center;
       text-align: center;

@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 </head>
-<body style="background-image: url('/images/bg.jpg'); background-size: 100%;">
+<body style="background-image: url('/images/bg.jpg'); background-size: 115%;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
@@ -29,7 +29,7 @@
 
                     src="{{ asset('images/icon/' . $weatherIcon . '.png') }}"
 
-                    alt="Weather Icon" style="height: 50px; width: 50px;">
+                    alt="Weather Icon" style="height: 60px; width: 70px;">
                     <div class="m-0" style="font-family: 'Segoe UI';">
                         <span id="datetime">{{ $cuaca['days'][0]['datetime'] }}</span>
                         <br>
@@ -40,17 +40,19 @@
             </div>
 
                     <!--berita-->
-                    <div class="container" style="height: 590px; width: 100%;">
+                    <div class="container" style="height: 680px; width: 100%;">
                         <div class="row" style="width: 100%;">
-                            <div id="news-container">
+                            <div id="news-container" style="background-color: rgba(175, 41, 41, 0.288); padding: 10px; border-radius: 15px;">
                                 @foreach ($berita as $item)
-                                <div class="card p-3">
+                                <div class="card p-2">
                                     <img class="card-img-top" src="{{ asset('/storage/beritas/upload/'.$item->gambar) }}"></img>
                                     <div class="card-body" style="font-size: 18px;">
                                         <h5 class="card-title">{{ $item->judul }}</h5>
-                                        <div class="card-text">{{ $item->isi }}</div>
+                                        <div style="font-size: 14px;" class="card-text">
+                                            {{ Str::limit($item->isi, 330, '...') }}
+                                        </div>
                                     </div>
-                                </div>
+                                </div>                                
                                 @endforeach
                             </div>
                         </div>
@@ -71,21 +73,19 @@
             <div class="col-9">
                 <div class="row">
                     <!--header & video-->
-                    <div class="col-9" style="height: 540px;">
+                    <div class="col-9" style="height: 600px;">
                         <div style="display: flex; justify-content: space-around; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 15px;">
-                            @if($header->count() > 0)
-                            <img src="{{ asset('/storage/header/upload/' . $header[0]->logo1) }}" alt="Logo 1" style="height: 80px; width: 80px;">
-                            @endif
-
+                            
+                            <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1" style="height: 80px; width: 80px;">
+                            
                             SMK FATAHILLAH CILEUNGSI
 
-                            @if($header->count() > 0)
-                                    <img src="{{ asset('/storage/header/upload/' . $header[0]->logo2) }}" alt="Logo 2" style="height: 80px; width: 80px;">
-                            @endif
+                            <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2" style="height: 80px; width: 80px;">
+                            
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
                             @if ($videodisplay)
-                                <iframe width="580" height="350" src="{{ $videodisplay->youtubelinks }}"
+                                <iframe width="800" height="420" src="{{ $videodisplay->youtubelinks }}"
                                     allow="autoplay;"></iframe>
                             @endif
 
@@ -97,13 +97,13 @@
                     </div>
 
                     <!--jadwal shalat-->
-                    <div class="col-3" style="height: 420px; font-family: 'Segoe UI'; font-weight: bold;">
+                    <div class="col-3" style="height: 480px; font-family: 'Segoe UI'; font-weight: bold;">
                         <div style="font-size: 25px; text-align: center; color: white; margin: 15px;">
                             JADWAL SHALAT
                         </div>
-                        <div class="container" style="font-size: 140%; border-radius: 15px; background-color: white; width: 100%; height: 400px;">
+                        <div class="container" style="font-size: 140%; border-radius: 15px; background-color: rgba(175, 41, 41, 0.288); width: 100%; height: 400px;">
                             @if($jadwalSholat)
-                                    <ul style="color: black;">
+                                    <ul style="color: white;">
                                         <br>
                                         <li>Subuh: {{ $jadwalSholat['subuh'] }}</li>
                                         <li>Dhuha: {{ $jadwalSholat['dhuha'] }}</li>
@@ -121,7 +121,7 @@
 
                <!--agenda-->
                 <div class="row">
-                    <div class="col-12 d-flex flex-row" style="height: 150px;">
+                    <div class="col-12 d-flex flex-row" style="background-color: rgba(175, 41, 41, 0.288); border-radius: 18px; padding: 10px; height: 180px;">
                         @php
                         $counter = 0;
                         @endphp
@@ -148,10 +148,10 @@
                 <!--running text-->
                 <div class="row">
                     <div class="col-12" style="height: 70px;">
-                        <div class="container" style="background-color: white; border-radius: 18px; width: 100%; height: 50px; margin: 10px; color:black; text-align:center;">
+                        <div class="container" style="background-color: rgba(175, 41, 41, 0.288); border-radius: 18px; width: 94%; height: 50px; margin: 10px; color:white; text-align:center;">
                             <marquee behavior="" scrollamount='' direction="" class="p-2">
                                 @foreach ( $RTs as $item )
-                                    {{ $item->RT }}
+                                    {{ $item->RT }} 
                                 @endforeach
                             </marquee>
                         </div>
@@ -162,30 +162,30 @@
     </div>
 
     <script>
-        // Berita
+    // Berita
         $(document).ready(function() {
-    var currentNewsIndex = -1; // Mulai dari -1 untuk menampilkan berita pertama segera setelah fungsi dijalankan
+        var currentNewsIndex = -1; // Mulai dari -1 untuk menampilkan berita pertama segera setelah fungsi dijalankan
 
-    function updateNews() {
-        var $newsContainers = $('.card.p-3'); // Ambil semua container card berita
-        var totalNews = $newsContainers.length;
+        function updateNews() {
+            var $newsContainers = $('.card.p-2'); // Ambil semua container card berita
+            var totalNews = $newsContainers.length;
 
-        // Sembunyikan semua berita dengan efek fadeOut
-        $newsContainers.hide();
+            // Sembunyikan semua berita dengan efek fadeOut
+            $newsContainers.hide();
 
-        // Geser ke berita selanjutnya
-        currentNewsIndex = (currentNewsIndex + 1) % totalNews;
+            // Geser ke berita selanjutnya
+            currentNewsIndex = (currentNewsIndex + 1) % totalNews;
 
-        // Tampilkan berita saat ini dengan efek fadeIn
-        $($newsContainers[currentNewsIndex]).fadeIn(500);
-    }
+            // Tampilkan berita saat ini dengan efek fadeIn
+            $($newsContainers[currentNewsIndex]).fadeIn(500);
+        }
 
-    // Panggil fungsi pertama kali
-    updateNews();
+        // Panggil fungsi pertama kali
+        updateNews();
 
-    // Update berita setiap 5 detik menggunakan setInterval
-    setInterval(updateNews, 5000);
-});
+        // Update berita setiap 5 detik menggunakan setInterval
+        setInterval(updateNews, 5000);
+    });
 
 
     function updateWeather() {
