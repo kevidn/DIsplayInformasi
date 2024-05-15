@@ -20,11 +20,11 @@
                         </div>
                         <div class="form-group">
                             <label>Isi Berita</label><br>
-                            <textarea class="form-control" placeholder="Masukan Isi Berita" id="isiBerita" name="isi" rows="5" required></textarea>
+                            <textarea class="custom-textarea" placeholder="Masukan Isi Berita" id="isiBerita" name="isi" rows="5" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="gambar"  class="badge badge-warning"  style="font-size: 12px; color: white;">Pilih Gambar</label>
-                            <input type="file" name="gambar" id="gambar" class="form-control" required>
+                            <label for="gambar"  class="btn btn-info"  style="font-size: 12px; color: white;">Pilih Gambar Berita</label>
+                            <input type="file" name="gambar" id="gambar" class="form-control" required><hr>
                         </div>
                         <button type="submit" class="btn btn-success">TAMBAH BERITA</button>
 
@@ -32,6 +32,24 @@
                 </div>
             </div>
         </div>
+        <style>
+            /* CSS untuk menambahkan border pada textarea */
+            .custom-textarea {
+                width: 100%; /* Menjadikan textarea lebar 100% dari container */
+                border: 1px solid #ced4da; /* Warna dan ketebalan border */
+                border-radius: 4px; /* Mengatur sudut border */
+                padding: .375rem .75rem; /* Mengatur padding */
+                line-height: 1.5; /* Mengatur jarak antar baris */
+                transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; /* Efek transisi */
+            }
+
+            /* CSS untuk menambahkan style ketika textarea di-focus */
+            .custom-textarea:focus {
+                border-color: #80bdff; /* Warna border saat di-focus */
+                outline: 0; /* Menghilangkan outline saat di-focus */
+                box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25); /* Efek bayangan saat di-focus */
+            }
+        </style>
     </div>
 </div>
 <script>
