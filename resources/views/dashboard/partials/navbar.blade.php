@@ -27,7 +27,9 @@
                 @if (Request::is('dashboard'))
                     <!-- Check if current page is dashboard -->
                     <li class="nav-item">
+
                         <a class="nav-link" href="{{ route('index') }}" target="_blank"> <!-- Open in new tab -->
+
                             <i class="now-ui-icons objects_spaceship"></i>
                             <p>
                                 <span class="d-lg-none d-md-block">Account</span>Tampilkan
@@ -39,8 +41,13 @@
                             @if (Auth::check())
                                 <!-- Check if user is logged in -->
                                 <a class="nav-link" href="{{ route('akun') }}">
-                                    <img src="{{ asset('/images/gambaruser.jpeg') }}" alt="Profile Picture"
-                                        style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+
+                                    @if (Auth::check())
+                                        <img src="{{ asset('storage/user_images/' . Auth::user()->gambarakun) }}"
+                                            alt="..." alt="Profile Picture"
+                                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                                    @endif
+
                                     <p>
                                         <span class="d-lg-none d-md-block">Account</span>
                                         {{ Auth::user()->name }} <!-- Display username of the logged in user -->
@@ -48,6 +55,7 @@
                                 </a>
                             @endif <!-- End if -->
                         @endif <!-- End if -->
+
 
                     </li>
 
@@ -62,8 +70,11 @@
                                     <span class="d-lg-none d-md-block">Account</span>Logout
                                 </p>
                             </a>
+
                         </form>
                     </li>
+
+
 
                 @endif <!-- End if -->
                 <li class="nav-item">
@@ -87,8 +98,25 @@
                         </p>
                     </a>
                 </li>
+                @if (Request::is('akun'))
+                <!-- Check if current page is dashboard -->
+                <li class="nav-item">
 
-                @if(!Request::is('dashboard')) <!-- Check if current page is NOT dashboard -->
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <a class="nav-link" href="{{ route('login') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="now-ui-icons media-1_button-power"></i>
+                            <p>
+                                <span class="d-lg-none d-md-block">Account</span>Logout
+                            </p>
+                        </a>
+
+                    </form>
+                </li>
+            @endif
+            
+              @if(!Request::is('dashboard')) <!-- Check if current page is NOT dashboard -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('index') }}" target="_blank"> <!-- Open in new tab -->
                         <i class="now-ui-icons objects_spaceship"></i>
@@ -98,8 +126,6 @@
                     </a>
                 </li>
             @endif
-
-
 
             </ul>
         </div>
