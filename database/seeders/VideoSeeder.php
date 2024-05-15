@@ -15,7 +15,7 @@ class VideoSeeder extends Seeder
     public function run(): void
     {
         Video::create([
-            'youtubelinks' => 'https://youtube.com/embed/e-B0VKTt5_Q?si=yaG2U9hA4fqMi0M9',
+            'youtubelinks' => 'https://www.youtube.com/watch?v=tSviQ4BR1YQ',
         ]);
     }
 }

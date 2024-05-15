@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RTSeeder::class);
         $this->call(AgendaSeeder::class); 
-        $this->call(VideoSeeder::class); 
+        $this->call(VideoSeeder::class);
+        $this->call(CreateUsersSeeder::class); 
     }
 }

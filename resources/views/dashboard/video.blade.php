@@ -10,7 +10,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <form action="{{ route('simpanVideo') }}" method="POST" class="d-flex">
                         @csrf
-                        <input type="text" name="link_youtube" class="form-control mr-2 custom-input" value="" placeholder="Silahkan Masukkan URL YouTube Disini!">
+                        <input type="text" name="link_youtube" class="form-control mr-2 custom-input" value="" placeholder="Silahkan Masukkan URL YouTube Disini!" style="width: 400px">
                         <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
                     </form>
                 </div>
