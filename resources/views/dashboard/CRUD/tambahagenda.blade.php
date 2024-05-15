@@ -24,17 +24,17 @@
 
                     <div class="form-group">
                         <label>Nama Agenda</label>
-                        <input type="text" name="nama_kegiatan" placeholder="Masukkan Nama Agenda" class="form-control">
+                        <input type="text" name="nama_kegiatan" placeholder="Masukkan Nama Agenda" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label>Tempat/Lokasi</label>
-                        <input type="text" name="tempat" placeholder="Masukkan Tempat/Lokasi Agenda" class="form-control">
+                        <input type="text" name="tempat" placeholder="Masukkan Tempat/Lokasi Agenda" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label>Tanggal</label>
-                        <input type="date" name="tanggal" class="form-control">
+                        <input type="date" name="tanggal" class="form-control" required>
                     </div>
 
                     <button type="submit" class="btn btn-success">TAMBAH AGENDA</button>
