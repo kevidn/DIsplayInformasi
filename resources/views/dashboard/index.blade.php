@@ -11,7 +11,7 @@
     <div class="row mx-auto mt-4 mb-4">
         <div class="col-md-12">
             <div class="card" style="background-image: url('/images/bg.jpg'); background-size: 140%; font-size: small;">
-                <div class="card-body">
+                <div class="card-body" style="max">
                     @include('display.index')
                 </div>
             </div>
