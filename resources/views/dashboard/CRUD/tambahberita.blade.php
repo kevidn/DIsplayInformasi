@@ -12,7 +12,6 @@
                 </div>
                 <div class="card-body">
                     <form name="myForm" action="{{ route('simpanBerita') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-
                         @csrf <!-- Tambahkan csrf token untuk keamanan -->
                         <div class="form-group">
                             <label>Judul Berita</label>
@@ -21,13 +20,14 @@
                         <div class="form-group">
                             <label>Isi Berita</label><br>
                             <textarea class="custom-textarea" placeholder="Masukan Isi Berita" id="isiBerita" name="isi" rows="5" required></textarea>
+                            <span id="isiError" style="color: red; display: none;">Isi Berita tidak boleh lebih dari 255 karakter</span> <!-- Elemen untuk menampilkan pesan kesalahan -->
                         </div>
                         <div class="form-group">
-                            <label for="gambar"  class="btn btn-info"  style="font-size: 12px; color: white;">Pilih Gambar Berita</label>
-                            <input type="file" name="gambar" id="gambar" class="form-control" required><hr>
+                            <label for="gambar" class="btn btn-info" style="font-size: 12px; color: white;">Pilih Gambar Berita</label>
+                            <input type="file" name="gambar" id="gambar" class="form-control" required>
+                            <span id="gambarError" style="color: red; display: none;">Ukuran file gambar tidak boleh lebih dari 2MB</span> <!-- Elemen untuk menampilkan pesan kesalahan -->
                         </div>
                         <button type="submit" class="btn btn-success">TAMBAH BERITA</button>
-
                     </form>
                 </div>
             </div>
@@ -56,15 +56,35 @@
     function validateForm() {
         var judul = document.forms["myForm"]["judul"].value;
         var isi = document.forms["myForm"]["isi"].value;
+        var gambar = document.forms["myForm"]["gambar"].files[0]; // Mendapatkan file gambar
 
-
-
-        if (isi.length > 255) {
-            alert("Isi Berita tidak boleh lebih dari 255 karakter");
+        if (judul == "" || isi == "") {
+            alert("Judul dan Isi Berita harus diisi");
             return false;
         }
+
+          // Validasi panjang isi berita
+          if (isi.length > 255) {
+            var isiErrorElement = document.getElementById("isiError");
+            isiErrorElement.innerHTML = "Isi Berita tidak boleh lebih dari 255 karakter";
+            isiErrorElement.style.display = "block"; // Menampilkan pesan kesalahan
+            return false;
+        }
+
+        // Validasi ukuran file gambar (dalam byte)
+        var maxSize = 2 * 1024 * 1024; // 2MB
+        if (gambar && gambar.size > maxSize) {
+            var errorElement = document.getElementById("gambarError");
+            errorElement.innerHTML = "Ukuran file gambar tidak boleh lebih dari 2MB";
+            errorElement.style.display = "block"; // Menampilkan pesan kesalahan
+            return false;
+        }
+
+        return true; // Form akan disubmit jika semua validasi berhasil
     }
 </script>
+
+
 
 
 @include('dashboard.partials.corejs')

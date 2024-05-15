@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <h4 class="card-title">EDIT BERITA</h4>
                     <div class="card-body">
-                        <form action="{{ route('updateBerita', ['id' => $berita->id]) }}" method="POST"  enctype="multipart/form-data">
+                        <form name="myForm" action="{{ route('updateBerita', ['id' => $berita->id]) }}" method="POST"  enctype="multipart/form-data" onsubmit="return validateForm()">
                             @csrf
                             @method('PUT')
 
@@ -23,20 +23,19 @@
                             <div class="form-group">
                                 <label>Gambar Berita</label><br>
                                 <img class="card-img-top" src="{{ asset('/storage/beritas/upload/'.$berita->gambar) }}" style="width: 550px; height: auto;" alt="Gambar Berita">
-
-                            <div class="form-group"><br>
-                                <label for="gambar"  class="btn btn-info"  style="font-size: 12px; color: white;">Ganti Gambar Berita</label>
-                                <input type="file" name="gambar" id="gambar" class="form-control">
+                                <div class="form-group"><br>
+                                    <label for="gambar" class="btn btn-info" style="font-size: 12px; color: white;">Ganti Gambar Berita</label>
+                                    <input type="file" name="gambar" id="gambar" class="form-control">
+                                    <span id="gambarError" style="color: red; display: none;"></span> <!-- Elemen untuk menampilkan pesan kesalahan -->
+                                </div>
                             </div>
 
-                            </div>
                             <div class="form-group">
-
-                                <textarea class="custom-textarea" id="isiBerita" name="isi" rows="5">{{ $berita->isi }}</textarea>
+                                <textarea class="custom-textarea" placeholder="Masukan Isi Berita" id="isiBerita" name="isi" rows="5">{{ $berita->isi }}</textarea>
+                                <span id="isiError" style="color: red; display: none;">Isi Berita tidak boleh lebih dari 255 karakter</span> <!-- Elemen untuk menampilkan pesan kesalahan -->
                             </div><hr>
 
                             <button type="submit" class="btn btn-success">UPDATE BERITA</button>
-
                         </form>
                     </div>
                 </div>
@@ -44,6 +43,38 @@
         </div>
     </div>
 </div>
+
+Tentu, saya akan menambahkan validasi pada form edit berita Anda. Berikut adalah kode lengkapnya:
+
+html
+Copy code
+<script>
+    function validateForm() {
+        var judul = document.forms["myForm"]["judul"].value;
+        var isi = document.forms["myForm"]["isi"].value;
+        var gambar = document.forms["myForm"]["gambar"].files[0]; // Mendapatkan file gambar
+
+        // Validasi panjang isi berita
+        if (isi.length > 255) {
+            var isiErrorElement = document.getElementById("isiError");
+            isiErrorElement.innerHTML = "Isi Berita tidak boleh lebih dari 255 karakter";
+            isiErrorElement.style.display = "block"; // Menampilkan pesan kesalahan
+            return false;
+        }
+
+        // Validasi ukuran file gambar (dalam byte)
+        var maxSize = 2 * 1024 * 1024; // 2MB
+        if (gambar && gambar.size > maxSize) {
+            var errorMessage = "Ukuran file gambar tidak boleh lebih dari 2MB";
+            var errorElement = document.getElementById("gambarError");
+            errorElement.innerHTML = errorMessage;
+            errorElement.style.display = "block"; // Menampilkan pesan kesalahan
+            return false;
+        }
+
+        return true; // Form akan disubmit jika semua validasi berhasil
+    }
+</script>
 <style>
     /* CSS untuk menambahkan border pada textarea */
     .custom-textarea {
