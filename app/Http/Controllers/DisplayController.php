@@ -40,7 +40,8 @@ class DisplayController extends Controller
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
 
-        // dd($cuaca);
+
+        // dd($jadwalSholat);
 
 
         return view('display.index', compact('currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
@@ -55,7 +56,11 @@ class DisplayController extends Controller
 
     public function getJadwalSholat()
     {
-        $url = "https://api.myquran.com/v2/sholat/jadwal/1204/2024/05";
+
+        $currentYear = date('Y');
+        $currentMonth = date('m');
+
+        $url = "https://api.myquran.com/v2/sholat/jadwal/1204/{$currentYear}/{$currentMonth}";
 
         $response = Http::get($url);
 
