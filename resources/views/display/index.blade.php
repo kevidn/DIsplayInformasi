@@ -99,7 +99,7 @@
                             SMK FATAHILLAH CILEUNGSI
 
                             <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2"
-                                style="height: 80px; width: 80px;">
+                                style="height: 100px; width: 100px;">
 
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
@@ -117,7 +117,7 @@
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 470px; font-family: 'Segoe UI'; font-weight: bold;">
                         <div style="font-size: 25px; text-align: center; color: white; margin: 15px;">
-                            JADWAL SHALAT 🕌
+                            JADWAL SHALAT
                         </div>
                         
                         <div class="container"
@@ -132,6 +132,7 @@
                                     <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
                                     <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
                                     <div>_______________</div>
+                                    <div>🕌</div>
                                 </div>
                             @else
                                 <p>Jadwal sholat untuk hari ini tidak tersedia.</p>
