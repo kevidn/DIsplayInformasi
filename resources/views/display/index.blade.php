@@ -24,7 +24,7 @@
 
 </head>
 
-<body style="background-image: url('/images/bg.jpg'); background-size: 115%;">
+<body style="background-image: url('/images/bg.jpg'); background-size: 100%;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
@@ -37,7 +37,7 @@
                     @endphp
 
                     <div class="row mb-3" style="height: 100%; width: 100%;">
-                        <div style="width: 100%; height: 16%; margin-bottom: 2mm; background-color: rgba(175, 41, 41, 0.288); margin: 10px; border-radius: 15px;"
+                        <div style="width: 100%; height: 16%; margin-bottom: 2mm; background-color: #00324946; margin: 10px; border-radius: 15px;"
                             class="col-11 p-2 d-flex align-items-center justify-content-center text-white">
                             <img id="weather-icon-indeks" class="mr-2"
                                 src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon"
@@ -53,20 +53,31 @@
                     </div>
 
                     <!--berita-->
-                    <div class="container" style="height: 670px; width: 100%;">
+                    <div class="container" style="height: 565px; width: 100%;">
                         <div class="row" style="width: 100%;">
                             <div id="news-container"
-                                style="background-color: rgba(175, 41, 41, 0.288); padding: 10px; border-radius: 15px;">
+                                style="background-color: #00324946; padding: 10px; border-radius: 15px;">
                                 @foreach ($berita as $item)
                                     <div class="card p-2">
                                         <img style="max-height: 150px;" class="card-img-top"
                                             src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
-                                        <div class="card-body" style="font-size: 18px;">
-                                            <h5 class="card-title">{{ $item->judul }}</h5>
-                                            <div style="font-size: 14px;" class="card-text">
-                                                {{ Str::limit($item->isi, 330, '...') }}
+
+                                        @if (Request::is("index"))
+                                            <div class="card-body" style="font-size: 18px;">
+                                                <h5 class="card-title">{{ $item->judul }}</h5>
+                                                <div style="font-size: 13px;" class="card-text">
+                                                    {{ Str::limit($item->isi, 530, '...') }}
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="card-body" style="font-size: 15px;">
+                                                <h5 class="card-title">{{ $item->judul }}</h5>
+                                                <div style="font-size: 11px;" class="card-text">
+                                                    {{ Str::limit($item->isi, 440, '...') }}
+                                                </div>
+                                            </div>
+                                        @endif
+                                        
                                     </div>
                                 @endforeach
                             </div>
@@ -90,21 +101,21 @@
                 <div class="row">
 
                     <!--header & video-->
-                    <div class="col-9" style="height: 610px;">
-                        <div style="display: flex; justify-content: space-around; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: rgba(175, 41, 41, 0.288); padding: 5px;">
+                    <div class="col-9" style="height: 550px;">
+                        <div style="display: flex; justify-content: space-around; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
 
                             <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1"
-                                style="height: 80px; width: 80px;">
+                                style="height: 75px; width: 75px;">
 
                             SMK FATAHILLAH CILEUNGSI
 
                             <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2"
-                                style="height: 100px; width: 100px;">
+                                style="height: 75px; width: 75px;">
 
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
                             @if ($videodisplay)
-                              <iframe width="800" height="402" src="{{ $videodisplay->youtubelinks }}?autoplay=1&mute=1"></iframe>
+                              <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}?autoplay=1&mute=1"></iframe>
                             @endif
                         </div>
                                                   
@@ -115,13 +126,12 @@
                     </div>
 
                     <!--jadwal shalat-->
-                    <div class="col-3" style="height: 470px; font-family: 'Segoe UI'; font-weight: bold;">
+                    <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
                         <div style="font-size: 25px; text-align: center; color: white; margin: 15px;">
                             JADWAL SHALAT
                         </div>
                         
-                        <div class="container"
-                            style="font-size: 140%; border-radius: 15px; background-color: rgba(175, 41, 41, 0.288); width: 100%; height: 400px;">
+                        <div class="container" style="font-size: 140%; border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
                             @if ($jadwalSholat)
                                 <div style="color: white; margin: 8px; text-align: center;">
                                     <div style="margin-top: 13px;">_______________</div>
@@ -142,7 +152,7 @@
                 </div>
 
                 <!-- agenda -->
-                <div id="agenda-container" class="row" style="background-color: rgba(175, 41, 41, 0.288); border-radius: 18px; padding: 8px; width: 98%; overflow: auto;">
+                <div id="agenda-container" class="row" style="background-color: #00324946; border-radius: 18px; padding: 8px; width: 98%; overflow: auto;">
                     <div class="col-12 d-flex flex-row" id="agenda-content">
                         @php
                             $counter = 0;
@@ -150,12 +160,12 @@
                         @foreach ($agenda as $item_agenda)
                             @if ($counter < 3)
                                 <div class="col-4">
-                                    <div class="card" style="height: 140px; margin: 5px;">
+                                    <div class="card" style="height: 950px; margin: 5px;">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $item_agenda->nama_kegiatan }}</h5>
                                             <hr>
                                             <div class="card-text mb-2">&#128205; Tempat: {{ $item_agenda->tempat }}</div>
-                                            <div>&#128197; Tanggal: {{ date('Y-m-d', strtotime($item_agenda->tanggal)) }}</div>
+                                            <div class="card-text">&#128197; Tanggal: {{ date('Y-m-d', strtotime($item_agenda->tanggal)) }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -170,9 +180,9 @@
 
                 <!--running text-->
                 <div class="row">
-                    <div class="col-12" style="height: 70px;">
+                    <div class="col-12" style="height: 35px;">
                         <div class="container"
-                            style="background-color: rgba(175, 41, 41, 0.288); border-radius: 18px; width: 94%; height: 50px; margin: 10px; color:white; text-align:center;">
+                            style="background-color: #00324946; border-radius: 18px; width: 94%; height: 35px; margin: 5px; color:white; text-align:center;">
                             <marquee behavior="" scrollamount='' direction="" class="p-2">
                                 @foreach ($RTs as $item)
                                     {{ $item->RT }}
