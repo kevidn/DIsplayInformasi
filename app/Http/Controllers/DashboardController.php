@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -82,11 +83,31 @@ class DashboardController extends Controller
 
     public function video(Request $request)
     {
-        $video_ada_display = Video::where('tampil', 1)->get();
-        $video_tidak_display = Video::where('tampil', 0)->get();
+        $video_ada_display = Video::where('tampil', 1)
+                                    ->whereNotNull('youtubelinks')
+                                    ->orWhereNotNull('videolokal')
+                                    ->get();
+
+        $video_tidak_display = Video::where('tampil', 0)
+                                        ->whereNotNull('youtubelinks')
+                                        ->orWhereNotNull('videolokal')
+                                        ->get();
+
         $videos = $video_ada_display->merge($video_tidak_display);
+        // Tambahkan path thumbnail untuk video lokal
+    foreach ($videos as $video) {
+        if (!empty($video->videolokal)) {
+            $thumbnailPath = storage_path('app/public/videolokal/thumbnails/' . $video->thumbnail);
+            if (file_exists($thumbnailPath)) {
+                $video->thumbnailPath = $thumbnailPath;
+            }
+        }
+    }
+
         return view('dashboard.video', compact('videos'));
     }
+
+
 
     public function tambahagenda(Request $request)
     {
@@ -109,6 +130,89 @@ class DashboardController extends Controller
         $berita = Berita::findOrFail($id);
         return view('dashboard.CRUD.editberita', compact('berita'));
     }
+//     public function simpanVideolokal(Request $request)
+// {
+//     // Validasi input
+//     $request->validate([
+//         'video_file' => 'required|mimes:mp4,avi,mov|max:20480', // max 20MB
+//     ]);
+
+//     // Proses upload video file
+//     if ($request->hasFile('video_file')) {
+//         $videoFile = $request->file('video_file');
+//         $hashedName = Str::random(40) . '.' . $videoFile->getClientOriginalExtension();
+//         $path = $videoFile->storeAs('public/videolokal', $hashedName);
+
+//         // Simpan nama file ke database
+//         $video = new Video();
+//         $video->videolokal = $hashedName;
+//         $video->save();
+
+//         // Atau jika menggunakan mass assignment
+//         // Video::create(['videolokal' => $hashedName]);
+
+//         // Simpan path atau nama file ke database jika diperlukan
+//         $savedPath = Storage::url($path);
+//         // Simpan atau proses path sesuai kebutuhan Anda
+//     }
+
+//     return redirect()->route('video');
+// }
+public function simpanVideolokal(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'video_file' => 'required|mimetypes:video/mp4,video/avi,video/quicktime|max:61440', // max 60MB
+    ]);
+
+    // Proses upload video file
+    if ($request->hasFile('video_file')) {
+        $videoFile = $request->file('video_file');
+        $hashedName = Str::random(40) . '.' . $videoFile->getClientOriginalExtension();
+        $path = $videoFile->storeAs('public/videolokal', $hashedName);
+
+        // Ekstrak thumbnail dari video
+        $thumbnailPath = $this->extractThumbnail($path);
+
+        // Simpan thumbnail ke penyimpanan
+        if ($thumbnailPath) {
+            $thumbnailName = pathinfo($hashedName, PATHINFO_FILENAME) . '.jpg';
+            Storage::put('public/videolokal/thumbnails/' . $thumbnailName, file_get_contents($thumbnailPath));
+        }
+
+        // Simpan nama file dan thumbnail ke database
+        $video = new Video();
+        $video->videolokal = $hashedName;
+        $video->thumbnail = $thumbnailName ?? null; // Jika thumbnail berhasil diekstrak, simpan nama thumbnail, jika tidak, simpan null
+        $video->save();
+
+        // Redirect atau tampilkan pesan berhasil
+        return redirect()->route('video')->with('success', 'Video lokal berhasil diunggah.');
+    }
+
+    // Jika tidak ada file yang diunggah
+    return redirect()->back()->with('error', 'Tidak ada file yang diunggah.');
+}
+
+private function extractThumbnail($videoPath)
+{
+    // Path untuk menyimpan thumbnail sementara
+    $tempThumbnailPath = public_path('temp/thumbnail.jpg');
+
+    // Perintah untuk mengekstrak thumbnail menggunakan FFmpeg
+    $ffmpegCommand = "ffmpeg -i " . storage_path('app/' . $videoPath) . " -ss 00:00:05 -vframes 1 " . $tempThumbnailPath;
+
+    // Jalankan perintah FFmpeg
+    exec($ffmpegCommand);
+
+    // Periksa apakah thumbnail berhasil diekstrak
+    if (file_exists($tempThumbnailPath)) {
+        return $tempThumbnailPath;
+    }
+
+    return null; // Jika thumbnail tidak berhasil diekstrak
+}
+
 
     public function simpanVideo(Request $request)
 {

@@ -114,12 +114,21 @@
 
                         </div>
                         <div style="display: flex; justify-content:center; margin: 10px;">
-                            @if ($videodisplay)
-                              <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}?autoplay=1&mute=1"></iframe>
+                            @if ($videodisplay && $videodisplay->tampil == 1)
+                                @if ($videodisplay->youtubelinks)
+                                    {{-- Jika video dari YouTube --}}
+                                    <iframe width="800" height="420" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" autoplay></iframe>
+                                @elseif ($videodisplay->videolokal)
+                                    {{-- Jika video dari lokal --}}
+                                    <video width="800" height="375" controls autoplay muted loop>
+                                        <source src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                @endif
                             @endif
                         </div>
-                                                  
-
+                                         
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
                         </div>

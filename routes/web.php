@@ -22,6 +22,8 @@ Route::get('/', function () {
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
 
 
+
+
 //ROUTE KHUSUS URUSAN DASHBOARD
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 Route::get('/berita', [DashboardController::class, 'berita'])->name('berita');
@@ -37,6 +39,7 @@ Route::get('/editberita/{id}', [DashboardController::class, 'editberita'])->name
 
 //ROUTE KHUSUS UNTUK POST
 Route::post('/simpanVideo', [DashboardController::class, 'simpanVideo'])->name('simpanVideo');
+Route::post('/simpanVideolokal', [DashboardController::class, 'simpanVideolokal'])->name('simpanVideolokal');
 Route::post('/simpanAgenda', [DashboardController::class, 'simpanAgenda'])->name('simpanAgenda');
 Route::post('/simpanBerita', [DashboardController::class, 'simpanBerita'])->name('simpanBerita');
 Route::post('/simpanRT', [DashboardController::class, 'simpanRT'])->name('simpanRT');
@@ -53,6 +56,8 @@ Route::put('/updateberita/{id}', [DashboardController::class, 'updateberita'])->
 Route::put('/updatert/{id}', [DashboardController::class, 'updatert'])->name('updateRt');
 Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'updateTampilStatus'])->name('tampilkanVideoKeDisplay');
 Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusTampilStatus'])->name('hapusVideoKeDisplay');
+
+
 
 
 

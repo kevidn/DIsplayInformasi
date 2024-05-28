@@ -35,13 +35,12 @@ class DisplayController extends Controller
         $berita = Berita::all();
         $agenda = Agenda::all();
         $videodisplay = Video::where('tampil', 1)->first();
-        $video = Video::paginate(1);
         $header = Header::all();
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
 
 
-        // dd($jadwalSholat);
+
 
 
         return view('display.index', compact('currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
@@ -80,4 +79,34 @@ class DisplayController extends Controller
             return null;
         }
     }
+    public function nextVideo()
+    {
+        // Dapatkan video yang sedang ditampilkan saat ini
+        $videodisplay = Video::where('tampil', 1)->first();
+
+        if ($videodisplay) {
+            // Dapatkan video berikutnya yang akan ditampilkan
+            $nextVideo = Video::where('tampil', 1)
+                              ->where('id', '>', $videodisplay->id) // Pilih video dengan ID lebih besar dari video saat ini
+                              ->orderBy('id')
+                              ->first();
+
+            if ($nextVideo) {
+                // Redirect ke halaman tampilan video berikutnya
+                if ($nextVideo->youtubelinks) {
+                    // Jika video dari YouTube, redirect ke URL YouTube
+                    return redirect()->away($nextVideo->youtubelinks);
+                } elseif ($nextVideo->videolokal) {
+                    // Jika video lokal, redirect ke halaman yang menampilkan video lokal
+                    return redirect()->route('videoDetail', $nextVideo->id);
+                }
+            }
+        }
+
+        // Jika tidak ada video yang ditampilkan saat ini atau tidak ada video berikutnya yang tersedia,
+        // redirect ke halaman lain atau lakukan tindakan lainnya
+        return redirect()->route('index'); // Ganti dengan rute atau tindakan yang sesuai
+    }
+
+
 }
