@@ -16,6 +16,8 @@ class Video extends Model
      */
     protected $fillable = [
         'youtubelinks',
+        'videolokal',
+        'thumbnail',
         'tampil'
 
     ];

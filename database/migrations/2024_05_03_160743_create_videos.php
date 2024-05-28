@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->string('youtubelinks');
+            $table->string('youtubelinks')->nullable(); // Mengizinkan nilai NULL
+            $table->string('videolokal')->nullable(); // Mengizinkan nilai NULL
+            $table->string('thumbnail')->nullable();
             $table->boolean('tampil')->default(0);
             $table->timestamps();
         });
