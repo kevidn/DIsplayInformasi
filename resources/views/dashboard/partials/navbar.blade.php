@@ -41,22 +41,19 @@
                             @if (Auth::check())
                                 <!-- Check if user is logged in -->
                                 <a class="nav-link" href="{{ route('akun') }}">
-
-                                    @if (Auth::check())
-                                        <img src="{{ asset('storage/user_images/' . Auth::user()->gambarakun) }}"
-                                            alt="..." alt="Profile Picture"
-                                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                                    @if (!Auth::user()->gambarakun)
+                                        <img class="avatar border-gray" src="{{ asset('images/defaultakun.jpeg') }}" alt="..." style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                                    @else
+                                        <img class="avatar border-gray" src="{{ asset('storage/user_images/' . Auth::user()->gambarakun) }}" alt="..." style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
                                     @endif
 
                                     <p>
                                         <span class="d-lg-none d-md-block">Account</span>
-                                        {{ Auth::user()->name }} <!-- Display username of the logged in user -->
+                                        {{ Auth::user()->name }} ({{ Auth::user()->userlevel }})<!-- Display username of the logged in user -->
                                     </p>
                                 </a>
-                            @endif <!-- End if -->
-                        @endif <!-- End if -->
-
-
+                            @endif
+                        @endif
                     </li>
 
                     <li class="nav-item">
@@ -115,7 +112,7 @@
                     </form>
                 </li>
             @endif
-            
+
               @if(!Request::is('dashboard')) <!-- Check if current page is NOT dashboard -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('index') }}" target="_blank"> <!-- Open in new tab -->

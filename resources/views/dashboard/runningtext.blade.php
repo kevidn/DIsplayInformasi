@@ -22,9 +22,7 @@
                 <div class="card-body">
                     <div class="running-text-container">
                         @if ($runningtext->isEmpty())
-                            <div class="running-text">
-
-                            </div>
+                            <div class="running-text"></div>
                         @else
                             @foreach ($runningtext as $item_rt)
                                 <div class="running-text">
@@ -35,32 +33,37 @@
                     </div>
 
                     @if ($runningtext->isEmpty())
-                        <form action="{{ route('simpanRT') }}" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                <label for="runningtext"></label>
-                                <textarea class="form-control" id="runningText" name="RT" rows="5" placeholder="Tambah Running Text"></textarea>
-                            </div>
-                            <button type="submit" class="badge badge-success custom-badge buattombol">Tambah Running Text</button>
-                        </form>
+                        @if(auth()->user()->userlevel === 'Admin')
+                            <form action="{{ route('simpanRT') }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="runningtext"></label>
+                                    <textarea class="form-control" id="runningText" name="RT" rows="5" placeholder="Tambah Running Text"></textarea>
+                                </div>
+                                <button type="submit" class="badge badge-success custom-badge buattombol">Tambah Running Text</button>
+                            </form>
+                        @endif
                     @else
-                        <form action="{{ route('updateRt', ['id' => $runningtext[0]->id]) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="form-group">
-                                <label for="runningtext"></label>
-                                <textarea class="form-control" id="runningText" name="RT" rows="5">{{ $runningtext[0]->RT }}</textarea>
-                            </div>
-                            <button type="submit" class="badge badge-warning custom-badge buattombol">Perbaharui Running Text</button>
-                        </form>
+                        @if(auth()->user()->userlevel === 'Admin')
+                            <form action="{{ route('updateRt', ['id' => $runningtext[0]->id]) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-group">
+                                    <label for="runningtext"></label>
+                                    <textarea class="form-control" id="runningText" name="RT" rows="5">{{ $runningtext[0]->RT }}</textarea>
+                                </div>
+                                <button type="submit" class="badge badge-warning custom-badge buattombol">Perbaharui Running Text</button>
+                            </form>
 
-                        <form action="{{ route('hapusRT', ['id' => $runningtext[0]->id]) }}" method="POST" style="margin-top: 10px;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="badge badge-danger custom-badge buattombol" onclick="return confirm('Apakah Anda yakin ingin menghapus running text ini?')">&#128465; Hapus Running Text</button>
-                        </form>
+                            <form action="{{ route('hapusRT', ['id' => $runningtext[0]->id]) }}" method="POST" style="margin-top: 10px;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="badge badge-danger custom-badge buattombol" onclick="return confirm('Apakah Anda yakin ingin menghapus running text ini?')">&#128465; Hapus Running Text</button>
+                            </form>
+                        @endif
                     @endif
                 </div>
+
 
 
 

@@ -11,6 +11,7 @@ use App\Models\RT;
 use App\Models\Berita;
 use App\Models\Agenda;
 use App\Models\Video;
+use App\Models\User;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Http;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class DashboardController extends Controller
 {
@@ -56,6 +58,7 @@ class DashboardController extends Controller
         $jadwalSholat = $this->getJadwalSholat();
 
 
+
         return view('dashboard.index', compact('currentHour','videodisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
@@ -71,9 +74,24 @@ class DashboardController extends Controller
     }
 
     public function akun(Request $request)
-    {
-        return view('dashboard.akun');
-    }
+{
+    $loggedInUserId = auth()->id();
+    $users = User::all()->sortBy(function($user) use ($loggedInUserId) {
+        if ($user->id === $loggedInUserId) {
+            return 0; // Akun yang sedang login diberi prioritas tertinggi
+        } elseif ($user->name === 'DefaultAdmin') {
+            return 1; // Akun DefaultAdmin diberi prioritas kedua tertinggi
+        } else {
+            return $user->userlevel === 'Admin' ? 2 : 3; // Urutkan pengguna berdasarkan peran, dengan Admin di atas Guest
+        }
+    });
+
+    return view('dashboard.akun', compact('users')); // Kirim data pengguna yang telah diurutkan ke tampilan
+}
+
+
+
+
 
     public function Runningtext(Request $request)
     {
@@ -569,5 +587,36 @@ public function hapusTampilStatus($id)
         // Redirect ke halaman lain, misalnya halaman beranda
         return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
     }
+    public function hapusakunmanagemen(Request $request)
+{
+    $userId = $request->input('user_id'); // Mengambil id pengguna dari request
+
+    $user = \App\Models\User::find($userId); // Mengambil data pengguna berdasarkan id
+
+    // Pastikan pengguna yang sedang login tidak dapat menghapus akunnya sendiri
+    if ($user && $user->id !== Auth::id()) {
+        // Hapus user dari database
+        $user->delete();
+
+        // Redirect ke halaman lain, misalnya halaman manajemen akun
+        return redirect()->route('akun')->with('success', 'Akun telah dihapus dengan berhasil.');
+    } else {
+        // Redirect dengan pesan kesalahan jika pengguna mencoba menghapus akun sendiri
+        return redirect()->route('akun')->with('error', 'Tidak dapat menghapus akun sendiri.');
+    }
+}
+public function ubahLevelAkun($id, $newLevel)
+{
+    $user = User::findOrFail($id);
+    $user->userlevel = $newLevel;
+    $user->save();
+
+    $message = ($newLevel === 'Admin') ? 'User berhasil diubah menjadi Admin' : 'User berhasil diubah menjadi Guest';
+
+    return redirect()->route('akun')->with('success', $message);
+}
 
 }
+
+
+

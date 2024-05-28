@@ -10,7 +10,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="card-title mb-0">DAFTAR AGENDA</h4>
+                    @if (auth()->user()->userlevel === 'Admin')
                     <a href="{{ route('tambahagenda') }}" class="badge badge-success custom-badge">TAMBAH AGENDA</a>
+                    @endif
                 <style>
                     .custom-badge {
                     font-size: 12px; /* Atur ukuran teks sesuai kebutuhan */
@@ -30,6 +32,7 @@
                                 <h5 class="card-title">{{ $singleAgenda->nama_kegiatan }}</h5>
                                 <p class="card-text">&#128205; Tempat: {{ $singleAgenda->tempat }}</p>
                                 <p>&#128197; Tanggal: {{ $singleAgenda->tanggal }}</p>
+                                @if (auth()->user()->userlevel === 'Admin')
                                 <form action="{{ route('hapusAgenda', $singleAgenda->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
@@ -37,7 +40,9 @@
 
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus agenda ini?')">&#128465; Hapus Agenda</button>
 
+
                                 </form>
+                                @endif
                             </div>
                         </div>
                     </div>
