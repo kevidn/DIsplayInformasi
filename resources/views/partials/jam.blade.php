@@ -15,7 +15,7 @@
 
     .clock {
       font-family: Arial, sans-serif;
-      width: 200px;
+      width: 170px;
       height: 49px;
       background-color: #fff;
       border-radius: 15px;
@@ -24,7 +24,7 @@
       text-align: center;
       font-size: 45px;
       color: #fff;
-      background-color: #333;
+      background-color: #01263746;
       /* box-shadow: 0 0 20px rgba(0,0,0,0.5); */
     }
 
