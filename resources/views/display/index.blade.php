@@ -37,63 +37,68 @@
                     @endphp
 
                     <div class="row mb-3" style="height: 100%; width: 100%;">
-                        <div style="width: 100%; height: 16%; margin-bottom: 2mm; background-color: #00324946; margin: 10px; border-radius: 15px;"
-                            class="col-11 p-2 d-flex align-items-center justify-content-center text-white">
-                            <img id="weather-icon-indeks" class="mr-2"
-                                src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon"
-                                style="height: 60px; width: 70px;">
-                            <div class="m-0" style="font-family: 'Segoe UI';">
-                                <span id="datetime">{{ $cuaca['days'][0]['datetime'] }}</span>
-                                <br>
-                                <span
-                                    id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
-                                <br>
+                        <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
+                            <div class="d-flex align-items-center" style="width: 100%;">
+                                <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon">
+
+                                <div class="row" style="width: 100%; margin-left: 10px;">
+                                    <!--jam-->
+                                    <div class="col-12 d-flex align-items-center justify-content-center text-white">
+                                        <h6>
+                                            <div class="p-1"></div>
+                                            @include('partials.jam')
+                                        </h6>
+                                    </div>
+
+                                    <!-- Tanggal dan kondisi cuaca -->
+                                    <div class="col-12 text-center mt-2" style="font-family: 'Segoe UI'; font-size: 18px; margin-bottom: 15px;">
+                                        <span id="datetime">{{ $cuaca['days'][0]['datetime'] }}</span>
+                                        <br>
+                                        <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
 
                     <!--berita-->
-                    <div class="container" style="height: 565px; width: 100%;">
+                    <div class="container" style="height: 530px; width: 100%;">
                         <div class="row" style="width: 100%;">
-                            <div id="news-container"
-                                style="background-color: #00324946; padding: 10px; border-radius: 15px;">
-                                @foreach ($berita as $item)
-                                    <div class="card p-2">
-                                        <img style="max-height: 150px;" class="card-img-top"
-                                            src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
+                            <div id="news-container" style="background-color: #00324946; padding: 10px; border-radius: 15px; height: 530px">
+                                <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 500px;  text-align: justify; text-justify: inter-word;">
+                                    @foreach ($berita as $item)
+                                        <div class="card p-2">
+                                            <img style="max-height: 150px;" class="card-img-top"
+                                                src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
 
-                                        @if (Request::is("index"))
-                                            <div class="card-body" style="font-size: 18px;">
-                                                <h5 class="card-title">{{ $item->judul }}</h5>
-                                                <div style="font-size: 13px;" class="card-text">
-                                                    {{ Str::limit($item->isi, 530, '...') }}
+                                            @if (Request::is("index"))
+                                                <div class="card-body" style="font-size: 18px;">
+                                                    <h5 class="card-title">{{ $item->judul }}</h5>
+                                                    <div style="font-size: 13px;" class="card-text">
+                                                        {{ Str::limit($item->isi, 300, '...') }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @else
-                                            <div class="card-body" style="font-size: 15px;">
-                                                <h5 class="card-title">{{ $item->judul }}</h5>
-                                                <div style="font-size: 11px;" class="card-text">
-                                                    {{ Str::limit($item->isi, 440, '...') }}
+                                            @else
+                                                <div class="card-body" style="font-size: 15px;">
+                                                    <h5 class="card-title">{{ $item->judul }}</h5>
+                                                    <div style="font-size: 11px;" class="card-text">
+                                                        {{ Str::limit($item->isi, 350, '...') }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endif
-                                        
-                                    </div>
-                                @endforeach
+                                            @endif
+
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!--jam-->
-                    <div class="row" style="height: 100%; width: 100%">
-                        <div style="width: 100%; height: 15%; margin-bottom: 4mm;"
-                            class="col-11 d-flex align-items-center justify-content-center text-white">
-                            <h6>
-                                <div class="p-1"></div>
-                                @include('partials.jam')
-                            </h6>
-                        </div>
-                    </div>
+
+
+
                 </div>
             </div>
 
@@ -102,17 +107,14 @@
 
                     <!--header & video-->
                     <div class="col-9" style="height: 550px;">
-                        <div style="display: flex; justify-content: space-around; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
-
-                            <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1"
-                                style="height: 75px; width: 75px;">
-
-                            SMK FATAHILLAH CILEUNGSI
-
-                            <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2"
-                                style="height: 75px; width: 75px;">
-
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
+                            <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1" style="height: 75px; width: 110px;">
+                            <div style="flex-grow: 1; display: flex; justify-content: center;">
+                                SMK FATAHILLAH CILEUNGSI
+                            </div>
+                            <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2" style="height: 75px; width: 75px;">
                         </div>
+
                         <div style="display: flex; justify-content:center; margin: 10px;">
                             @if ($videodisplay && $videodisplay->tampil == 1)
                                 @if ($videodisplay->youtubelinks)
@@ -128,7 +130,7 @@
                                 @endif
                             @endif
                         </div>
-                                         
+
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
                         </div>
@@ -136,10 +138,10 @@
 
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
-                        <div style="font-size: 25px; text-align: center; color: white; margin: 15px;">
+                        <div style="display: flex; justify-content: center; align-items: center; font-size: 25px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
                             JADWAL SHALAT
                         </div>
-                        
+
                         <div class="container" style="font-size: 140%; border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
                             @if ($jadwalSholat)
                                 <div style="color: white; margin: 8px; text-align: center;">
@@ -151,7 +153,7 @@
                                     <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
                                     <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
                                     <div>_______________</div>
-                                    <div>🕌</div>
+                                    <div style="font-size: 45px">🕌</div>
                                 </div>
                             @else
                                 <p>Jadwal sholat untuk hari ini tidak tersedia.</p>

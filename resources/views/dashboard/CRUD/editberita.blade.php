@@ -44,10 +44,6 @@
     </div>
 </div>
 
-Tentu, saya akan menambahkan validasi pada form edit berita Anda. Berikut adalah kode lengkapnya:
-
-html
-Copy code
 <script>
     function validateForm() {
         var judul = document.forms["myForm"]["judul"].value;
@@ -55,9 +51,9 @@ Copy code
         var gambar = document.forms["myForm"]["gambar"].files[0]; // Mendapatkan file gambar
 
         // Validasi panjang isi berita
-        if (isi.length > 255) {
+        if (isi.length > 525) {
             var isiErrorElement = document.getElementById("isiError");
-            isiErrorElement.innerHTML = "Isi Berita tidak boleh lebih dari 255 karakter";
+            isiErrorElement.innerHTML = "Isi Berita tidak boleh lebih dari 525 karakter";
             isiErrorElement.style.display = "block"; // Menampilkan pesan kesalahan
             return false;
         }
