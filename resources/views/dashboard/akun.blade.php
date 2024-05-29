@@ -136,7 +136,7 @@
                                                 <!-- Menampilkan 'Anda' jika akun yang sedang ditampilkan adalah akun yang sedang login -->
                                                 <span class="badge badge-success custom-font-size-badge">Anda</span>
                                             @elseif ($user->name === 'DefaultAdmin')
-                                                <span class="badge badge-primary custom-font-size-badge">DefaultAdmin</span>
+                                                <span class="badge badge-primary custom-font-size-badge">Admin</span>
                                             @elseif ($user->userlevel === 'Admin')
                                                 <span class="badge badge-info custom-font-size-badge">{{ $user->userlevel }}</span>
                                             @elseif ($user->userlevel === 'Guest')
