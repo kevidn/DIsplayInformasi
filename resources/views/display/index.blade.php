@@ -36,38 +36,65 @@
                         $weatherIcon = $cuaca['days'][0]['hours'][intval($currentHour)]['icon'];
                     @endphp
 
-                    <div class="row mb-3" style="height: 100%; width: 100%;">
-                        <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
-                            <div class="d-flex align-items-center" style="width: 100%;">
-                                <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon">
+                    @if (Request::is("index"))
+                        <div class="row mb-3" style="height: 100%; width: 100%;">
+                            <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
+                                <div class="d-flex align-items-center" style="width: 100%;">
+                                    <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" style="margin-left: 18px; width: 40%; height: 40%;" >
 
-                                <div class="row" style="width: 100%; margin-left: 10px;">
-                                    <!--jam-->
-                                    <div class="col-12 d-flex align-items-center justify-content-center text-white">
-                                        <h6>
-                                            <div class="p-1"></div>
-                                            @include('partials.jam')
-                                        </h6>
-                                    </div>
+                                    <div class="row" style="width: 100%; margin-left: 10px;">
+                                        <!--jam-->
+                                        <div class="col-12 d-flex align-items-center justify-content-center text-white">
+                                            <h6>
+                                                <div class="p-1"></div>
+                                                @include('partials.jam')
+                                            </h6>
+                                        </div>
 
-                                    <!-- Tanggal dan kondisi cuaca -->
-                                    <div class="col-12 text-center mt-2" style="font-family: 'Segoe UI'; font-size: 18px; margin-bottom: 15px;">
-                                        <span id="datetime">{{ $cuaca['days'][0]['datetime'] }}</span>
-                                        <br>
-                                        <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
+                                        <!-- Tanggal dan kondisi cuaca -->
+                                        <div class="col-12 text-center mt-2" style="font-family: 'Segoe UI'; font-size: 18px; margin-bottom: 15px;">
+                                            <span id="datetime">{{ $date }}</span>
+                                            <br>
+                                            <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                    @else
+                        <div class="row mb-3" style="height: 100%; width: 100%;">
+                            <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 2px;" class="col-11 d-flex align-items-center text-white">
+                                <div class="d-flex align-items-center" style="width: 100%;">
+                                    <img id="weather-icon-indeks" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" class="ml-4" style="width: 45%; height: 45%;">
+                                    <div class="row" style="width: 100%; margin-left: 10px;">
+                                        <!--jam-->
+                                        <div class="col-12 d-flex align-items-center justify-content-center text-white">
+                                            <h6>
+                                                <div class="p-1"></div>
+                                                @include('partials.jam')
+                                            </h6>
+                                        </div>
+
+                                        <!-- Tanggal dan kondisi cuaca -->
+                                        <div class="col-12 text-center mt-2" style="font-family: 'Segoe UI'; font-size: 13px; margin-bottom: 15px;">
+                                            <span id="datetime">{{ $date}}</span>
+                                            <br>
+                                            <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
 
 
                     <!--berita-->
                     <div class="container" style="height: 530px; width: 100%;">
                         <div class="row" style="width: 100%;">
-                            <div id="news-container" style="background-color: #00324946; padding: 10px; border-radius: 15px; height: 530px">
-                                <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 500px;  text-align: justify; text-justify: inter-word;">
+                            <div id="news-container" style="background-color: #00324946; padding: 10px; border-radius: 15px; height: 565px">
+                                <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 540px;  text-align: justify; text-justify: inter-word;">
                                     @foreach ($berita as $item)
                                         <div class="card p-2">
                                             <img style="max-height: 150px;" class="card-img-top"
@@ -84,7 +111,7 @@
                                                 <div class="card-body" style="font-size: 15px;">
                                                     <h5 class="card-title">{{ $item->judul }}</h5>
                                                     <div style="font-size: 11px;" class="card-text">
-                                                        {{ Str::limit($item->isi, 350, '...') }}
+                                                        {{ Str::limit($item->isi, 275, '...') }}
                                                     </div>
                                                 </div>
                                             @endif
@@ -95,9 +122,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
 
                 </div>
             </div>
@@ -119,7 +143,7 @@
                             @if ($videodisplay && $videodisplay->tampil == 1)
                                 @if ($videodisplay->youtubelinks)
                                     {{-- Jika video dari YouTube --}}
-                                    <iframe width="800" height="420" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" autoplay></iframe>
+                                    <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" autoplay></iframe>
                                 @elseif ($videodisplay->videolokal)
                                     {{-- Jika video dari lokal --}}
                                     <video width="800" height="375" controls autoplay muted loop>
@@ -199,7 +223,6 @@
                         @endforeach
                     </div>
                 </div>
-
 
                 <!--running text-->
                 <div class="row">

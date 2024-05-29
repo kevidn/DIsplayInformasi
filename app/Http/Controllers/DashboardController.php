@@ -56,10 +56,10 @@ class DashboardController extends Controller
         $header = Header::all();
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
+        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
 
-
-        return view('dashboard.index', compact('currentHour','videodisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
+        return view('dashboard.index', compact('date','currentHour','videodisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
     public function berita(Request $request)
