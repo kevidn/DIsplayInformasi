@@ -150,10 +150,22 @@
                                         <source src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
-
+                                @else
+                                    {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                    <video width="800" height="375" controls autoplay muted loop>
+                                        <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
                                 @endif
+                            @else
+                                {{-- Jika tidak ada video yang tersedia --}}
+                                <video width="800" height="375" controls autoplay muted loop>
+                                    <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
                             @endif
                         </div>
+
 
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
