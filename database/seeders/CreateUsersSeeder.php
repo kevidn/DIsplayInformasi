@@ -1,11 +1,11 @@
 <?php
-  
+
 namespace Database\Seeders;
-  
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-  
+use Illuminate\Support\Facades\Hash;
 class CreateUsersSeeder extends Seeder
 {
     /**
@@ -17,22 +17,20 @@ class CreateUsersSeeder extends Seeder
     {
         $users = [
             [
-               'name'=>'Admin User',
-               'type'=>1,
-               'password'=> bcrypt('123456'),
+                'name' => 'DefaultAdmin',
+                'password' => Hash::make('12345678'),
+                'userlevel' => 'Admin',
+                'quotes' => 'This is the default account for admin. This account cannot be deleted or renamed.',
             ],
             [
-               'name'=>'Manager User',
-               'type'=> 2,
-               'password'=> bcrypt('123456'),
+                'name' => 'DefaultGuest',
+                'password' => Hash::make('12345678'),
+                'userlevel' => 'Guest',
+                'quotes' => 'Kamu Bisa Menambahkan Seputar Tentang Dirimu Disini!',
             ],
-            [
-               'name'=>'User',
-               'type'=>0,
-               'password'=> bcrypt('123456'),
-            ],
+
         ];
-    
+
         foreach ($users as $key => $user) {
             User::create($user);
         }

@@ -105,77 +105,68 @@
                     <div class="card-header">
                         <h5 class="title">Account Management</h5>
                     </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            @foreach ($users as $user)
-                                <li class="list-group-item d-flex align-items-center">
-                                    <img src="{{ asset('storage/user_images/' . $user->gambarakun) }}"
-                                        alt="Profile Image" class="rounded-circle mr-3"
-                                        style="width: 50px; height: 50px;">
-                                    <div class="d-flex align-items-center">
-                                        <h5 class="mb-0 custom-font-size">{{ $user->name }}</h5>
-                                        <style>
-                                            .custom-font-size {
-                                                font-size: 17px;
-                                                /* Ganti angka sesuai dengan ukuran font yang diinginkan */
-                                            }
-
-                                            .custom-font-size-badge {
-                                                font-size: 11px;
-                                                /* Ganti angka sesuai dengan ukuran font yang diinginkan */
-                                            }
-                                        </style>
-                                        <span style="margin-left: 5px;"></span>
-                                        <!-- Menambahkan spasi antara nama dan level -->
-                                        @if (Auth::user()->id === $user->id)
-                                            <!-- Menampilkan 'Anda' jika akun yang sedang ditampilkan adalah akun yang sedang login -->
-                                            <span class="badge badge-success custom-font-size-badge">Anda</span>
-                                        @elseif ($user->userlevel === 'Admin')
-                                            <span
-                                                class="badge badge-info custom-font-size-badge">{{ $user->userlevel }}</span>
-                                        @elseif ($user->userlevel === 'Guest')
-                                            <span
-                                                class="badge badge-dark custom-font-size-badge">{{ $user->userlevel }}</span>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                @foreach ($users as $user)
+                                    <li class="list-group-item d-flex align-items-center">
+                                        @if($user->name === 'DefaultAdmin')
+                                            <img src="{{ asset('images/defaultadmin.png') }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                                        @elseif(!$user->gambarakun)
+                                            <img src="{{ asset('images/defaultakun.jpeg') }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                                        @else
+                                            <img src="{{ asset('storage/user_images/' . $user->gambarakun) }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
                                         @endif
 
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="mb-0 custom-font-size">{{ $user->name }}</h5>
+                                            <style>
+                                                .custom-font-size {
+                                                    font-size: 17px;
+                                                    /* Ganti angka sesuai dengan ukuran font yang diinginkan */
+                                                }
 
+                                                .custom-font-size-badge {
+                                                    font-size: 11px;
+                                                    /* Ganti angka sesuai dengan ukuran font yang diinginkan */
+                                                }
+                                            </style>
+                                            <span style="margin-left: 5px;"></span>
+                                            <!-- Menambahkan spasi antara nama dan level -->
+                                            @if (Auth::user()->id === $user->id)
+                                                <!-- Menampilkan 'Anda' jika akun yang sedang ditampilkan adalah akun yang sedang login -->
+                                                <span class="badge badge-success custom-font-size-badge">Anda</span>
+                                            @elseif ($user->name === 'DefaultAdmin')
+                                                <span class="badge badge-primary custom-font-size-badge">DefaultAdmin</span>
+                                            @elseif ($user->userlevel === 'Admin')
+                                                <span class="badge badge-info custom-font-size-badge">{{ $user->userlevel }}</span>
+                                            @elseif ($user->userlevel === 'Guest')
+                                                <span class="badge badge-dark custom-font-size-badge">{{ $user->userlevel }}</span>
+                                            @endif
+                                        </div>
 
+                                        <div class="ml-auto">
+                                            <!-- Tombol edit dan hapus hanya muncul untuk user admin -->
+                                            @if (Auth::user()->id !== $user->id && $user->name !== 'DefaultAdmin')
+                                                <!-- Menyembunyikan tombol jika pengguna yang sedang login adalah pengguna saat ini -->
+                                                <form action="{{ route('ubahlevel', ['id' => $user->id, 'newLevel' => $user->userlevel === 'Admin' ? 'Guest' : 'Admin']) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Apakah Anda yakin ingin mengubah peran pengguna ini menjadi {{ $user->userlevel === 'Admin' ? 'Guest' : 'Admin' }}?')">
+                                                        {{ $user->userlevel === 'Admin' ? 'Make Guest' : 'Make Admin' }}
+                                                    </button>
+                                                </form>
 
+                                                <form action="{{ route('hapusakunmanagemen', ['user_id' => $user->id]) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus akun ini?')">Delete</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
 
-
-
-
-                                    </div>
-                                    <div class="ml-auto">
-                                        <!-- Tombol edit dan hapus hanya muncul untuk user admin -->
-                                        @if (Auth::user()->id !== $user->id && $user->name !== 'DefaultAdmin')
-                                            <!-- Menyembunyikan tombol jika pengguna yang sedang login adalah pengguna saat ini -->
-                                            <form
-                                                action="{{ route('ubahlevel', ['id' => $user->id, 'newLevel' => $user->userlevel === 'Admin' ? 'Guest' : 'Admin']) }}"
-                                                method="POST" style="display: inline;">
-                                                @csrf
-                                                <button type="submit" class="btn btn-warning btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin mengubah peran pengguna ini menjadi {{ $user->userlevel === 'Admin' ? 'Guest' : 'Admin' }}?')">
-                                                    {{ $user->userlevel === 'Admin' ? 'Make Guest' : 'Make Admin' }}
-                                                </button>
-                                            </form>
-
-                                            <form action="{{ route('hapusakunmanagemen', ['user_id' => $user->id]) }}"
-                                                method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus akun ini?')">Delete</button>
-                                            </form>
-                                        @endif
-                                    </div>
-
-
-
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
                 </div>
             @endif
 
@@ -205,13 +196,16 @@
                         <a id="changeAvatar">
 
                             @if(Auth::check())
-                            @if(!Auth::user()->gambarakun)
+                            @if(Auth::user()->name === 'DefaultAdmin')
+                                <img class="avatar border-gray" src="{{ asset('images/defaultadmin.png') }}" alt="...">
+                            @elseif(!Auth::user()->gambarakun)
                                 <img class="avatar border-gray" src="{{ asset('images/defaultakun.jpeg') }}" alt="...">
                             @else
                                 <img class="avatar border-gray" src="{{ asset('storage/user_images/' . Auth::user()->gambarakun) }}" alt="...">
                             @endif
                             <h5 class="title">{{ Auth::user()->name }} ({{ Auth::user()->userlevel }})</h5>
                         @endif
+
 
 
                         </a>

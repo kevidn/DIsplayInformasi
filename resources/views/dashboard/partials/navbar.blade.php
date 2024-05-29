@@ -41,7 +41,9 @@
                             @if (Auth::check())
                                 <!-- Check if user is logged in -->
                                 <a class="nav-link" href="{{ route('akun') }}">
-                                    @if (!Auth::user()->gambarakun)
+                                    @if (Auth::user()->name === 'DefaultAdmin')
+                                        <img class="avatar border-gray" src="{{ asset('images/defaultadmin.png') }}" alt="..." style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                                    @elseif (!Auth::user()->gambarakun)
                                         <img class="avatar border-gray" src="{{ asset('images/defaultakun.jpeg') }}" alt="..." style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
                                     @else
                                         <img class="avatar border-gray" src="{{ asset('storage/user_images/' . Auth::user()->gambarakun) }}" alt="..." style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
@@ -55,6 +57,7 @@
                             @endif
                         @endif
                     </li>
+
 
                     <li class="nav-item">
 
