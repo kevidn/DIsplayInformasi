@@ -38,12 +38,12 @@ class DisplayController extends Controller
         $header = Header::all();
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
+        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
 
 
 
-
-        return view('display.index', compact('currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
+        return view('display.index', compact('date','currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
     }
 
     public function video()
