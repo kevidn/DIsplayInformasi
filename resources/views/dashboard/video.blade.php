@@ -25,7 +25,6 @@
                     <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
                 </form>
                 @endif
-
                 </div>
 
                 <div class="card-body">
@@ -47,9 +46,8 @@
                                             </div>
 
                                             <div class="mt-3">
-                                                {{-- Tombol hanya muncul jika user adalah admin --}}
-                                                @if(auth()->user()->userlevel === 'admin')
-                                                    {{-- Tombol "Tampilkan Video Ke Display" hanya muncul jika kolom tampil memiliki nilai 0 --}}
+                                                {{-- Tombol "Tampilkan Video Ke Display" hanya muncul jika kolom tampil memiliki nilai 0 --}}
+                                                @if (auth()->user()->userlevel === 'Admin')
                                                     @if ($singleVideo->tampil == 0)
                                                         <form action="{{ route('tampilkanVideoKeDisplay', $singleVideo->id) }}" method="POST" style="display: inline;">
                                                             @csrf
@@ -93,7 +91,8 @@
                                                 <span class="badge badge-danger mb-3">Tidak Ditampilkan Ke Display</span><br>
                                             @endif
 
-                                            <video width="100%" height="auto" controls autoplay muted poster="{{ asset('storage/videolokal/thumbnails/' . $singleVideo->thumbnail) }}">
+                                            <video width="100%" height="auto" controls autoplay muted
+                                                poster="{{ asset('storage/videolokal/thumbnails/' . $singleVideo->thumbnail) }}">
                                                 <source src="{{ asset('storage/videolokal/' . $singleVideo->videolokal) }}" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
@@ -138,17 +137,28 @@
                         @endforeach
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+
 <script>
     document.getElementById('video_file').addEventListener('change', function() {
-        var fileName = this.files[0] ? this.files
+        var fileName = this.files[0] ? this.files[0].name : 'Pilih video dari Komputer Anda!';
+        document.getElementById('file_label').innerText = fileName;
     });
 
+    function validateFileSize() {
+        var fileInput = document.getElementById('video_file');
+        var fileSize = fileInput.files[0].size;
+        var maxSize = 100 * 1024 * 1024; // 100MB
 
+        if (fileSize > maxSize) {
+            alert('Ukuran file melebihi 100MB.');
+            return false;
+        }
+        return true;
+    }
 </script>
 
 <style>
