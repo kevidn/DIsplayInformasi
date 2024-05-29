@@ -40,7 +40,7 @@
                         <div class="row mb-3" style="height: 100%; width: 100%;">
                             <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
                                 <div class="d-flex align-items-center" style="width: 100%;">
-                                    <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" style="margin-left: 18px;">
+                                    <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" style="margin-left: 18px; width: 40%; height: 40%;" >
 
                                     <div class="row" style="width: 100%; margin-left: 10px;">
                                         <!--jam-->
@@ -53,7 +53,7 @@
 
                                         <!-- Tanggal dan kondisi cuaca -->
                                         <div class="col-12 text-center mt-2" style="font-family: 'Segoe UI'; font-size: 18px; margin-bottom: 15px;">
-                                            <span id="datetime">{{ $cuaca['days'][0]['datetime'] }}</span>
+                                            <span id="datetime">{{ $date }}</span>
                                             <br>
                                             <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
                                         </div>
@@ -61,12 +61,12 @@
                                 </div>
                             </div>
                         </div>
+
                     @else
                         <div class="row mb-3" style="height: 100%; width: 100%;">
                             <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 2px;" class="col-11 d-flex align-items-center text-white">
                                 <div class="d-flex align-items-center" style="width: 100%;">
-                                    <img id="weather-icon-indeks" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" style="width: 40%; height: 40%;">
-
+                                    <img id="weather-icon-indeks" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" class="ml-4" style="width: 45%; height: 45%;">
                                     <div class="row" style="width: 100%; margin-left: 10px;">
                                         <!--jam-->
                                         <div class="col-12 d-flex align-items-center justify-content-center text-white">
@@ -78,7 +78,7 @@
 
                                         <!-- Tanggal dan kondisi cuaca -->
                                         <div class="col-12 text-center mt-2" style="font-family: 'Segoe UI'; font-size: 13px; margin-bottom: 15px;">
-                                            <span id="datetime">{{ $cuaca['days'][0]['datetime'] }}</span>
+                                            <span id="datetime">{{ $date}}</span>
                                             <br>
                                             <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
                                         </div>
