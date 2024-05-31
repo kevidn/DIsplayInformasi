@@ -51,7 +51,7 @@ class DashboardController extends Controller
         $total_berita = count($berita);
         $agenda = Agenda::all();
         $total_agenda = count($agenda);
-        $video = Video::paginate(1);
+        $video = Video::all();
         $total_video = count($video);
         $header = Header::all();
         $RTs = RT::all();

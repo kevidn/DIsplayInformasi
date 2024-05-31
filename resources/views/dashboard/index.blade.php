@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="col-9">
                                             <div class="numbers">
-                                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Video Yang DiPutar</p>
+                                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Daftar Video Yang Tersedia</p>
                                                 <h5 class="font-weight-bolder">
                                                     {{ $total_video }}
                                                 </h5>
