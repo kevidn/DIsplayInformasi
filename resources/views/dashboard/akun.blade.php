@@ -15,28 +15,26 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6 pr-1">
-
                                 <div class="form-group">
-                                    @if (Auth::check() && Auth::user()->name !== 'DefaultAdmin')
-                                        <label for="name">Name</label>
-
-                                        <!-- Check if user is logged in and has a name -->
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            value="{{ Auth::user()->name }}" required>
+                                    <label for="name">Name</label>
+                                    @if (Auth::check() && Auth::user()->name === 'DefaultAdmin')
+                                        <!-- Jika akun yang login adalah DefaultAdmin -->
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" disabled>
+                                        <small class="form-text text-muted text-danger" style="font-size: 10px;">This account cannot be renamed.</small>
+                                    @else
+                                        <!-- Jika bukan DefaultAdmin -->
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" required>
                                     @endif
                                 </div>
                             </div>
                             <div class="col-md-6 pr-1">
-
                                 <div class="form-group">
-                                    @if (Auth::check() && Auth::user()->name !== 'DefaultAdmin')
-                                        <!-- Check if user is logged in and has a name -->
-                                        <label for="password">Password</label>
-                                        <input type="text" class="form-control" id="password" name="password"
-                                            placeholder="{{ Auth::check() ? '********' : '' }}">
-                                    @endif
+                                    <label for="password">Password</label>
+                                    <input type="text" class="form-control" id="password" name="password" placeholder="{{ Auth::check() ? '********' : '' }}">
                                 </div>
                             </div>
+
+
                             <div class="col-md-10 pr-1">
                                 <div class="form-group">
                                     @if (Auth::check() && Auth::user()->name)
