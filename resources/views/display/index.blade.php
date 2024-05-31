@@ -266,21 +266,9 @@
     var currentAgendaIndex = 0;
 var agendaItems = {!! json_encode($agenda) !!}; // Ambil data agenda dari PHP
 
-function formatTanggalSekarang() {
-    var today = new Date();
-
-    // Daftar nama bulan dalam bahasa Indonesia
-    var bulanIndonesia = [
-        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-    ];
-
-    var day = today.getDate();
-    var month = today.getMonth(); // Bulan di JavaScript dimulai dari 0
-    var year = today.getFullYear();
-
-    var formattedDate = `${day} ${bulanIndonesia[month]} ${year}`;
-    return formattedDate;
+function formatTanggal(tanggal) {
+    var options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Intl.DateTimeFormat('id-ID', options).format(new Date(tanggal));
 }
 
 function updateAgenda() {
@@ -297,12 +285,12 @@ function updateAgenda() {
             var agenda = agendaItems[i];
             newHTML += `
                 <div class="col-4 card-transition fade-in">
-                    <div class="card" style="height: 140px; font-size: 11px; margin: 5px;">
+                    <div class="card" style="height: 140px; font-size: 12px; margin: 5px;">
                         <div class="card-body">
-                            <b class="card-title" style="font-size: 15px;">${agenda.nama_kegiatan}</b>
+                            <h6 class="card-title">${agenda.nama_kegiatan}</h6>
                             <hr>
                             <div class="card-text mb-2">&#128205; Tempat: ${agenda.tempat}</div>
-                            <div>&#128197; Tanggal: ${formatTanggalSekarang()}</div>
+                            <div>&#128197; Tanggal: ${formatTanggal(agenda.tanggal)}</div>
                         </div>
                     </div>
                 </div>
@@ -324,6 +312,7 @@ function updateAgenda() {
 
 setInterval(updateAgenda, 15000); // Update agenda setiap 15 detik (15000 ms)
 updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
+
 
 
 
