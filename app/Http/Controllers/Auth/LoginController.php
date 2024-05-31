@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
-
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -23,24 +22,33 @@ class LoginController extends Controller
 
     // Method untuk menangani proses login
     public function login(Request $request): RedirectResponse
-    {   
+    {
         $input = $request->all();
-     
+
         $this->validate($request, [
             'name' => 'required|string', // Menggunakan 'name' sebagai kredensial
             'password' => 'required',
         ]);
-     
-        if(auth()->attempt(array('name' => $input['name'], 'password' => $input['password'])))
-        {
+
+        if (auth()->attempt(['name' => $input['name'], 'password' => $input['password']])) {
             return redirect()->intended('/dashboard'); // Menggunakan 'intended' untuk mengarahkan pengguna ke lokasi yang seharusnya setelah login berhasil
         } else {
-            return redirect()->route('login')
-                ->with('error','Name or Password is Invalid.'); // Mengubah pesan error
+            return $this->sendFailedLoginResponse($request); // Panggil method untuk menangani login gagal
         }
     }
-    public function logout(Request $request) {
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors([
+                $this->username() => 'Name or Password is Invalid.',
+            ]);
+    }
+
+    public function logout(Request $request)
+    {
         Auth::logout();
         return redirect('/login');
-      }
+    }
 }
