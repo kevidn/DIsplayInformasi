@@ -113,7 +113,7 @@
                                                 <div class="card-body" style="font-size: 18px;">
                                                     <h5 class="card-title">{{ $item->judul }}</h5>
                                                     <div style="font-size: 13px;" class="card-text">
-                                                        {{ Str::limit($item->isi, 300, '...') }}
+                                                        {{ Str::limit($item->isi, 500, '...') }}
                                                     </div>
                                                 </div>
                                             @else
