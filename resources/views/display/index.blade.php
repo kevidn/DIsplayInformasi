@@ -22,6 +22,8 @@
         }
     </style>
 
+
+
 </head>
 
 <body style="background-image: url('/images/bg.jpg'); background-size: 100%;">
@@ -37,10 +39,17 @@
                     @endphp
 
                     @if (Request::is("index"))
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            document.body.style.zoom = '110%';
+                        });
+                    </script>
+                    
                         <div class="row mb-3" style="height: 100%; width: 100%;">
                             <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
                                 <div class="d-flex align-items-center" style="width: 100%;">
-                                    <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" style="margin-left: 18px; width: 40%; height: 40%;" >
+                                    <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" style="margin-left: 15px; width: 30%; height: 30%;" >
 
                                     <div class="row" style="width: 100%; margin-left: 10px;">
                                         <!--jam-->
