@@ -20,6 +20,15 @@
         .fade-in {
             opacity: 1;
         }
+
+        /* Tambahkan gaya CSS ini ke file CSS Anda atau di dalam tag <style> di halaman Anda */
+        .card hr {
+            margin-top: 6px; /* Atur margin atas */
+            margin-bottom: 6px; /* Atur margin bawah */
+            border: none; /* Hapus border default */
+            border-top: 1px solid #000000; /* Tambahkan border atas */
+        }
+
     </style>
 
 
@@ -45,7 +54,7 @@
                             document.body.style.zoom = '110%';
                         });
                     </script>
-                    
+
                         <div class="row mb-3" style="height: 100%; width: 100%;">
                             <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
                                 <div class="d-flex align-items-center" style="width: 100%;">
@@ -218,10 +227,10 @@
                                 <div class="col-4">
                                     <div class="card" style="height: 950px; margin: 5px;">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ $item_agenda->nama_kegiatan }}</h5>
+                                            <p class="card-text">{{ $item_agenda->nama_kegiatan }}</p>
                                             <hr>
                                             <div class="card-text mb-2">&#128205; Tempat: {{ $item_agenda->tempat }}</div>
-                                            <div class="card-text">&#128197; Tanggal: {{ date('Y-m-d', strtotime($item_agenda->tanggal)) }}</div>
+                                            <div class="card-text">&#128197; Tanggal: {{ date('D-m-y', strtotime($item_agenda->tanggal)) }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -255,49 +264,67 @@
     //Agenda
 
     var currentAgendaIndex = 0;
-    var agendaItems = {!! json_encode($agenda) !!}; // Ambil data agenda dari PHP
+var agendaItems = {!! json_encode($agenda) !!}; // Ambil data agenda dari PHP
 
-    function updateAgenda() {
-        var agendaContent = document.getElementById('agenda-content');
+function formatTanggalSekarang() {
+    var today = new Date();
 
-        // Tambahkan kelas fade-out sebelum mengubah konten
-        agendaContent.classList.add('fade-out');
-        agendaContent.classList.remove('fade-in');
+    // Daftar nama bulan dalam bahasa Indonesia
+    var bulanIndonesia = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
 
-        // Gunakan setTimeout untuk menunggu transisi selesai
-        setTimeout(function() {
-            var newHTML = '';
-            for (var i = currentAgendaIndex; i < currentAgendaIndex + 3 && i < agendaItems.length; i++) {
-                var agenda = agendaItems[i];
-                newHTML += `
-                    <div class="col-4 card-transition fade-in">
-                        <div class="card" style="height: 140px; font-size: 13px; margin: 5px;">
-                            <div class="card-body">
-                                <h5 class="card-title">${agenda.nama_kegiatan}</h5>
-                                <hr>
-                                <div class="card-text mb-2">&#128205; Tempat: ${agenda.tempat}</div>
-                                <div>&#128197; Tanggal: ${new Date(agenda.tanggal).toISOString().split('T')[0]}</div>
-                            </div>
+    var day = today.getDate();
+    var month = today.getMonth(); // Bulan di JavaScript dimulai dari 0
+    var year = today.getFullYear();
+
+    var formattedDate = `${day} ${bulanIndonesia[month]} ${year}`;
+    return formattedDate;
+}
+
+function updateAgenda() {
+    var agendaContent = document.getElementById('agenda-content');
+
+    // Tambahkan kelas fade-out sebelum mengubah konten
+    agendaContent.classList.add('fade-out');
+    agendaContent.classList.remove('fade-in');
+
+    // Gunakan setTimeout untuk menunggu transisi selesai
+    setTimeout(function() {
+        var newHTML = '';
+        for (var i = currentAgendaIndex; i < currentAgendaIndex + 3 && i < agendaItems.length; i++) {
+            var agenda = agendaItems[i];
+            newHTML += `
+                <div class="col-4 card-transition fade-in">
+                    <div class="card" style="height: 140px; font-size: 11px; margin: 5px;">
+                        <div class="card-body">
+                            <b class="card-title" style="font-size: 15px;">${agenda.nama_kegiatan}</b>
+                            <hr>
+                            <div class="card-text mb-2">&#128205; Tempat: ${agenda.tempat}</div>
+                            <div>&#128197; Tanggal: ${formatTanggalSekarang()}</div>
                         </div>
                     </div>
-                `;
-            }
-
-            agendaContent.innerHTML = newHTML;
-
-            // Hapus kelas fade-out dan tambahkan kelas fade-in setelah mengubah konten
-            agendaContent.classList.remove('fade-out');
-            agendaContent.classList.add('fade-in');
-        }, 500); // Durasi sesuai dengan durasi transisi CSS
-
-        currentAgendaIndex += 3;
-        if (currentAgendaIndex >= agendaItems.length) {
-            currentAgendaIndex = 0; // Reset index jika sudah mencapai akhir data
+                </div>
+            `;
         }
-    }
 
-    setInterval(updateAgenda, 15000); // Update agenda setiap 15 detik (15000 ms)
-    updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
+        agendaContent.innerHTML = newHTML;
+
+        // Hapus kelas fade-out dan tambahkan kelas fade-in setelah mengubah konten
+        agendaContent.classList.remove('fade-out');
+        agendaContent.classList.add('fade-in');
+    }, 500); // Durasi sesuai dengan durasi transisi CSS
+
+    currentAgendaIndex += 3;
+    if (currentAgendaIndex >= agendaItems.length) {
+        currentAgendaIndex = 0; // Reset index jika sudah mencapai akhir data
+    }
+}
+
+setInterval(updateAgenda, 15000); // Update agenda setiap 15 detik (15000 ms)
+updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
+
 
 
     // Berita
