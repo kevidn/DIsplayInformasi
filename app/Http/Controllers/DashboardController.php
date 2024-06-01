@@ -277,47 +277,56 @@ public function hapusTampilStatus($id)
     return redirect()->route('video')->with('success', 'Video Berhasil Di Hapus Dari Display');
 }
 
-    public function simpanAgenda(Request $request)
-    {
-        // Simpan data agenda ke database
-        $agenda = new Agenda;
-        $agenda->nama_kegiatan = $request->input('nama_kegiatan');
-        $agenda->tempat = $request->input('tempat');
-        $agenda->tanggal = $request->input('tanggal');
-        $agenda->save();
+public function simpanAgenda(Request $request)
+{
+    // Validasi data
+    $request->validate([
+        'nama_kegiatan' => 'required|string|max:65',
+        'tempat' => 'required|string',
+        'tanggal' => 'required|date',
+    ]);
 
-        // Redirect atau kirim respons sesuai kebutuhan aplikasi
-        return redirect()->route('agenda');
+    // Simpan data agenda ke database
+    $agenda = new Agenda;
+    $agenda->nama_kegiatan = $request->input('nama_kegiatan');
+    $agenda->tempat = $request->input('tempat');
+    $agenda->tanggal = $request->input('tanggal');
+    $agenda->save();
+
+    // Redirect atau kirim respons sesuai kebutuhan aplikasi
+    return redirect()->route('agenda')->with('success', 'Agenda berhasil ditambahkan.');
+}
+
+
+public function simpanBerita(Request $request)
+{
+    // Define validation rules
+    $validator = Validator::make($request->all(), [
+        'judul'     => 'required|string|max:80', // Batasan 80 karakter untuk judul
+        'gambar'    => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'isi'       => 'required|string|max:425', // Batasan 425 karakter untuk isi
+    ]);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
     }
 
-    public function simpanBerita(Request $request)
-    {
-        //define validation rules
-        $validator = Validator::make($request->all(), [
-            'judul'     => 'required',
-            'gambar'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'isi'   => 'required',
-        ]);
+    // Upload image
+    $gambar = $request->file('gambar');
+    $gambar->storeAs('public/beritas/upload/', $gambar->hashName());
 
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+    // Create berita
+    $berita = Berita::create([
+        'judul'     => $request->judul,
+        'gambar'    => $gambar->hashName(),
+        'isi'       => $request->isi,
+    ]);
 
-        //upload image
-        $gambar = $request->file('gambar');
-        $gambar->storeAs('public/beritas/upload/', $gambar->hashName());
+    // Return response
+    return redirect()->route('berita')->with('success', 'Berita berhasil disimpan.');
+}
 
-        //create berita
-        $berita = berita::create([
-            'judul'     => $request->judul,
-            'gambar'     => $gambar->hashName(),
-            'isi'   => $request->isi,
-        ]);
-
-        //return response
-        return redirect()->route('berita');
-    }
     public function simpanRT(Request $request)
     {
         // Simpan link YouTube ke database
@@ -380,84 +389,81 @@ public function hapusTampilStatus($id)
         return redirect()->route('runningtext')->with('success', 'Running Text berhasil dihapus.');
     }
 
-    public function updateagenda(Request $request, $id)
+    public function updateAgenda(Request $request, $id)
     {
-        //define validation rules
-        $validator = Validator::make($request->all(), [
-            'nama_kegiatan'     => 'required',
-            'tempat'     => 'required',
-            'tanggal'   => '',
+        // Validasi data
+        $request->validate([
+            'nama_kegiatan' => 'required|string|max:65',
+            'tempat' => 'required|string',
+            'tanggal' => 'required|date',
         ]);
 
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        //find agenda by ID
+        // Temukan agenda berdasarkan ID
         $agenda = Agenda::find($id);
 
-        //check if agenda exists
+        // Cek jika agenda tidak ditemukan
         if (!$agenda) {
-            return response()->json(['message' => 'Agenda not found'], 404);
+            return redirect()->route('agenda')->with('error', 'Agenda tidak ditemukan.');
         }
 
-        //update agenda data
+        // Perbarui data agenda
         $agenda->update([
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'tempat' => $request->tempat,
-            'tanggal' => $request->tanggal,
+            'nama_kegiatan' => $request->input('nama_kegiatan'),
+            'tempat' => $request->input('tempat'),
+            'tanggal' => $request->input('tanggal'),
         ]);
 
-        //return response
+        // Redirect atau kirim respons sesuai kebutuhan aplikasi
         return redirect()->route('agenda')->with('success', 'Agenda berhasil diperbaharui.');
     }
 
+
     public function updateberita(Request $request, $id)
     {
-        //define validation rules
+        // Define validation rules
         $validator = Validator::make($request->all(), [
-            'judul'     => 'required',
-            'gambar'     => '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'isi'   => 'required',
+            'judul'     => 'required|string|max:80', // Batasan 80 karakter untuk judul
+            'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'isi'       => 'required|string|max:425', // Batasan 425 karakter untuk isi
         ]);
 
-        //check if validation fails
+        // Check if validation fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        //find post by ID
+        // Find post by ID
         $berita = Berita::find($id);
 
-        //check if image is not empty
+        // Check if image is not empty
         if ($request->hasFile('gambar')) {
 
-            //upload image
+            // Upload image
             $gambar = $request->file('gambar');
             $gambar->storeAs('public/beritas/upload/', $gambar->hashName());
 
-            //delete old image
+            // Delete old image
             Storage::delete('public/beritas/upload/' . basename($berita->gambar));
 
-            //update berita with new image
+            // Update berita with new image
             $berita->update([
                 'judul'     => $request->judul,
-                'gambar'     => $gambar->hashName(),
-                'isi'   => $request->isi,
+                'gambar'    => $gambar->hashName(),
+                'isi'       => $request->isi,
             ]);
         } else {
 
-            //update berita without image
+            // Update berita without image
             $berita->update([
                 'judul'     => $request->judul,
-                'isi'   => $request->isi,
+                'isi'       => $request->isi,
             ]);
         }
 
-        //return response
+        // Return response
         return redirect()->route('berita')->with('success', 'Berita berhasil diperbaharui.');
     }
+
 
     public function updatert(Request $request, $id)
     {
