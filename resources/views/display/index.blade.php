@@ -322,7 +322,7 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
                 1; // Mulai dari -1 untuk menampilkan berita pertama segera setelah fungsi dijalankan
 
             function updateNews() {
-                var $newsContainers = $('.card.p-2'); // Ambil semua container card berita
+                var $newsContainers = $('.card'); // Ambil semua container card berita
                 var totalNews = $newsContainers.length;
 
                 // Sembunyikan semua berita dengan efek fadeOut
