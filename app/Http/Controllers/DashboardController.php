@@ -58,7 +58,6 @@ class DashboardController extends Controller
         $jadwalSholat = $this->getJadwalSholat();
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
-
         return view('dashboard.index', compact('date','currentHour','videodisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
@@ -497,7 +496,10 @@ public function simpanBerita(Request $request)
 
     public function getJadwalSholat()
     {
-        $url = "https://api.myquran.com/v2/sholat/jadwal/1204/2024/05";
+         $currentYear = date('Y');
+        $currentMonth = date('m');
+
+        $url = "https://api.myquran.com/v2/sholat/jadwal/1204/{$currentYear}/{$currentMonth}";
 
         $response = Http::get($url);
 

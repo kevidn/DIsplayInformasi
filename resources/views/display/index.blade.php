@@ -114,7 +114,7 @@
                             <div id="news-container" style="background-color: #00324946; padding: 10px; border-radius: 15px; height: 565px">
                                 <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 540px;">
                                     @foreach ($berita as $item)
-                                        <div class="card.berita">
+                                        <div class="card berita p-1">
                                             <img style="max-height: 150px;" class="card-img-top"
                                                 src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
 
@@ -322,7 +322,7 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
                 1; // Mulai dari -1 untuk menampilkan berita pertama segera setelah fungsi dijalankan
 
             function updateNews() {
-                var $newsContainers = $('.card.berita'); // Ambil semua container card berita
+                var $newsContainers = $('.card.berita.p-1'); // Ambil semua container card berita
                 var totalNews = $newsContainers.length;
 
                 // Sembunyikan semua berita dengan efek fadeOut
