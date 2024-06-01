@@ -114,7 +114,9 @@
                             <div id="news-container" style="background-color: #00324946; padding: 10px; border-radius: 15px; height: 565px">
                                 <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 540px;">
                                     @foreach ($berita as $item)
+
                                         <div class="card berita p-1">
+
                                             <img style="max-height: 150px;" class="card-img-top"
                                                 src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
 
