@@ -112,23 +112,23 @@
                     <div class="container" style="height: 530px; width: 100%;">
                         <div class="row" style="width: 100%;">
                             <div id="news-container" style="background-color: #00324946; padding: 10px; border-radius: 15px; height: 565px">
-                                <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 540px;  text-align: justify; text-justify: inter-word;">
+                                <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 540px;">
                                     @foreach ($berita as $item)
-                                        <div class="card p-2">
+                                        <div class="card">
                                             <img style="max-height: 150px;" class="card-img-top"
                                                 src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
 
                                             @if (Request::is("index"))
                                                 <div class="card-body" style="font-size: 18px;">
                                                     <h5 class="card-title">{{ $item->judul }}</h5>
-                                                    <div style="font-size: 13px;" class="card-text">
+                                                    <div style="font-size: 13px; text-align: justify; text-justify: inter-word;" class="card-text">
                                                         {{ Str::limit($item->isi, 500, '...') }}
                                                     </div>
                                                 </div>
                                             @else
                                                 <div class="card-body" style="font-size: 15px;">
                                                     <h5 class="card-title">{{ $item->judul }}</h5>
-                                                    <div style="font-size: 11px;" class="card-text">
+                                                    <div style="font-size: 11px; text-align: justify; text-justify: inter-word;" class="card-text">
                                                         {{ Str::limit($item->isi, 275, '...') }}
                                                     </div>
                                                 </div>

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('beritas', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
+            $table->string('judul', 80); // Batasan 80 karakter untuk judul
             $table->string('gambar');
-            $table->text('isi');
+            $table->string('isi', 425); // Batasan 425 karakter untuk isi
             $table->timestamps();
         });
     }

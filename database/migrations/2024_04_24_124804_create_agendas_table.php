@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('agendas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kegiatan');
+            $table->string('nama_kegiatan', 65); // Menambahkan batasan panjang 65 karakter
             $table->string('tempat');
-            $table->string('tanggal');
+            $table->date('tanggal'); // Menggunakan tipe data date untuk tanggal
             $table->timestamps();
         });
     }
