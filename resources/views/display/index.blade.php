@@ -344,7 +344,7 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
             setInterval(updateNews, 20000);
         });
 
-
+        //cuaca
         function updateWeather() {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
@@ -369,6 +369,16 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
         }
 
         setInterval(updateWeather, 1800000); // Setiap 30 menit (1800000 ms)
+
+
+         //auto refresh
+
+         function autoRefresh() {
+            location.reload();
+        }
+
+        // Set interval untuk memanggil fungsi autoRefresh setiap 1 jam (3600000 milidetik)
+        setInterval(autoRefresh, 1800000);
     </script>
 </body>
 
