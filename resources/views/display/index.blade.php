@@ -51,7 +51,7 @@
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
-                            document.body.style.zoom = '110%';
+                            document.body.style.zoom = '93.5%';
                         });
                     </script>
 
@@ -124,7 +124,7 @@
                                                 <div class="card-body" style="font-size: 18px;">
                                                     <h5 class="card-title">{{ $item->judul }}</h5>
                                                     <div style="font-size: 13px; text-align: justify; text-justify: inter-word;" class="card-text">
-                                                        {{ Str::limit($item->isi, 500, '...') }}
+                                                        {{ Str::limit($item->isi, 460, '...') }}
                                                     </div>
                                                 </div>
                                             @else
@@ -166,7 +166,7 @@
                                     <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" autoplay></iframe>
                                 @elseif ($videodisplay->videolokal)
                                     {{-- Jika video dari lokal --}}
-                                    <video width="800" height="375" controls autoplay muted loop>
+                                    <video width="800" height="375" controls autoplay loop>
                                         <source src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
@@ -185,7 +185,6 @@
                                 </video>
                             @endif
                         </div>
-
 
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
@@ -377,7 +376,7 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
             location.reload();
         }
 
-        // Set interval untuk memanggil fungsi autoRefresh setiap 1 jam (3600000 milidetik)
+        // Set interval untuk memanggil fungsi autoRefresh setiap 30 menit
         setInterval(autoRefresh, 1800000);
     </script>
 </body>
