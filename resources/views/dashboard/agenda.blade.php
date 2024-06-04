@@ -23,24 +23,40 @@
                 <div class="card-body">
                     <div class="row">
                         @foreach ($agenda as $singleAgenda)
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $singleAgenda->nama_kegiatan }}</h5>
-                                    <p class="card-text">&#128205; Tempat: {{ $singleAgenda->tempat }}</p>
-                                    <p>&#128197; Tanggal: <span class="agenda-tanggal" data-tanggal="{{ $singleAgenda->tanggal }}"></span></p>
-                                    @if (auth()->user()->userlevel === 'Admin')
-                                    <form action="{{ route('hapusAgenda', $singleAgenda->id) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a href="{{ route('editagenda', ['id' => $singleAgenda->id]) }}" class="btn btn-warning">&#9998; Edit Agenda</a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus agenda ini?')">&#128465; Hapus Agenda</button>
-                                    </form>
-                                    @endif
+                        @php
+                            // Menghitung selisih hari antara tanggal agenda dan tanggal hari ini
+                            $selisihHari = (strtotime($singleAgenda->tanggal) - strtotime('today')) / (60 * 60 * 24);
+
+                            // Tambahkan kelas CSS tambahan untuk badge berdasarkan selisih hari
+                            $badgeClass = $selisihHari < 0 ? 'badge-danger' : ($selisihHari == 0 ? 'badge-success' : '');
+
+                            // Tambahkan juga teks notifikasi sesuai dengan selisih hari
+                            $badgeText = $selisihHari < 0 ? 'SUDAH LEWAT ' . abs($selisihHari) . ' HARI' : ($selisihHari == 0 ? 'HARI INI' : '');
+                        @endphp
+
+
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $singleAgenda->nama_kegiatan }}</h5>
+                                        <p class="card-text">&#128205; Tempat: {{ $singleAgenda->tempat }}</p>
+                                        <p>
+                                            &#128197; Tanggal: <span class="agenda-tanggal" data-tanggal="{{ $singleAgenda->tanggal }}"></span>
+                                            <span class="badge {{ $badgeClass }}">{{ $badgeText }} </span> <!-- Badge pemberitahuan -->
+                                        </p>
+                                        @if (auth()->user()->userlevel === 'Admin')
+                                            <form action="{{ route('hapusAgenda', $singleAgenda->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ route('editagenda', ['id' => $singleAgenda->id]) }}" class="btn btn-warning">&#9998; Edit Agenda</a>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus agenda ini?')">&#128465; Hapus Agenda</button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
+
                     </div>
                 </div>
             </div>
