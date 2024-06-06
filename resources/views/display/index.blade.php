@@ -223,7 +223,7 @@
                         @php
                             $counter = 0;
                         @endphp
-                        @foreach ($agenda as $item_agenda)
+                        @foreach ($agendadisplay as $item_agenda)
                             @if ($counter < 3)
                                 <div class="col-4">
                                     <div class="card" style="height: 950px; margin: 5px;">
@@ -265,7 +265,7 @@
     //Agenda
 
     var currentAgendaIndex = 0;
-var agendaItems = {!! json_encode($agenda) !!}; // Ambil data agenda dari PHP
+var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
 
 function formatTanggal(tanggal) {
     var options = { day: 'numeric', month: 'long', year: 'numeric' };

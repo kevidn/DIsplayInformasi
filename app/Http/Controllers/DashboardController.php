@@ -45,10 +45,11 @@ class DashboardController extends Controller
         // Buat array jam dari 1 sampai 24
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-        $agenda = Agenda::paginate(3);
+
         $berita = Berita::all();
         $videodisplay = Video::where('tampil', 1)->first();
         $total_berita = count($berita);
+        $agendadisplay = $this->agendadisplay();
         $agenda = Agenda::all();
         $total_agenda = count($agenda);
         $video = Video::all();
@@ -58,7 +59,7 @@ class DashboardController extends Controller
         $jadwalSholat = $this->getJadwalSholat();
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
-        return view('dashboard.index', compact('date','currentHour','videodisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
+        return view('dashboard.index', compact('date','currentHour','videodisplay', 'agendadisplay','cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
     public function berita(Request $request)
@@ -70,6 +71,13 @@ class DashboardController extends Controller
     {
         $agenda = Agenda::all();
         return view('dashboard.agenda', compact('agenda'));
+    }
+    public function agendadisplay()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
+
+        return $agendaNow;
     }
 
     public function akun(Request $request)
