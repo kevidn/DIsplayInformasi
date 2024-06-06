@@ -62,6 +62,14 @@ class DashboardController extends Controller
         return view('dashboard.index', compact('date','currentHour','videodisplay', 'agendadisplay','cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
+    public function agendaNow()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
+    
+        return $agendaNow;
+    }
+
     public function berita(Request $request)
     {
         $berita = Berita::all();
@@ -81,24 +89,20 @@ class DashboardController extends Controller
     }
 
     public function akun(Request $request)
-{
-    $loggedInUserId = auth()->id();
-    $users = User::all()->sortBy(function($user) use ($loggedInUserId) {
-        if ($user->id === $loggedInUserId) {
-            return 0; // Akun yang sedang login diberi prioritas tertinggi
-        } elseif ($user->name === 'DefaultAdmin') {
-            return 1; // Akun DefaultAdmin diberi prioritas kedua tertinggi
-        } else {
-            return $user->userlevel === 'Admin' ? 2 : 3; // Urutkan pengguna berdasarkan peran, dengan Admin di atas Guest
-        }
-    });
+    {
+        $loggedInUserId = auth()->id();
+        $users = User::all()->sortBy(function($user) use ($loggedInUserId) {
+            if ($user->id === $loggedInUserId) {
+                return 0; // Akun yang sedang login diberi prioritas tertinggi
+            } elseif ($user->name === 'DefaultAdmin') {
+                return 1; // Akun DefaultAdmin diberi prioritas kedua tertinggi
+            } else {
+                return $user->userlevel === 'Admin' ? 2 : 3; // Urutkan pengguna berdasarkan peran, dengan Admin di atas Guest
+            }
+        });
 
-    return view('dashboard.akun', compact('users')); // Kirim data pengguna yang telah diurutkan ke tampilan
-}
-
-
-
-
+        return view('dashboard.akun', compact('users')); // Kirim data pengguna yang telah diurutkan ke tampilan
+    }
 
     public function Runningtext(Request $request)
     {
