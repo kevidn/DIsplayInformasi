@@ -82,16 +82,21 @@
                             <div class="col-md-3 pr-1">
                                 <button type="submit" class="btn btn-success tombol">Update Profile</button>
                             </div>
+                        </form>
 
-                            <div class="col-md-3 pr-1">
-                                @if (Auth::check() && Auth::user()->name !== 'DefaultAdmin')
-                                    <form id="logout-form" action="{{ route('hapusakun') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger tombol">&#128465; Delete
-                                            Account</button>
-                                    </form>
-                                @endif
-                            </div>
+                        <div class="col-md-3 pr-1">
+                            @if (Auth::check() && Auth::user()->name !== 'DefaultAdmin')
+                                <form id="delete-account-form" action="{{ route('hapusakun') }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger tombol">&#128465; Delete Account</button>
+                                </form>
+                            @endif
+                        </div>
+
+
+
+
                         </div>
                     </form>
 

@@ -116,7 +116,8 @@ Route::middleware(['auth'])->group(function () {
     })->name('profile');
 
     Route::post('/update_profile', [DashboardController::class, 'update'])->name('update_profile');
-    Route::post('/delete_account', [DashboardController::class, 'hapusakun'])->name('hapusakun');
+    Route::delete('/hapusakun', [DashboardController::class, 'hapusakun'])->name('hapusakun');
+
     Route::delete('/delete_account_managemen', [DashboardController::class, 'hapusakunmanagemen'])->name('hapusakunmanagemen');
 
 });

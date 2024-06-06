@@ -66,7 +66,7 @@ class DashboardController extends Controller
     {
         $now = Carbon::now('Asia/Jakarta');
         $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
-    
+
         return $agendaNow;
     }
 
@@ -595,18 +595,18 @@ public function simpanBerita(Request $request)
      * @return \Illuminate\Http\Response
      */
     public function hapusakun()
-    {
-        $user = \App\Models\User::find(Auth::id());
+{
+    $user = \App\Models\User::find(Auth::id());
 
-        // Hapus user dari database
+    if ($user) {
         $user->delete();
-
-        // Logout user setelah menghapus akun
         Auth::logout();
-
-        // Redirect ke halaman lain, misalnya halaman beranda
         return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
     }
+
+    return redirect()->route('akun')->with('error', 'Failed to delete your account.');
+}
+
     public function hapusakunmanagemen(Request $request)
 {
     $userId = $request->input('user_id'); // Mengambil id pengguna dari request
