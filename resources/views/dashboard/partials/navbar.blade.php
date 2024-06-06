@@ -24,7 +24,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('index') }}" target="_blank">
                             <i class="now-ui-icons objects_spaceship"></i>
-                            <p><span class="d-lg-none d-md-block">Account</span>Tampilkan</p>
+                            <p><span class="d-lg-none d-md-block"></span>Tampilkan</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -49,7 +49,7 @@
                             @csrf
                             <a class="nav-link" href="{{ route('login') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="now-ui-icons media-1_button-power"></i>
-                                <p><span class="d-lg-none d-md-block">Account</span>Logout</p>
+                                <p><span class="d-lg-none d-md-block"></span>Logout</p>
                             </a>
                         </form>
                     </li>
@@ -77,7 +77,7 @@
                             @csrf
                             <a class="nav-link" href="{{ route('login') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="now-ui-icons media-1_button-power"></i>
-                                <p><span class="d-lg-none d-md-block">Account</span>Logout</p>
+                                <p><span class="d-lg-none d-md-block"></span>Logout</p>
                             </a>
                         </form>
                     </li>
@@ -86,7 +86,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('index') }}" target="_blank">
                             <i class="now-ui-icons objects_spaceship"></i>
-                            <p><span class="d-lg-none d-md-block">Account</span>Tampilkan</p>
+                            <p><span class="d-lg-none d-md-block"></span>Tampilkan</p>
                         </a>
                     </li>
                 @endif
