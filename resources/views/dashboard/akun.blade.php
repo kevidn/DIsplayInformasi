@@ -83,7 +83,7 @@
                                 <button type="submit" class="btn btn-success tombol">Update Profile</button>
                             </div>
 
-                            <div class="col-md-3 pr-1"">
+                            <div class="col-md-3 pr-1">
                                 @if (Auth::check() && Auth::user()->name !== 'DefaultAdmin')
                                     <form id="logout-form" action="{{ route('hapusakun') }}" method="POST">
                                         @csrf
