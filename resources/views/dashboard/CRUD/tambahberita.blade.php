@@ -28,8 +28,9 @@
                         <div class="form-group">
                             <label for="gambar" class="btn btn-info" style="font-size: 12px; color: white;">Pilih Gambar Berita</label>
                             <input type="file" name="gambar" id="gambar" class="form-control" required>
-                            <span id="gambarError" style="color: red; display: none;">Ukuran file gambar tidak boleh lebih dari 2MB</span> <!-- Elemen untuk menampilkan pesan kesalahan -->
+                            <span id="gambarError" style="color: red; display: none;"></span> <!-- Elemen untuk menampilkan pesan kesalahan -->
                         </div>
+
                         <button type="submit" class="btn btn-success">TAMBAH BERITA</button>
                     </form>
                 </div>
@@ -92,17 +93,27 @@
             return false;
         }
 
-        // Validasi ukuran file gambar (dalam byte)
-        var maxSize = 2 * 1024 * 1024; // 2MB
-        if (gambar && gambar.size > maxSize) {
-            gambarErrorElement.innerHTML = "Ukuran file gambar tidak boleh lebih dari 2MB";
-            gambarErrorElement.style.display = "block"; // Menampilkan pesan kesalahan
-            return false;
+        // Validasi tipe dan ukuran file gambar
+        var validExtensions = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
+        if (gambar) {
+            if (!validExtensions.includes(gambar.type)) {
+                gambarErrorElement.innerHTML = "Tipe file gambar harus berupa JPEG, PNG, JPG, GIF, atau SVG";
+                gambarErrorElement.style.display = "block"; // Menampilkan pesan kesalahan
+                return false;
+            }
+
+            var maxSize = 2 * 1024 * 1024; // 2MB
+            if (gambar.size > maxSize) {
+                gambarErrorElement.innerHTML = "Ukuran file gambar tidak boleh lebih dari 2MB";
+                gambarErrorElement.style.display = "block"; // Menampilkan pesan kesalahan
+                return false;
+            }
         }
 
         return true; // Form akan disubmit jika semua validasi berhasil
     }
 </script>
+
 
 
 
