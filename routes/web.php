@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 // ROUTE KHUSUS DISPLAY
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
+Route::get('/mobile-view', [DisplayController::class, 'showMobileView'])->name('showMobileView');
+
 
 
 

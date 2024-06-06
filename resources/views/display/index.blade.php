@@ -31,14 +31,16 @@
 
     </style>
 
-    <script>
-          document.addEventListener('DOMContentLoaded', function () {
-            var width = window.innerWidth;
-            if (width <= 1100) { // Sesuaikan ukuran layar yang diinginkan, misalnya 768px untuk mobile
-                window.location.href = '/not-allowed'; // Halaman yang ingin dialihkan
-            }
-        });
-    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var width = window.innerWidth;
+        if (width <= 1100) { // Sesuaikan ukuran layar yang diinginkan, misalnya 1100px untuk mobile
+            window.location.href = '/mobile-view'; // Route yang ingin dialihkan untuk perangkat mobile
+        }
+    });
+</script>
+
+
 
 
 

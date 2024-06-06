@@ -14,9 +14,6 @@ b<!-- Core JS Files -->
 <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('/demo/demo.js') }}"></script>
 
-body {
-    overflow-y: auto; /* Atur overflow-y ke auto untuk memungkinkan scrolling vertikal jika konten lebih panjang dari tinggi layar */
-}
 
 
 </body>

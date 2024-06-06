@@ -22,6 +22,11 @@ class DisplayController extends Controller
 
 
     }
+    public function showMobileView()
+{
+    return view('display.mobile');
+}
+
 
     public function index(Request $request)
     {
