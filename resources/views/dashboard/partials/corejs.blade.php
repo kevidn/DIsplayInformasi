@@ -1,4 +1,4 @@
-b<!-- Core JS Files -->
+<!-- Core JS Files -->
 <script src="{{ asset('/js/core/jquery.min.js') }}"></script>
 <script src="{{ asset('/js/core/popper.min.js') }}"></script>
 <script src="{{ asset('/js/core/bootstrap.min.js') }}"></script>
