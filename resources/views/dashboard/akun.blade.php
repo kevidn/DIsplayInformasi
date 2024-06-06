@@ -99,74 +99,112 @@
 
             </div>
             @if (auth()->user()->userlevel === 'Admin')
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="title">Account Management</h5>
-                    </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                @foreach ($users as $user)
-                                    <li class="list-group-item d-flex align-items-center">
-                                        @if($user->name === 'DefaultAdmin')
-                                            <img src="{{ asset('images/defaultadmin.png') }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
-                                        @elseif(!$user->gambarakun)
-                                            <img src="{{ asset('images/defaultakun.jpeg') }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
-                                        @else
-                                            <img src="{{ asset('storage/user_images/' . $user->gambarakun) }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
-                                        @endif
+<div class="card">
+    <div class="card-header">
+        <h5 class="title">Account Management</h5>
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            @foreach ($users as $user)
+            <li class="list-group-item d-flex align-items-center flex-wrap">
+                @if($user->name === 'DefaultAdmin')
+                <img src="{{ asset('images/defaultadmin.png') }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                @elseif(!$user->gambarakun)
+                <img src="{{ asset('images/defaultakun.jpeg') }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                @else
+                <img src="{{ asset('storage/user_images/' . $user->gambarakun) }}" alt="Profile Image" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                @endif
 
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="mb-0 custom-font-size">{{ $user->name }}</h5>
-                                            <style>
-                                                .custom-font-size {
-                                                    font-size: 17px;
-                                                    /* Ganti angka sesuai dengan ukuran font yang diinginkan */
-                                                }
+                <div class="d-flex align-items-center flex-grow-1">
+                    <h5 class="mb-0 custom-font-size">{{ $user->name }}</h5>
+                    <style>
+                        .custom-font-size {
+                            font-size: 17px;
+                        }
 
-                                                .custom-font-size-badge {
-                                                    font-size: 11px;
-                                                    /* Ganti angka sesuai dengan ukuran font yang diinginkan */
-                                                }
-                                            </style>
-                                            <span style="margin-left: 5px;"></span>
-                                            <!-- Menambahkan spasi antara nama dan level -->
-                                            @if (Auth::user()->id === $user->id)
-                                                <!-- Menampilkan 'Anda' jika akun yang sedang ditampilkan adalah akun yang sedang login -->
-                                                <span class="badge badge-success custom-font-size-badge">Anda</span>
-                                            @elseif ($user->name === 'DefaultAdmin')
-                                                <span class="badge badge-primary custom-font-size-badge">Admin</span>
-                                            @elseif ($user->userlevel === 'Admin')
-                                                <span class="badge badge-info custom-font-size-badge">{{ $user->userlevel }}</span>
-                                            @elseif ($user->userlevel === 'Guest')
-                                                <span class="badge badge-dark custom-font-size-badge">{{ $user->userlevel }}</span>
-                                            @endif
-                                        </div>
-
-                                        <div class="ml-auto">
-                                            <!-- Tombol edit dan hapus hanya muncul untuk user admin -->
-                                            @if (Auth::user()->id !== $user->id && $user->name !== 'DefaultAdmin')
-                                                <!-- Menyembunyikan tombol jika pengguna yang sedang login adalah pengguna saat ini -->
-                                                <form action="{{ route('ubahlevel', ['id' => $user->id, 'newLevel' => $user->userlevel === 'Admin' ? 'Guest' : 'Admin']) }}" method="POST" style="display: inline;">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Apakah Anda yakin ingin mengubah peran pengguna ini menjadi {{ $user->userlevel === 'Admin' ? 'Guest' : 'Admin' }}?')">
-                                                        {{ $user->userlevel === 'Admin' ? 'Make Guest' : 'Make Admin' }}
-                                                    </button>
-                                                </form>
-
-                                                <form action="{{ route('hapusakunmanagemen', ['user_id' => $user->id]) }}" method="POST" style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus akun ini?')">Delete</button>
-                                                </form>
-                                            @endif
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-
+                        .custom-font-size-badge {
+                            font-size: 11px;
+                        }
+                    </style>
+                    <span style="margin-left: 5px;"></span>
+                    @if (Auth::user()->id === $user->id)
+                    <span class="badge badge-success custom-font-size-badge">Anda</span>
+                    @elseif ($user->name === 'DefaultAdmin')
+                    <span class="badge badge-primary custom-font-size-badge">Admin</span>
+                    @elseif ($user->userlevel === 'Admin')
+                    <span class="badge badge-info custom-font-size-badge">{{ $user->userlevel }}</span>
+                    @elseif ($user->userlevel === 'Guest')
+                    <span class="badge badge-dark custom-font-size-badge">{{ $user->userlevel }}</span>
+                    @endif
                 </div>
-            @endif
+
+                <div class="ml-auto mt-2 mt-md-0">
+                    @if (Auth::user()->id !== $user->id && $user->name !== 'DefaultAdmin')
+                    <form action="{{ route('ubahlevel', ['id' => $user->id, 'newLevel' => $user->userlevel === 'Admin' ? 'Guest' : 'Admin']) }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Apakah Anda yakin ingin mengubah peran pengguna ini menjadi {{ $user->userlevel === 'Admin' ? 'Guest' : 'Admin' }}?')">
+                            {{ $user->userlevel === 'Admin' ? 'Make Guest' : 'Make Admin' }}
+                        </button>
+                    </form>
+
+                    <form action="{{ route('hapusakunmanagemen', ['user_id' => $user->id]) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus akun ini?')">Delete</button>
+                    </form>
+                    @endif
+                </div>
+            </li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endif
+
+<style>
+
+ /* CSS untuk Body Overflow saat Tampilan Mobile */
+ @media (max-width: 768px) {
+        body {
+            overflow-y: auto;
+        }
+    }
+    @media (max-width: 768px) {
+        .list-group-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .ml-auto {
+            margin-left: 0 !important;
+            margin-top: 10px;
+        }
+
+        .custom-font-size {
+            font-size: 15px;
+        }
+
+        .custom-font-size-badge {
+            font-size: 9px;
+        }
+
+        .btn {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+        .btn-sm {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+        .rounded-circle {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>
+
 
 
 
@@ -233,6 +271,7 @@
                                 /* Lebar tombol dalam piksel */
                             }
                         </style>
+                        @include('dashboard.partials.corejs')
                         <script>
                             function validateAkunForm() {
                                 var gambarAkun = document.getElementById("gambar_akun").files[0]; // Mendapatkan file gambar akun

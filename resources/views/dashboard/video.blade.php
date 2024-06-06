@@ -7,20 +7,22 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                     @if (auth()->user()->userlevel === 'Admin')
-                    <form action="{{ route('simpanVideo') }}" method="POST" class="d-flex align-items-center">
+                    <form action="{{ route('simpanVideo') }}" method="POST" class="d-flex align-items-center mb-3 flex-grow-1">
                         @csrf
                         <input type="text" name="link_youtube" class="form-control mr-2 custom-input" value=""
-                            placeholder="Silahkan Masukkan URL YouTube Disini!" style="width: 400px;">
+                            placeholder="Video Youtube">
                         <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
                     </form>
-                    <form action="{{ route('simpanVideolokal') }}" method="POST" class="d-flex align-items-center"
+                </div>
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                    <form action="{{ route('simpanVideolokal') }}" method="POST" class="d-flex align-items-center mb-3 flex-grow-1"
                     enctype="multipart/form-data" onsubmit="return validateFileSize()">
                     @csrf
-                    <div class="custom-file" style="width: 400px; margin-right: 10px;">
+                    <div class="custom-file mr-2 flex-grow-1">
                         <input type="file" name="video_file" class="custom-file-input" id="video_file">
-                        <label class="custom-file-label" for="video_file" id="file_label">Pilih video dari Komputer Anda!</label>
+                        <label class="custom-file-label" for="video_file" id="file_label">Video Lokal</label>
                     </div>
                     <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
                 </form>
@@ -141,6 +143,7 @@
         </div>
     </div>
 </div>
+@include('dashboard.partials.corejs')
 
 <script>
     document.getElementById('video_file').addEventListener('change', function() {
@@ -163,8 +166,8 @@
 
 <style>
     .custom-input {
-        width: 1060px;
-        /* Sesuaikan lebar sesuai kebutuhan */
+        width: 100%;
+        /* Adjust width as needed */
     }
 
     .custom-file-input {
@@ -187,5 +190,19 @@
 
     .badge {
         line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .custom-input {
+            width: 100%;
+        }
+
+        .custom-file {
+            width: 100%;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
     }
 </style>

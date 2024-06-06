@@ -32,7 +32,7 @@ class DisplayController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
 
         //Ambil Data
-        
+
         $berita = Berita::all();
         $videodisplay = Video::where('tampil', 1)->first();
         $header = Header::all();
@@ -40,16 +40,16 @@ class DisplayController extends Controller
         $jadwalSholat = $this->getJadwalSholat();
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
         $video = Video::all();
-        $agenda = $this->agenda();
+        $agendadisplay = $this->agendadisplay();
 
-        return view('display.index', compact('video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
+        return view('display.index', compact('video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
     }
-    
-    public function agenda()
+
+    public function agendadisplay()
     {
         $now = Carbon::now('Asia/Jakarta');
         $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
-    
+
         return $agendaNow;
     }
 
