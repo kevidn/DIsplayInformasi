@@ -11,6 +11,7 @@ use App\Models\RT;
 use App\Models\Berita;
 use App\Models\Agenda;
 use App\Models\Video;
+use App\Models\User;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Http;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class DashboardController extends Controller
 {
@@ -43,20 +45,29 @@ class DashboardController extends Controller
         // Buat array jam dari 1 sampai 24
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
-        $agenda = Agenda::paginate(3);
+
         $berita = Berita::all();
         $videodisplay = Video::where('tampil', 1)->first();
         $total_berita = count($berita);
+        $agendadisplay = $this->agendadisplay();
         $agenda = Agenda::all();
         $total_agenda = count($agenda);
-        $video = Video::paginate(1);
+        $video = Video::all();
         $total_video = count($video);
         $header = Header::all();
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
+        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
+        return view('dashboard.index', compact('date','currentHour','videodisplay', 'agendadisplay','cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
+    }
 
-        return view('dashboard.index', compact('currentHour','videodisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita','total_agenda', 'total_video', 'video', 'jadwalSholat'));
+    public function agendaNow()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
+
+        return $agendaNow;
     }
 
     public function berita(Request $request)
@@ -69,10 +80,28 @@ class DashboardController extends Controller
         $agenda = Agenda::all();
         return view('dashboard.agenda', compact('agenda'));
     }
+    public function agendadisplay()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
+
+        return $agendaNow;
+    }
 
     public function akun(Request $request)
     {
-        return view('dashboard.akun');
+        $loggedInUserId = auth()->id();
+        $users = User::all()->sortBy(function($user) use ($loggedInUserId) {
+            if ($user->id === $loggedInUserId) {
+                return 0; // Akun yang sedang login diberi prioritas tertinggi
+            } elseif ($user->name === 'DefaultAdmin') {
+                return 1; // Akun DefaultAdmin diberi prioritas kedua tertinggi
+            } else {
+                return $user->userlevel === 'Admin' ? 2 : 3; // Urutkan pengguna berdasarkan peran, dengan Admin di atas Guest
+            }
+        });
+
+        return view('dashboard.akun', compact('users')); // Kirim data pengguna yang telah diurutkan ke tampilan
     }
 
     public function Runningtext(Request $request)
@@ -259,47 +288,56 @@ public function hapusTampilStatus($id)
     return redirect()->route('video')->with('success', 'Video Berhasil Di Hapus Dari Display');
 }
 
-    public function simpanAgenda(Request $request)
-    {
-        // Simpan data agenda ke database
-        $agenda = new Agenda;
-        $agenda->nama_kegiatan = $request->input('nama_kegiatan');
-        $agenda->tempat = $request->input('tempat');
-        $agenda->tanggal = $request->input('tanggal');
-        $agenda->save();
+public function simpanAgenda(Request $request)
+{
+    // Validasi data
+    $request->validate([
+        'nama_kegiatan' => 'required|string|max:65',
+        'tempat' => 'required|string',
+        'tanggal' => 'required|date',
+    ]);
 
-        // Redirect atau kirim respons sesuai kebutuhan aplikasi
-        return redirect()->route('agenda');
+    // Simpan data agenda ke database
+    $agenda = new Agenda;
+    $agenda->nama_kegiatan = $request->input('nama_kegiatan');
+    $agenda->tempat = $request->input('tempat');
+    $agenda->tanggal = $request->input('tanggal');
+    $agenda->save();
+
+    // Redirect atau kirim respons sesuai kebutuhan aplikasi
+    return redirect()->route('agenda')->with('success', 'Agenda berhasil ditambahkan.');
+}
+
+
+public function simpanBerita(Request $request)
+{
+    // Define validation rules
+    $validator = Validator::make($request->all(), [
+        'judul'     => 'required|string|max:80', // Batasan 80 karakter untuk judul
+        'gambar'    => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'isi'       => 'required|string|max:425', // Batasan 425 karakter untuk isi
+    ]);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
     }
 
-    public function simpanBerita(Request $request)
-    {
-        //define validation rules
-        $validator = Validator::make($request->all(), [
-            'judul'     => 'required',
-            'gambar'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'isi'   => 'required',
-        ]);
+    // Upload image
+    $gambar = $request->file('gambar');
+    $gambar->storeAs('public/beritas/upload/', $gambar->hashName());
 
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+    // Create berita
+    $berita = Berita::create([
+        'judul'     => $request->judul,
+        'gambar'    => $gambar->hashName(),
+        'isi'       => $request->isi,
+    ]);
 
-        //upload image
-        $gambar = $request->file('gambar');
-        $gambar->storeAs('public/beritas/upload/', $gambar->hashName());
+    // Return response
+    return redirect()->route('berita')->with('success', 'Berita berhasil disimpan.');
+}
 
-        //create berita
-        $berita = berita::create([
-            'judul'     => $request->judul,
-            'gambar'     => $gambar->hashName(),
-            'isi'   => $request->isi,
-        ]);
-
-        //return response
-        return redirect()->route('berita');
-    }
     public function simpanRT(Request $request)
     {
         // Simpan link YouTube ke database
@@ -362,84 +400,81 @@ public function hapusTampilStatus($id)
         return redirect()->route('runningtext')->with('success', 'Running Text berhasil dihapus.');
     }
 
-    public function updateagenda(Request $request, $id)
+    public function updateAgenda(Request $request, $id)
     {
-        //define validation rules
-        $validator = Validator::make($request->all(), [
-            'nama_kegiatan'     => 'required',
-            'tempat'     => 'required',
-            'tanggal'   => '',
+        // Validasi data
+        $request->validate([
+            'nama_kegiatan' => 'required|string|max:65',
+            'tempat' => 'required|string',
+            'tanggal' => 'required|date',
         ]);
 
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        //find agenda by ID
+        // Temukan agenda berdasarkan ID
         $agenda = Agenda::find($id);
 
-        //check if agenda exists
+        // Cek jika agenda tidak ditemukan
         if (!$agenda) {
-            return response()->json(['message' => 'Agenda not found'], 404);
+            return redirect()->route('agenda')->with('error', 'Agenda tidak ditemukan.');
         }
 
-        //update agenda data
+        // Perbarui data agenda
         $agenda->update([
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'tempat' => $request->tempat,
-            'tanggal' => $request->tanggal,
+            'nama_kegiatan' => $request->input('nama_kegiatan'),
+            'tempat' => $request->input('tempat'),
+            'tanggal' => $request->input('tanggal'),
         ]);
 
-        //return response
+        // Redirect atau kirim respons sesuai kebutuhan aplikasi
         return redirect()->route('agenda')->with('success', 'Agenda berhasil diperbaharui.');
     }
 
+
     public function updateberita(Request $request, $id)
     {
-        //define validation rules
+        // Define validation rules
         $validator = Validator::make($request->all(), [
-            'judul'     => 'required',
-            'gambar'     => '|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'isi'   => 'required',
+            'judul'     => 'required|string|max:80', // Batasan 80 karakter untuk judul
+            'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'isi'       => 'required|string|max:425', // Batasan 425 karakter untuk isi
         ]);
 
-        //check if validation fails
+        // Check if validation fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        //find post by ID
+        // Find post by ID
         $berita = Berita::find($id);
 
-        //check if image is not empty
+        // Check if image is not empty
         if ($request->hasFile('gambar')) {
 
-            //upload image
+            // Upload image
             $gambar = $request->file('gambar');
             $gambar->storeAs('public/beritas/upload/', $gambar->hashName());
 
-            //delete old image
+            // Delete old image
             Storage::delete('public/beritas/upload/' . basename($berita->gambar));
 
-            //update berita with new image
+            // Update berita with new image
             $berita->update([
                 'judul'     => $request->judul,
-                'gambar'     => $gambar->hashName(),
-                'isi'   => $request->isi,
+                'gambar'    => $gambar->hashName(),
+                'isi'       => $request->isi,
             ]);
         } else {
 
-            //update berita without image
+            // Update berita without image
             $berita->update([
                 'judul'     => $request->judul,
-                'isi'   => $request->isi,
+                'isi'       => $request->isi,
             ]);
         }
 
-        //return response
+        // Return response
         return redirect()->route('berita')->with('success', 'Berita berhasil diperbaharui.');
     }
+
 
     public function updatert(Request $request, $id)
     {
@@ -473,7 +508,10 @@ public function hapusTampilStatus($id)
 
     public function getJadwalSholat()
     {
-        $url = "https://api.myquran.com/v2/sholat/jadwal/1204/2024/05";
+         $currentYear = date('Y');
+        $currentMonth = date('m');
+
+        $url = "https://api.myquran.com/v2/sholat/jadwal/1204/{$currentYear}/{$currentMonth}";
 
         $response = Http::get($url);
 
@@ -557,17 +595,48 @@ public function hapusTampilStatus($id)
      * @return \Illuminate\Http\Response
      */
     public function hapusakun()
-    {
-        $user = \App\Models\User::find(Auth::id());
+{
+    $user = \App\Models\User::find(Auth::id());
 
-        // Hapus user dari database
+    if ($user) {
         $user->delete();
-
-        // Logout user setelah menghapus akun
         Auth::logout();
-
-        // Redirect ke halaman lain, misalnya halaman beranda
         return redirect()->route('login')->with('success', 'Your account has been deleted successfully.');
     }
 
+    return redirect()->route('akun')->with('error', 'Failed to delete your account.');
 }
+
+    public function hapusakunmanagemen(Request $request)
+{
+    $userId = $request->input('user_id'); // Mengambil id pengguna dari request
+
+    $user = \App\Models\User::find($userId); // Mengambil data pengguna berdasarkan id
+
+    // Pastikan pengguna yang sedang login tidak dapat menghapus akunnya sendiri
+    if ($user && $user->id !== Auth::id()) {
+        // Hapus user dari database
+        $user->delete();
+
+        // Redirect ke halaman lain, misalnya halaman manajemen akun
+        return redirect()->route('akun')->with('success', 'Akun telah dihapus dengan berhasil.');
+    } else {
+        // Redirect dengan pesan kesalahan jika pengguna mencoba menghapus akun sendiri
+        return redirect()->route('akun')->with('error', 'Tidak dapat menghapus akun sendiri.');
+    }
+}
+public function ubahLevelAkun($id, $newLevel)
+{
+    $user = User::findOrFail($id);
+    $user->userlevel = $newLevel;
+    $user->save();
+
+    $message = ($newLevel === 'Admin') ? 'User berhasil diubah menjadi Admin' : 'User berhasil diubah menjadi Guest';
+
+    return redirect()->route('akun')->with('success', $message);
+}
+
+}
+
+
+

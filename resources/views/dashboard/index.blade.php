@@ -7,11 +7,11 @@
 </div>
 
 <!--Display-->
-<div class="content">
+<div class="">
     <div class="row mx-auto mt-4 mb-4">
         <div class="col-md-12">
             <div class="card" style="background-image: url('/images/bg.jpg'); background-size: 140%; font-size: small;">
-                <div class="card-body" style="max">
+                <div class="card-body" style="max" id="preview">
                     @include('display.index')
                 </div>
             </div>
@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="col-9">
                                             <div class="numbers">
-                                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Video Yang DiPutar</p>
+                                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Daftar Video Yang Tersedia</p>
                                                 <h5 class="font-weight-bolder">
                                                     {{ $total_video }}
                                                 </h5>

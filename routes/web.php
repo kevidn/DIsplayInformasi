@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 // ROUTE KHUSUS DISPLAY
 Route::get('/index', [DisplayController::class, 'index'])->name('index');
+Route::get('/mobile-view', [DisplayController::class, 'showMobileView'])->name('showMobileView');
+
 
 
 
@@ -32,6 +34,8 @@ Route::get('/akun', [DashboardController::class, 'akun'])->name('akun');
 Route::get('/runningtext', [DashboardController::class, 'runningtext'])->name('runningtext');
 Route::get('/video', [DashboardController::class, 'video'])->name('video');
 
+
+
 Route::get('/tambahagenda', [DashboardController::class, 'tambahagenda'])->name('tambahagenda');
 Route::get('/tambahberita', [DashboardController::class, 'tambahberita'])->name('tambahberita');
 Route::get('/editagenda/{id}', [DashboardController::class, 'editagenda'])->name('editagenda');
@@ -43,6 +47,9 @@ Route::post('/simpanVideolokal', [DashboardController::class, 'simpanVideolokal'
 Route::post('/simpanAgenda', [DashboardController::class, 'simpanAgenda'])->name('simpanAgenda');
 Route::post('/simpanBerita', [DashboardController::class, 'simpanBerita'])->name('simpanBerita');
 Route::post('/simpanRT', [DashboardController::class, 'simpanRT'])->name('simpanRT');
+Route::post('/ubahlevel/{id}/{newLevel}', [DashboardController::class, 'ubahLevelAkun'])->name('ubahlevel');
+
+
 
 //ROUTE KHUSUS MENGHAPUS
 Route::delete('/hapusberita/{id}', [DashboardController::class, 'destroyberita'])->name('hapusBerita');
@@ -56,6 +63,7 @@ Route::put('/updateberita/{id}', [DashboardController::class, 'updateberita'])->
 Route::put('/updatert/{id}', [DashboardController::class, 'updatert'])->name('updateRt');
 Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'updateTampilStatus'])->name('tampilkanVideoKeDisplay');
 Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusTampilStatus'])->name('hapusVideoKeDisplay');
+
 
 
 
@@ -108,6 +116,8 @@ Route::middleware(['auth'])->group(function () {
     })->name('profile');
 
     Route::post('/update_profile', [DashboardController::class, 'update'])->name('update_profile');
-    Route::post('/delete_account', [DashboardController::class, 'hapusakun'])->name('hapusakun');
+    Route::delete('/hapusakun', [DashboardController::class, 'hapusakun'])->name('hapusakun');
+
+    Route::delete('/delete_account_managemen', [DashboardController::class, 'hapusakunmanagemen'])->name('hapusakunmanagemen');
 
 });

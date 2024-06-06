@@ -22,35 +22,40 @@ class DisplayController extends Controller
 
 
     }
+    public function showMobileView()
+{
+    return view('display.mobile');
+}
+
 
     public function index(Request $request)
     {
 
         //array untuk cuaca
         $currentHour = Carbon::now('Asia/Jakarta')->format('H'); // Mendapatkan jam saat ini dalam format 24 jam dari zona waktu Asia/Jakarta
-
-        //Ambil Data
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
         $cuaca = $this->cuacaService->getWeather($city);
+
+        //Ambil Data
+
         $berita = Berita::all();
-        $agenda = Agenda::all();
         $videodisplay = Video::where('tampil', 1)->first();
         $header = Header::all();
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
+        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
+        $video = Video::all();
+        $agendadisplay = $this->agendadisplay();
 
-
-
-
-
-        return view('display.index', compact('currentHour','cuaca', 'berita', 'header', 'RTs', 'agenda', 'videodisplay', 'jadwalSholat'));
+        return view('display.index', compact('video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
     }
 
-    public function video()
+    public function agendadisplay()
     {
-        $video = Video::all(); // Mengambil semua data video dari database
+        $now = Carbon::now('Asia/Jakarta');
+        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
 
-        return view('display.index', compact('video'));
+        return $agendaNow;
     }
 
     public function getJadwalSholat()
