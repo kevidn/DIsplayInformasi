@@ -117,7 +117,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 });
 
-
+Auth::routes(['register' => false]);
+Auth::routes([
+    'register' => false, // Registration Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
+  ]);
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', function () {

@@ -3,7 +3,12 @@
 @include('dashboard.partials.navbar')
 
 
-<div class="panel-header panel-header-sm">
+<div class="panel-header">
+    <div class="header text-center">
+        <h2 class="title">Hai, Selamat Datang {{ Auth::user()->name }}</h2>
+        <p class="category">Ini Adalah Menu Utama Pada Dashboard. Kamu Dapat Melakukan Seluruh Konfigurasi Display Disini.</p>
+
+    </div>
 </div>
 
 <!--Display-->
