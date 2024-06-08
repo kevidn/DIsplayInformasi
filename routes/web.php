@@ -48,6 +48,8 @@ Route::post('/simpanVideo', [DashboardController::class, 'simpanVideo'])->name('
 Route::post('/simpanVideolokal', [DashboardController::class, 'simpanVideolokal'])->name('simpanVideolokal');
 Route::post('/simpanAgenda', [DashboardController::class, 'simpanAgenda'])->name('simpanAgenda');
 Route::post('/simpanBerita', [DashboardController::class, 'simpanBerita'])->name('simpanBerita');
+Route::post('/create-user-account', [DashboardController::class, 'createUserAccount'])->name('create.user.account');
+
 
 
 
@@ -60,6 +62,7 @@ Route::delete('/hapusagenda/{id}', [DashboardController::class, 'destroyagenda']
 Route::delete('/hapusvideo/{id}', [DashboardController::class, 'destroyVideo'])->name('hapusVideo');
 Route::delete('/hapusRT/{id}', [DashboardController::class, 'destroyRT'])->name('hapusRT');
 Route::delete('/hapus-quotes/{id}', [DashboardController::class, 'hapusQuotes'])->name('hapusQuotes');
+Route::delete('/hapusgambarslide/{id}', [DashboardController::class, 'deleteImage'])->name('hapusgambarslide');
 
 
 
@@ -68,12 +71,13 @@ Route::put('/updateagenda/{id}', [DashboardController::class, 'updateagenda'])->
 Route::put('/updateberita/{id}', [DashboardController::class, 'updateberita'])->name('updateBerita');
 Route::put('/updatert/{id}', [DashboardController::class, 'updatert'])->name('updateRt');
 Route::put('/updatequotes/{id}', [DashboardController::class, 'updateQuotes'])->name('updateQuotes');
+Route::put('/updategambarslide/{id}', [DashboardController::class, 'updateImage'])->name('updategambarslide');
 Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'updateTampilStatus'])->name('tampilkanVideoKeDisplay');
 Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusTampilStatus'])->name('hapusVideoKeDisplay');
 
 
-Route::put('/updategambarslide/{id}', [DashboardController::class, 'updateImage'])->name('updategambarslide');
-Route::delete('/hapusgambarslide/{id}', [DashboardController::class, 'deleteImage'])->name('hapusgambarslide');
+
+
 
 
 
@@ -83,7 +87,7 @@ Route::delete('/hapusgambarslide/{id}', [DashboardController::class, 'deleteImag
 // Route::get('/buattes', [DashboardController::class, 'buattes'])->name('buattes');
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -117,12 +121,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 });
 
-Auth::routes(['register' => false]);
-Auth::routes([
-    'register' => false, // Registration Routes...
-    'reset' => false, // Password Reset Routes...
-    'verify' => false, // Email Verification Routes...
-  ]);
+
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', function () {

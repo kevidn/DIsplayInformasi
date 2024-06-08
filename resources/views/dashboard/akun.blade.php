@@ -229,44 +229,48 @@
             }
         </style>
         @if (auth()->user()->userlevel === 'Admin')
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="title">Create User Account</h5>
-                    <div class="card-body">
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6 pr-1">
-                                    <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            placeholder="Nama">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 pr-1">
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="text" class="form-control" id="password" name="password"
-                                            placeholder="Password">
-                                    </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">Create User Account</h5>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('create.user.account') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama" required>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3 pr-1">
-                                    <button type="submit" class="btn btn-success">Create User Account</button>
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                                 </div>
-        @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 pr-1">
+                                <button type="submit" class="btn btn-success">Create User Account</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+                    @endif
 
 
 
 
-    </div>
-</div>
-</div>
-</div>
-    </div>
 
 
+
+
+
+
+
+                </div>
 <div class="col-md-4">
     <div class="card card-user">
         <div class="image">

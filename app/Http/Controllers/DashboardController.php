@@ -744,4 +744,28 @@ public function deleteImage($id)
 
         return redirect()->route('akun')->with('success', $message);
     }
+    public function createUserAccount(Request $request)
+    {
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Cek apakah pengguna yang sedang melakukan permintaan adalah Admin
+        if (auth()->user()->userlevel === 'Admin') {
+            // Buat akun pengguna baru
+            $user = new User();
+            $user->name = $request->name;
+            $user->password = Hash::make($request->password);
+            $user->userlevel = 'Guest'; // Atur level pengguna baru sebagai Guest
+            $user->save();
+
+            // Redirect kembali ke halaman sebelumnya dengan pesan sukses
+            return redirect()->back()->with('success', 'User account has been created successfully.');
+        } else {
+            // Redirect kembali ke halaman sebelumnya dengan pesan error
+            return redirect()->back()->with('error', 'You do not have permission to create user accounts.');
+        }
+    }
 }
