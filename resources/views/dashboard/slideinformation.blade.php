@@ -15,10 +15,11 @@
                 <div class="card-header">
                     <h4 class="card-title">Image Viewer</h4>
                 </div>
+                @foreach ($slideinformation as $singleSlideinformation)
                 <div class="card-body text-center">
                     <!-- Gambar yang ingin ditampilkan -->
                     <div class="text-center">
-                        <img src="{{ asset('images/ppdb.png') }}" class="img-thumbnail img-portrait bordered-image" data-toggle="modal" data-target="#imageModal">
+                        <img src="{{ asset('/storage/slideinformation/upload/' . $singleSlideinformation->gambar) }}" class="img-thumbnail img-portrait bordered-image" data-toggle="modal" data-target="#imageModal">
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <a href="#" class="btn btn-warning mr-2">&#9998; Ganti Gambar</a>
@@ -29,6 +30,7 @@
                         </form>
                     </div>
                 </div>
+                @endforeach
             </div>
             <style>
                 .bordered-image {
@@ -65,10 +67,10 @@
                 </div>
                 <div class="card-body">
                     <!-- Quote 1 -->
+                    @foreach ($slideinformation as $singleSlideinformation)
                     <div class="quote-card">
                         <blockquote class="blockquote text-center">
-                            <p class="mb-0">"عن أبي سعيد الخدري رضي الله عنه قال: قال رسول الله صلى الله عليه وسلم: «ما يصيب المسلم من نصب ولا وصب ولا هم ولا حزن ولا أذى ولا غم حتى الشوكة يشاكها إلا كفر الله بها من خطاياه» (رواه البخاري ومسلم)
-                               <br> Dari Abu Sa'id al-Khudri r.a., ia berkata: Rasulullah SAW bersabda: "Tidak ada seorang muslim yang tertimpa suatu penyakit, kelelahan, kesusahan, kesedihan, gangguan, atau kesulitan hingga duri yang menusuknya, melainkan Allah akan menghapus dosa-dosanya karena hal itu." (HR. Bukhari dan Muslim)"</p>
+                            <p class="mb-0">{{ $singleSlideinformation->quotes }}</p>
                             <footer class="blockquote-footer">Qur'an 2:153</footer>
                         </blockquote>
                         <div class="d-flex justify-content-center mt-3">
@@ -79,6 +81,7 @@
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus gambar ini?')">&#128465; Hapus Quotes</button>
                             </form>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

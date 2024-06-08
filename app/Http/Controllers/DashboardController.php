@@ -12,6 +12,7 @@ use App\Models\Berita;
 use App\Models\Agenda;
 use App\Models\Video;
 use App\Models\User;
+use App\Models\Slideinformation;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Http;
@@ -80,10 +81,10 @@ class DashboardController extends Controller
         $agenda = Agenda::all();
         return view('dashboard.agenda', compact('agenda'));
     }
-    public function sideinformation(Request $request)
+    public function slideinformation(Request $request)
     {
-
-        return view('dashboard.sideinformation');
+        $slideinformation = Slideinformation::all();
+        return view('dashboard.slideinformation', compact('slideinformation'));
     }
     public function agendadisplay()
     {

@@ -29,8 +29,8 @@
             <p> List Agenda</p>
         </a>
     </li>
-    <li class="{{ Request::is('sideinformation') ? 'active' : '' }}">
-        <a href="{{ route('sideinformation') }}">
+    <li class="{{ Request::is('slideinformation') ? 'active' : '' }}">
+        <a href="{{ route('slideinformation') }}">
             <i class="now-ui-icons files_paper"></i>
             <p>Slide Information</p>
         </a>

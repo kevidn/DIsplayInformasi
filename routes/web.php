@@ -33,7 +33,7 @@ Route::get('/agenda', [DashboardController::class, 'agenda'])->name('agenda');
 Route::get('/akun', [DashboardController::class, 'akun'])->name('akun');
 Route::get('/runningtext', [DashboardController::class, 'runningtext'])->name('runningtext');
 Route::get('/video', [DashboardController::class, 'video'])->name('video');
-Route::get('/sideinformation', [DashboardController::class, 'sideinformation'])->name('sideinformation');
+Route::get('/slideinformation', [DashboardController::class, 'slideinformation'])->name('slideinformation');
 
 
 
