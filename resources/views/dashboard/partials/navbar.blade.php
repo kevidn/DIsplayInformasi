@@ -36,7 +36,7 @@
                                     <img class="avatar border-gray" src="{{ asset('storage/user_images/' . Auth::user()->gambarakun) }}" alt="..." style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
                                 @endif
                                 <p>
-                                    <span class="d-lg-none d-md-block">Account</span>
+                                    <span class="d-lg-none d-md-block"></span>
                                     {{ Auth::user()->name }} ({{ Auth::user()->userlevel }})
                                 </p>
                             </a>
