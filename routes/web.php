@@ -10,10 +10,10 @@ use app\Http\Middleware\UnregisteredUser;
 use App\Http\Controllers\Api\AgendaController;
 
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
 
-});
+// });
 
 
 

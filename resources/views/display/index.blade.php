@@ -132,7 +132,7 @@
                                     @foreach ($berita as $item)
 
                                         @if (Request::is('index'))
-                                            <div class="card berita p-1">
+                                        <div class="card berita p-1">
 
                                             <img style="max-height: 150px;" class="card-img-top"
                                                 src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
@@ -155,7 +155,7 @@
 
                                         </div>
                                         @else
-                                            <div class="card berita">
+                                        <div class="card berita">
 
                                             <img style="max-height: 150px;" class="card-img-top"
                                                 src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
