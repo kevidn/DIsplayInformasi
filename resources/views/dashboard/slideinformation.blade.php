@@ -4,7 +4,7 @@
 <div class="panel-header">
     <div class="header text-center">
         <h2 class="title">Slide Information</h2>
-        <p class="category">Kamu Bisa Mengatur Menu Sliding Information Disini</p>
+        <p class="category">Kamu Bisa Mengatur Menu Sliding Informasi Disini</p>
 
     </div>
 </div>
@@ -16,21 +16,30 @@
                     <h4 class="card-title">Image Viewer</h4>
                 </div>
                 @foreach ($slideinformation as $singleSlideinformation)
-                <div class="card-body text-center">
-                    <!-- Gambar yang ingin ditampilkan -->
-                    <div class="text-center">
-                        <img src="{{ asset('/storage/slideinformation/upload/' . $singleSlideinformation->gambar) }}" class="img-thumbnail img-portrait bordered-image" data-toggle="modal" data-target="#imageModal">
-                    </div>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a href="#" class="btn btn-warning mr-2">&#9998; Ganti Gambar</a>
-                        <form id="delete-image-form" action="" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus gambar ini?')">&#128465; Hapus Gambar</button>
-                        </form>
-                    </div>
-                </div>
-                @endforeach
+<div class="card-body text-center">
+    <!-- Gambar yang ingin ditampilkan -->
+    <div class="text-center">
+        <img src="{{ asset('/storage/slideinformation/upload/' . $singleSlideinformation->gambar) }}" class="img-thumbnail img-portrait bordered-image" data-toggle="modal" data-target="#imageModal">
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        <form id="update-image-form-{{ $singleSlideinformation->id }}" action="{{ route('updategambarslide', ['id' => $singleSlideinformation->id]) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="form-group" style="display: none;">
+                <input type="file" name="gambar" class="form-control-file" accept="image/*" onchange="document.getElementById('update-image-form-{{ $singleSlideinformation->id }}').submit();">
+            </div>
+            <button type="button" class="btn btn-warning" onclick="document.getElementById('file-upload-{{ $singleSlideinformation->id }}').click();">&#9998; Ganti Gambar</button>
+            <input id="file-upload-{{ $singleSlideinformation->id }}" type="file" name="gambar" class="form-control-file" accept="image/*" style="display: none;" onchange="document.getElementById('update-image-form-{{ $singleSlideinformation->id }}').submit();">
+        </form>
+        <form id="delete-image-form-{{ $singleSlideinformation->id }}" action="{{ route('hapusgambarslide', ['id' => $singleSlideinformation->id]) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus gambar ini?')">&#128465; Hapus Gambar</button>
+        </form>
+    </div>
+</div>
+@endforeach
+
             </div>
             <style>
                 .bordered-image {
@@ -69,20 +78,29 @@
                     <!-- Quote 1 -->
                     @foreach ($slideinformation as $singleSlideinformation)
                     <div class="quote-card">
-                        <blockquote class="blockquote text-center">
-                            <p class="mb-0">{{ $singleSlideinformation->quotes }}</p>
-                            <footer class="blockquote-footer">Qur'an 2:153</footer>
-                        </blockquote>
-                        <div class="d-flex justify-content-center mt-3">
-                            <a href="#" class="btn btn-warning mr-2">&#9998; Edit Quotes</a>
-                            <form id="delete-image-form" action="" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus gambar ini?')">&#128465; Hapus Quotes</button>
+                        <form action="{{ route('updateQuotes', ['id' => $singleSlideinformation->id]) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <textarea class="form-control mb-3" name="quotes" rows="3">{{ $singleSlideinformation->quotes }}</textarea>
+
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="submit" class="btn btn-warning mr-2">Simpan Quotes</button>
                             </form>
-                        </div>
-                        @endforeach
+                                <form id="delete-quote-form" action="{{ route('hapusQuotes', ['id' => $singleSlideinformation->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus quotes ini?')">&#128465; Hapus Quotes</button>
+                                </form>
+
+                            </div>
+
+
                     </div>
+                    @endforeach
+                </div>
+
+                </div>
+
                 </div>
             </div>
         </div><!-- Style untuk mempercantik tampilan card quotes -->
