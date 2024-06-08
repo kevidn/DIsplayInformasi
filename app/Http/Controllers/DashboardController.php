@@ -59,8 +59,9 @@ class DashboardController extends Controller
         $RTs = RT::all();
         $jadwalSholat = $this->getJadwalSholat();
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
+        $slideinfo = Slideinformation::all();
 
-        return view('dashboard.index', compact('date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
+        return view('dashboard.index', compact('slideinfo', 'date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
     public function agendaNow()
