@@ -80,6 +80,11 @@ class DashboardController extends Controller
         $agenda = Agenda::all();
         return view('dashboard.agenda', compact('agenda'));
     }
+    public function sideinformation(Request $request)
+    {
+
+        return view('dashboard.sideinformation');
+    }
     public function agendadisplay()
     {
         $now = Carbon::now('Asia/Jakarta');

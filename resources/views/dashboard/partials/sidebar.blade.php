@@ -29,18 +29,12 @@
             <p> List Agenda</p>
         </a>
     </li>
-    <!-- <li>
-            <a href="">
-              <i class="now-ui-icons objects_umbrella-13"></i>
-              <p>Cuaca</p>
-            </a>
-          </li> -->
-          <!-- <li>
-            <a href="">
-              <i class="now-ui-icons travel_istanbul"></i>
-              <p>Jadwal Sholat</p>
-            </a>
-          </li> -->
+    <li class="{{ Request::is('sideinformation') ? 'active' : '' }}">
+        <a href="{{ route('sideinformation') }}">
+            <i class="now-ui-icons files_paper"></i>
+            <p>Slide Information</p>
+        </a>
+    </li>
           <li class="{{ Request::is('video') ? 'active' : '' }}">
             <a href="{{ route('video') }}">
               <i class="now-ui-icons media-1_button-play"></i>
