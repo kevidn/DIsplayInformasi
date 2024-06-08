@@ -2,13 +2,19 @@
 @include('dashboard.partials.sidebar')
 @include('dashboard.partials.navbar')
 
-<div class="panel-header panel-header-sm"></div>
+<div class="panel-header">
+    <div class="header text-center">
+        <h2 class="title">Menu Running Text</h2>
+        <p class="category">Kamu Bisa Mengubah Dan Menghapus Running Text Disini</p>
+
+    </div>
+</div>
 <div class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">RUNNING TEXT</h4>
+
 
 
                         <div class="form-group mb-0">

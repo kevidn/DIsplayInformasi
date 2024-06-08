@@ -4,7 +4,7 @@
 <div class="panel-header">
     <div class="header text-center">
         <h2 class="title">Slide Information</h2>
-        <p class="category">You Can Edit Slide Information From Here</p>
+        <p class="category">Kamu Bisa Mengatur Menu Sliding Information Disini</p>
 
     </div>
 </div>
