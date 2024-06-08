@@ -52,7 +52,7 @@ class DisplayController extends Controller
 
     public function agendadisplay()
     {
-        $now = Carbon::now('Asia/Jakarta');
+        $now = Carbon::now();
         $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
 
         return $agendaNow;
