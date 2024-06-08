@@ -9,9 +9,7 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            @if (Request::is('dashboard'))
-                <a class="navbar-brand" href="#">Hai, Selamat Datang {{ Auth::user()->name }}</a>
-            @endif
+
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -38,7 +36,7 @@
                                     <img class="avatar border-gray" src="{{ asset('storage/user_images/' . Auth::user()->gambarakun) }}" alt="..." style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
                                 @endif
                                 <p>
-                                    <span class="d-lg-none d-md-block">Account</span>
+                                    <span class="d-lg-none d-md-block"></span>
                                     {{ Auth::user()->name }} ({{ Auth::user()->userlevel }})
                                 </p>
                             </a>
