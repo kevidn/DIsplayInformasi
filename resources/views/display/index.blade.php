@@ -131,7 +131,8 @@
                                 <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 540px;">
                                     @foreach ($berita as $item)
 
-                                        <div class="card berita p-1">
+                                        @if (Request::is('index'))
+                                            <div class="card berita p-1">
 
                                             <img style="max-height: 150px;" class="card-img-top"
                                                 src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
@@ -153,6 +154,31 @@
                                             @endif
 
                                         </div>
+                                        @else
+                                            <div class="card berita">
+
+                                            <img style="max-height: 150px;" class="card-img-top"
+                                                src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
+
+                                            @if (Request::is("index"))
+                                                <div class="card-body" style="font-size: 18px;">
+                                                    <h5 class="card-title">{{ $item->judul }}</h5>
+                                                    <div style="font-size: 13px; text-align: justify; text-justify: inter-word;" class="card-text">
+                                                        {{ Str::limit($item->isi, 460, '...') }}
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="card-body" style="font-size: 15px;">
+                                                    <h5 class="card-title">{{ $item->judul }}</h5>
+                                                    <div style="font-size: 11px; text-align: justify; text-justify: inter-word;" class="card-text">
+                                                        {{ Str::limit($item->isi, 275, '...') }}
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                        </div>
+                                        @endif
+
                                     @endforeach
                                 </div>
                             </div>
@@ -374,7 +400,7 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
                 1; // Mulai dari -1 untuk menampilkan berita pertama segera setelah fungsi dijalankan
 
             function updateNews() {
-                var $newsContainers = $('.card.berita.p-1'); // Ambil semua container card berita
+                var $newsContainers = $('.card.berita'); // Ambil semua container card berita
                 var totalNews = $newsContainers.length;
 
                 // Sembunyikan semua berita dengan efek fadeOut

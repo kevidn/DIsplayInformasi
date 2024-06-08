@@ -97,15 +97,7 @@
 
 
 
-                            <div class="col-md-3 pr-1">
-                                @if (Auth::check() && Auth::user()->name !== 'DefaultAdmin')
-                                    <form id="logout-form" action="{{ route('hapusakun') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger tombol">&#128465; Delete
-                                            Account</button>
-                                    </form>
-                                @endif
-                            </div>
+                           
                         </div>
                     </form>
 
