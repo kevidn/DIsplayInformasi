@@ -18,7 +18,29 @@
         }
 
         .fade-in {
+            animation: fadeIn 1s forwards;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+            opacity: 0;
+            }
+            to {
             opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+            opacity: 1;
+            }
+            to {
+            opacity: 0;
+            }
         }
 
         /* Tambahkan gaya CSS ini ke file CSS Anda atau di dalam tag <style> di halaman Anda */
@@ -266,28 +288,37 @@
 
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
-                        <div style="display: flex; justify-content: center; align-items: center; font-size: 25px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
-                            JADWAL SHALAT
+                        <div style="display: flex; justify-content: center; align-items: center; font-size: 22px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        JADWAL SHALAT, QUOTES & INFO PPDB
                         </div>
-
-                        <div class="container" style="font-size: 140%; border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
-                            @if ($jadwalSholat)
-                                <div style="color: white; margin: 8px; text-align: center;">
-                                    <div style="margin-top: 13px;">_______________</div>
-                                    <div style="margin-top: 9px;">Subuh: {{ $jadwalSholat['subuh'] }}</div>
-                                    <div style="margin-top: 9px;">Dhuha: {{ $jadwalSholat['dhuha'] }}</div>
-                                    <div style="margin-top: 9px;">Dzuhur: {{ $jadwalSholat['dzuhur'] }}</div>
-                                    <div style="margin-top: 9px;">Ashar: {{ $jadwalSholat['ashar'] }}</div>
-                                    <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
-                                    <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
-                                    <div>_______________</div>
-                                    <div style="font-size: 45px">🕌</div>
-                                </div>
-                            @else
-                                <p>Jadwal sholat untuk hari ini tidak tersedia.</p>
-                            @endif
+                    
+                        <div class="container mt-3" style="border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
+                        <div id="content-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                            @foreach ($slideinfo as $item)
+                            <img id="image-element" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 360px;">
+                            
+                            <div style="background-color: #f0f8ff; border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                <p id="text-element" style="font-family: 'Helvetica Neue', sans-serif; color: #1e90ff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
+                                {{ $item->quotes }}
+                                </p>
+                            </div>
+                            @endforeach
+                    
+                            <div id="jadwal-shalat" style="display: none; color: white; margin: 5px; text-align: center; font-size: 22px;">
+                            <div>_______________</div>
+                            <div style="margin-top: 9px;">Subuh: {{ $jadwalSholat['subuh'] }}</div>
+                            <div style="margin-top: 9px;">Dhuha: {{ $jadwalSholat['dhuha'] }}</div>
+                            <div style="margin-top: 9px;">Dzuhur: {{ $jadwalSholat['dzuhur'] }}</div>
+                            <div style="margin-top: 9px;">Ashar: {{ $jadwalSholat['ashar'] }}</div>
+                            <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
+                            <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
+                            <div>_______________</div>
+                            <div style="font-size: 45px">🕌</div>
+                            </div>
+                        </div>
                         </div>
                     </div>
+  
                 </div>
 
                 <!-- agenda -->
@@ -455,6 +486,44 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
 
         // Set interval untuk memanggil fungsi autoRefresh setiap 30 menit
         setInterval(autoRefresh, 1800000);
+
+        const imageElement = document.getElementById('image-element');
+        const textElement = document.getElementById('text-element');
+        const jadwalSholatElement = document.getElementById('jadwal-shalat');
+
+        let currentElement = imageElement; // Start with image
+
+        function switchContent() {
+            currentElement.classList.add('fade-out');
+
+            setTimeout(() => {
+                currentElement.style.display = 'none';
+                currentElement.classList.remove('fade-out');
+
+                if (currentElement === imageElement) {
+                    currentElement = textElement;
+                } else if (currentElement === textElement) {
+                    currentElement = jadwalSholatElement;
+                } else {
+                    currentElement = imageElement;
+                }
+
+                currentElement.style.display = 'block';
+                currentElement.classList.add('fade-in');
+
+                setTimeout(() => {
+                    currentElement.classList.remove('fade-in');
+                }, 1000);
+            }, 1000); // Match the duration of fade-out animation
+        }
+
+        // Set an interval to switch content every 10 seconds
+        setInterval(switchContent, 3000);
+
+        // Hide all elements initially except for the starting element
+        textElement.style.display = 'none';
+        jadwalSholatElement.style.display = 'none';
+
     </script>
 </body>
 

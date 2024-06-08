@@ -7,6 +7,7 @@ use App\Services\Cuaca;
 use App\Models\Header;
 use Illuminate\Support\Facades\Http;
 use App\Models\Agenda;
+use App\Models\Slideinformation;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -46,8 +47,9 @@ class DisplayController extends Controller
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
         $video = Video::all();
         $agendadisplay = $this->agendadisplay();
+        $slideinfo = Slideinformation::all();
 
-        return view('display.index', compact('video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
+        return view('display.index', compact('slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
     }
 
     public function agendadisplay()
