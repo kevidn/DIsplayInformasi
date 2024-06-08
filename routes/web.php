@@ -33,6 +33,7 @@ Route::get('/agenda', [DashboardController::class, 'agenda'])->name('agenda');
 Route::get('/akun', [DashboardController::class, 'akun'])->name('akun');
 Route::get('/runningtext', [DashboardController::class, 'runningtext'])->name('runningtext');
 Route::get('/video', [DashboardController::class, 'video'])->name('video');
+Route::get('/slideinformation', [DashboardController::class, 'slideinformation'])->name('slideinformation');
 
 
 
@@ -40,14 +41,16 @@ Route::get('/tambahagenda', [DashboardController::class, 'tambahagenda'])->name(
 Route::get('/tambahberita', [DashboardController::class, 'tambahberita'])->name('tambahberita');
 Route::get('/editagenda/{id}', [DashboardController::class, 'editagenda'])->name('editagenda');
 Route::get('/editberita/{id}', [DashboardController::class, 'editberita'])->name('editberita');
+Route::post('/ubahlevel/{id}/{newLevel}', [DashboardController::class, 'ubahLevelAkun'])->name('ubahlevel');
 
 //ROUTE KHUSUS UNTUK POST
 Route::post('/simpanVideo', [DashboardController::class, 'simpanVideo'])->name('simpanVideo');
 Route::post('/simpanVideolokal', [DashboardController::class, 'simpanVideolokal'])->name('simpanVideolokal');
 Route::post('/simpanAgenda', [DashboardController::class, 'simpanAgenda'])->name('simpanAgenda');
 Route::post('/simpanBerita', [DashboardController::class, 'simpanBerita'])->name('simpanBerita');
-Route::post('/simpanRT', [DashboardController::class, 'simpanRT'])->name('simpanRT');
-Route::post('/ubahlevel/{id}/{newLevel}', [DashboardController::class, 'ubahLevelAkun'])->name('ubahlevel');
+
+
+
 
 
 
@@ -56,15 +59,21 @@ Route::delete('/hapusberita/{id}', [DashboardController::class, 'destroyberita']
 Route::delete('/hapusagenda/{id}', [DashboardController::class, 'destroyagenda'])->name('hapusAgenda');
 Route::delete('/hapusvideo/{id}', [DashboardController::class, 'destroyVideo'])->name('hapusVideo');
 Route::delete('/hapusRT/{id}', [DashboardController::class, 'destroyRT'])->name('hapusRT');
+Route::delete('/hapus-quotes/{id}', [DashboardController::class, 'hapusQuotes'])->name('hapusQuotes');
+
+
 
 //ROUTE KHUSUS UPDATE
 Route::put('/updateagenda/{id}', [DashboardController::class, 'updateagenda'])->name('updateAgenda');
 Route::put('/updateberita/{id}', [DashboardController::class, 'updateberita'])->name('updateBerita');
 Route::put('/updatert/{id}', [DashboardController::class, 'updatert'])->name('updateRt');
+Route::put('/updatequotes/{id}', [DashboardController::class, 'updateQuotes'])->name('updateQuotes');
 Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'updateTampilStatus'])->name('tampilkanVideoKeDisplay');
 Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusTampilStatus'])->name('hapusVideoKeDisplay');
 
 
+Route::put('/updategambarslide/{id}', [DashboardController::class, 'updateImage'])->name('updategambarslide');
+Route::delete('/hapusgambarslide/{id}', [DashboardController::class, 'deleteImage'])->name('hapusgambarslide');
 
 
 

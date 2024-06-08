@@ -2,14 +2,19 @@
 @include('dashboard.partials.sidebar')
 @include('dashboard.partials.navbar')
 
-<div class="panel-header panel-header-sm">
+<div class="panel-header">
+    <div class="header text-center">
+        <h2 class="title">Daftar Agenda</h2>
+        <p class="category">Kamu Bisa Menambah, Mengubah Dan Menghapus Agenda Disini</p>
+
+    </div>
 </div>
 <div class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">DAFTAR AGENDA</h4>
+
                     @if (auth()->user()->userlevel === 'Admin')
                     <a href="{{ route('tambahagenda') }}" class="badge badge-success custom-badge">TAMBAH AGENDA</a>
                     @endif

@@ -2,7 +2,13 @@
 @include('dashboard.partials.sidebar')
 @include('dashboard.partials.navbar')
 
-<div class="panel-header panel-header-sm"></div>
+<div class="panel-header">
+    <div class="header text-center">
+        <h2 class="title">Daftar Video</h2>
+        <p class="category">Kamu Bisa Menambah, Mengubah Dan Menghapus Video Disini</p>
+
+    </div>
+</div>
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -12,7 +18,7 @@
                     <form action="{{ route('simpanVideo') }}" method="POST" class="d-flex align-items-center mb-3 flex-grow-1">
                         @csrf
                         <input type="text" name="link_youtube" class="form-control mr-2 custom-input" value=""
-                            placeholder="Video Youtube">
+                            placeholder="Video YouTube">
                         <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
                     </form>
                 </div>
