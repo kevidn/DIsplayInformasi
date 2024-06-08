@@ -359,9 +359,6 @@ function updateAgenda() {
         for (var i = currentAgendaIndex; i < currentAgendaIndex + 3 && i < agendaItems.length; i++) {
             var agenda = agendaItems[i];
             var agendaTanggal = new Date(agenda.tanggal); // Konversi tanggal agenda ke objek Date
-            if (agendaTanggal < tanggalHariIni) {
-                continue; // Skip agenda dengan tanggal lebih kecil dari tanggal hari ini
-            }
             newHTML += `
                 <div class="col-4 card-transition fade-in">
                     <div class="card" style="height: 140px; font-size: 12px; margin: 5px;">

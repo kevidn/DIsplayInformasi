@@ -47,16 +47,19 @@ class DisplayController extends Controller
         $video = Video::all();
         $agendadisplay = $this->agendadisplay();
 
+
         return view('display.index', compact('video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
     }
 
-    public function agendadisplay()
-    {
-        $now = Carbon::now();
-        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
+public function agendadisplay()
+{
+    $today = Carbon::today()->toDateString(); // Ambil hanya tanggal tanpa jam dan menit
+    $agendaNow = Agenda::whereDate('tanggal', '>=', $today)->get(); // Hanya ambil agenda dengan tanggal setelah atau sama dengan hari ini
 
-        return $agendaNow;
-    }
+
+    return $agendaNow;
+}
+
 
     public function getJadwalSholat()
     {
