@@ -160,15 +160,15 @@
                                                 src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
 
                                             @if (Request::is("index"))
-                                                <div class="card-body" style="font-size: 18px;">
-                                                    <h5 class="card-title">{{ $item->judul }}</h5>
+                                                <div class="card-body">
+                                                    <h6 class="card-title">{{ $item->judul }}</h5>
                                                     <div style="font-size: 13px; text-align: justify; text-justify: inter-word;" class="card-text">
                                                         {{ Str::limit($item->isi, 460, '...') }}
                                                     </div>
                                                 </div>
                                             @else
-                                                <div class="card-body" style="font-size: 15px;">
-                                                    <h5 class="card-title">{{ $item->judul }}</h5>
+                                                <div class="card-body">
+                                                    <h6 class="card-title">{{ $item->judul }}</h5>
                                                     <div style="font-size: 11px; text-align: justify; text-justify: inter-word;" class="card-text">
                                                         {{ Str::limit($item->isi, 275, '...') }}
                                                     </div>
@@ -287,17 +287,17 @@
 
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
-                        <div style="display: flex; justify-content: center; align-items: center; font-size: 22px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
-                        JADWAL SHALAT, QUOTES & INFO PPDB
+                        <div style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        JADWAL SHALAT QUOTES & INFO PPDB
                         </div>
 
                         <div class="container mt-3" style="border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
                         <div id="content-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                             @foreach ($slideinfo as $item)
-                            <img id="image-element" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 360px;">
+                            <img id="image-element" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 400px;">
 
-                            <div style="background-color: #f0f8ff; border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                <p id="text-element" style="font-family: 'Helvetica Neue', sans-serif; color: #1e90ff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
+                            <div style="border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
+                                <p id="text-element" style="font-family: 'Helvetica Neue', sans-serif; color: #ffffff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
                                 {{ $item->quotes }}
                                 </p>
                             </div>
@@ -513,7 +513,7 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
 
         let currentElement = imageElement; // Start with image
 
-        function switchContent() {
+        function switchContent( ) {
             currentElement.classList.add('fade-out');
 
             setTimeout(() => {
@@ -537,13 +537,8 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
             }, 1000); // Match the duration of fade-out animation
         }
 
-        // Set an interval to switch content every 10 seconds
+        // Set an interval to switch content every 15 seconds
         setInterval(switchContent, 3000);
-
-        // Hide all elements initially except for the starting element
-        textElement.style.display = 'none';
-        jadwalSholatElement.style.display = 'none';
-
     </script>
 </body>
 
