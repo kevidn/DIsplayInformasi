@@ -167,34 +167,7 @@ class DashboardController extends Controller
         $berita = Berita::findOrFail($id);
         return view('dashboard.CRUD.editberita', compact('berita'));
     }
-    //     public function simpanVideolokal(Request $request)
-    // {
-    //     // Validasi input
-    //     $request->validate([
-    //         'video_file' => 'required|mimes:mp4,avi,mov|max:20480', // max 20MB
-    //     ]);
 
-    //     // Proses upload video file
-    //     if ($request->hasFile('video_file')) {
-    //         $videoFile = $request->file('video_file');
-    //         $hashedName = Str::random(40) . '.' . $videoFile->getClientOriginalExtension();
-    //         $path = $videoFile->storeAs('public/videolokal', $hashedName);
-
-    //         // Simpan nama file ke database
-    //         $video = new Video();
-    //         $video->videolokal = $hashedName;
-    //         $video->save();
-
-    //         // Atau jika menggunakan mass assignment
-    //         // Video::create(['videolokal' => $hashedName]);
-
-    //         // Simpan path atau nama file ke database jika diperlukan
-    //         $savedPath = Storage::url($path);
-    //         // Simpan atau proses path sesuai kebutuhan Anda
-    //     }
-
-    //     return redirect()->route('video');
-    // }
     public function simpanVideolokal(Request $request)
     {
         // Validasi input
