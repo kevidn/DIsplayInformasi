@@ -121,6 +121,7 @@ class DashboardController extends Controller
     {
         $video_ada_display = Video::where('tampil', 1)
             ->whereNotNull('youtubelinks')
+            ->orderBy('tampil', 'desc')
             ->orWhereNotNull('videolokal')
             ->get();
 
