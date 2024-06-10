@@ -291,19 +291,19 @@
                         <div style="display: flex; justify-content: center; align-items: center; font-size: 22px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
                         JADWAL SHALAT, QUOTES & INFO PPDB
                         </div>
-                    
+
                         <div class="container mt-3" style="border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
                         <div id="content-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                             @foreach ($slideinfo as $item)
                             <img id="image-element" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 360px;">
-                            
+
                             <div style="background-color: #f0f8ff; border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                                 <p id="text-element" style="font-family: 'Helvetica Neue', sans-serif; color: #1e90ff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
                                 {{ $item->quotes }}
                                 </p>
                             </div>
                             @endforeach
-                    
+
                             <div id="jadwal-shalat" style="display: none; color: white; margin: 5px; text-align: center; font-size: 22px;">
                             <div>_______________</div>
                             <div style="margin-top: 9px;">Subuh: {{ $jadwalSholat['subuh'] }}</div>
@@ -318,7 +318,7 @@
                         </div>
                         </div>
                     </div>
-  
+
                 </div>
 
                 <!-- agenda -->
@@ -376,9 +376,33 @@ function formatTanggal(tanggal) {
     return new Intl.DateTimeFormat('id-ID', options).format(new Date(tanggal));
 }
 
+function createDummyAgenda() {
+    return [
+        {
+            nama_kegiatan: "Tidak ada agenda saat ini",
+            tempat: "N/A",
+            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+        },
+        {
+            nama_kegiatan: "Tidak ada agenda saat ini",
+            tempat: "N/A",
+            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+        },
+        {
+            nama_kegiatan: "Tidak ada agenda saat ini",
+            tempat: "N/A",
+            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+        }
+    ];
+}
+
 function updateAgenda() {
     var agendaContent = document.getElementById('agenda-content');
     var tanggalHariIni = new Date();
+
+    if (agendaItems.length === 0) {
+        agendaItems = createDummyAgenda();
+    }
 
     // Tambahkan kelas fade-out sebelum mengubah konten
     agendaContent.classList.add('fade-out');
@@ -417,7 +441,7 @@ function updateAgenda() {
     }
 }
 
-setInterval(updateAgenda, 15000); // Update agenda setiap 15 detik (15000 ms)
+setInterval(updateAgenda, 20000); // Update agenda setiap 20 detik
 updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
 
 
