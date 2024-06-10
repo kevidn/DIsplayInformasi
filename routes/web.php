@@ -83,8 +83,7 @@ Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusT
 
 
 
-//KHUSUS BUAT TES/COBA-COBA
-// Route::get('/buattes', [DashboardController::class, 'buattes'])->name('buattes');
+
 
 
 Auth::routes(['register' => false]);
