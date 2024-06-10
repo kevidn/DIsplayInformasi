@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(RTSeeder::class);
-        $this->call(AgendaSeeder::class); 
-        $this->call(VideoSeeder::class);
-        $this->call(CreateUsersSeeder::class); 
+
+
+
+        $this->call(CreateUsersSeeder::class);
+        $this->call(SlideinformationSeeder::class);
     }
 }
