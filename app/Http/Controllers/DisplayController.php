@@ -48,8 +48,9 @@ class DisplayController extends Controller
         $video = Video::all();
         $agendadisplay = $this->agendadisplay();
         $slideinfo = Slideinformation::all();
+        $videoList = Video::where('tampil', 1)->get();
 
-        return view('display.index', compact('slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
+        return view('display.index', compact('videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
 
     }
 

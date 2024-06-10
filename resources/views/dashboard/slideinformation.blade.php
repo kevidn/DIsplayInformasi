@@ -43,17 +43,7 @@
 
                             </form>
                             @endif
-                            @if (auth()->user()->userlevel === 'Admin')
-                            <form id="delete-image-form-{{ $singleSlideinformation->id }}"
-                                action="{{ route('hapusgambarslide', ['id' => $singleSlideinformation->id]) }}"
-                                method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus gambar ini?')">&#128465;
-                                    Hapus Gambar</button>
-                            </form>
-                            @endif
+
                         </div>
                     </div>
                 @endforeach
@@ -106,17 +96,7 @@
                                     <button type="submit" class="btn btn-warning mr-2">Simpan Quotes</button>
                             </form>
                             @endif
-                            @if (auth()->user()->userlevel === 'Admin')
-                            <form id="delete-quote-form"
-                                action="{{ route('hapusQuotes', ['id' => $singleSlideinformation->id]) }}"
-                                method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus quotes ini?')">&#128465;
-                                    Hapus Quotes</button>
-                            </form>
-                            @endif
+
 
                         </div>
 
