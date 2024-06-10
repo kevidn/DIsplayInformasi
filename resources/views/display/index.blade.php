@@ -222,6 +222,7 @@
                             </div>
                             <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2" style="height: 75px; width: 75px;">
                         </div>
+                        {{-- VIDEO DISPLAY --}}
                         @if (Request::is("index"))
                         <div style="display: flex; justify-content:center; margin: 10px;">
                             @if ($videodisplay && $videodisplay->tampil == 1)
@@ -249,6 +250,39 @@
                                 </video>
                             @endif
                         </div>
+                        @endif
+
+
+                        {{-- VIDEO DASHBOARD --}}
+                        @if (Request::is("dashboard"))
+                        <div style="display: flex; justify-content:center; margin: 10px;">
+                            @if ($videodisplay && $videodisplay->tampil == 1)
+                                @if ($videodisplay->youtubelinks)
+                                    {{-- Jika video dari YouTube --}}
+                                    <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
+                                @elseif ($videodisplay->videolokal)
+                                    {{-- Jika video dari lokal --}}
+                                    <video id="localVideo" width="800" height="375" controls autoplay muted>
+                                        <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @else
+                                    {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                    <video width="800" height="375" controls autoplay muted loop>
+                                        <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @endif
+                            @else
+                                {{-- Jika tidak ada video yang tersedia --}}
+                                <video width="800" height="375" controls autoplay muted loop>
+                                    <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @endif
+                        </div>
+                        @endif
+
 
                         <script>
                             document.addEventListener('DOMContentLoaded', (event) => {
@@ -272,7 +306,7 @@
                                 }
                             });
                         </script>
-                    @endif
+
 
 
 
