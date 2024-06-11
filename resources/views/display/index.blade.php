@@ -223,62 +223,56 @@
                             <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2" style="height: 75px; width: 75px;">
                         </div>
                         @if (Request::is("index"))
-                        <div style="display: flex; justify-content:center; margin: 10px;">
-                            @if ($videodisplay && $videodisplay->tampil == 1)
-                                @if ($videodisplay->youtubelinks)
-                                    {{-- Jika video dari YouTube --}}
-                                    <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
-                                @elseif ($videodisplay->videolokal)
-                                    {{-- Jika video dari lokal --}}
-                                    <video id="localVideo" width="800" height="375" controls autoplay>
-                                        <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
+                            <div style="display: flex; justify-content:center; margin: 10px;">
+                                @if ($videodisplay && $videodisplay->tampil == 1)
+                                    @if ($videodisplay->youtubelinks)
+                                        {{-- Jika video dari YouTube --}}
+                                        <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
+                                    @elseif ($videodisplay->videolokal)
+                                        {{-- Jika video dari lokal --}}
+                                        <video id="localVideo" width="800" height="375" controls autoplay>
+                                            <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @else
+                                        {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                        <video width="800" height="375" controls autoplay muted loop>
+                                            <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @endif
                                 @else
-                                    {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                    {{-- Jika tidak ada video yang tersedia --}}
                                     <video width="800" height="375" controls autoplay muted loop>
                                         <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                 @endif
-                            @else
-                                {{-- Jika tidak ada video yang tersedia --}}
-                                <video width="800" height="375" controls autoplay muted loop>
-                                    <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            @endif
-                        </div>
+                            </div>
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', (event) => {
-                                const videoElement = document.getElementById('localVideo');
-                                const videoSource = document.getElementById('videoSource');
-                                const videoList = @json($videoList); // Assuming $videoList is passed from the controller
+                            <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    const videoElement = document.getElementById('localVideo');
+                                    const videoSource = document.getElementById('videoSource');
+                                    const videoList = @json($videoList); // Assuming $videoList is passed from the controller
 
-                                let currentVideoIndex = 0;
+                                    let currentVideoIndex = 0;
 
-                                if (videoElement) {
-                                    videoElement.play().catch(error => {
-                                        console.error('Autoplay was prevented:', error);
-                                    });
+                                    if (videoElement) {
+                                        videoElement.play().catch(error => {
+                                            console.error('Autoplay was prevented:', error);
+                                        });
 
-                                    videoElement.onended = () => {
-                                        currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-                                        videoSource.src = '{{ asset('storage/videolokal') }}/' + videoList[currentVideoIndex].videolokal;
-                                        videoElement.load();
-                                        videoElement.play();
-                                    };
-                                }
-                            });
-                        </script>
-                    @endif
-
-
-
-
-
-
+                                        videoElement.onended = () => {
+                                            currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+                                            videoSource.src = '{{ asset('storage/videolokal') }}/' + videoList[currentVideoIndex].videolokal;
+                                            videoElement.load();
+                                            videoElement.play();
+                                        };
+                                    }
+                                });
+                            </script>
+                        @endif
 
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
@@ -365,9 +359,9 @@
 
     <script>
 
-    //Agenda
+// Agenda
 
-    var currentAgendaIndex = 0;
+var currentAgendaIndex = 0;
 var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
 
 function formatTanggal(tanggal) {
@@ -410,7 +404,20 @@ function updateAgenda() {
     // Gunakan setTimeout untuk menunggu transisi selesai
     setTimeout(function() {
         var newHTML = '';
-        for (var i = currentAgendaIndex; i < currentAgendaIndex + 3 && i < agendaItems.length; i++) {
+        var itemsToShow = 3;
+
+        // Check if the remaining items are less than 3
+        if (currentAgendaIndex + 3 > agendaItems.length) {
+            // If less than 3 items left, adjust itemsToShow to show the remaining items
+            itemsToShow = agendaItems.length - currentAgendaIndex;
+            if (itemsToShow < 3) {
+                // If itemsToShow is less than 3, start from the remaining items to fill up to 3
+                currentAgendaIndex = Math.max(0, agendaItems.length - 3);
+                itemsToShow = agendaItems.length - currentAgendaIndex;
+            }
+        }
+
+        for (var i = currentAgendaIndex; i < currentAgendaIndex + itemsToShow; i++) {
             var agenda = agendaItems[i];
             var agendaTanggal = new Date(agenda.tanggal); // Konversi tanggal agenda ke objek Date
             newHTML += `
@@ -440,8 +447,14 @@ function updateAgenda() {
     }
 }
 
-setInterval(updateAgenda, 20000); // Update agenda setiap 20 detik
-updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
+// Panggil fungsi pertama kali saat halaman dimuat
+updateAgenda();
+
+// Periksa jumlah item sebelum mengatur interval pembaruan
+if (agendaItems.length > 3) {
+    setInterval(updateAgenda, 1000); // Update agenda setiap 15 detik
+}
+
 
 
 

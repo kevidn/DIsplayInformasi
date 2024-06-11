@@ -64,12 +64,12 @@ class DashboardController extends Controller
         return view('dashboard.index', compact('slideinfo', 'date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
-    public function agendaNow()
+    public function agendaDisplay()
     {
-        $now = Carbon::now('Asia/Jakarta');
-        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
+    $today = Carbon::today()->toDateString(); // Ambil hanya tanggal tanpa jam dan menit
+    $agendaNow = Agenda::whereDate('tanggal', '>=', $today)->get(); // Hanya ambil agenda dengan tanggal setelah atau sama dengan hari ini
 
-        return $agendaNow;
+    return $agendaNow;
     }
 
     public function berita(Request $request)
@@ -87,13 +87,7 @@ class DashboardController extends Controller
         $slideinformation = Slideinformation::all();
         return view('dashboard.slideinformation', compact('slideinformation'));
     }
-    public function agendadisplay()
-    {
-        $now = Carbon::now('Asia/Jakarta');
-        $agendaNow = Agenda::where('tanggal', '>=', $now)->get();
 
-        return $agendaNow;
-    }
 
     public function akun(Request $request)
     {
@@ -586,10 +580,6 @@ public function deleteImage($id)
     return redirect()->route('slideinformation')->with('success', 'Gambar berhasil dihapus.');
 }
 
-
-
-
-
     public function getJadwalSholat()
     {
         $currentYear = date('Y');
@@ -744,3 +734,5 @@ public function deleteImage($id)
         }
     }
 }
+
+
