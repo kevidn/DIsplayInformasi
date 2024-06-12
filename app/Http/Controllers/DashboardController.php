@@ -64,11 +64,14 @@ class DashboardController extends Controller
 
         $jadwalSholat = $this->getJadwalSholat();
         $slideinfo = Slideinformation::all();
+        $videoList = Video::where('tampil', 1)->get();
+
 
         $videoList = Video::where('tampil', 1)->get();
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
         return view('dashboard.index', compact('videoList' ,'slideinfo', 'date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
+
     }
 
     public function agendadisplay()
