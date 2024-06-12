@@ -29,7 +29,7 @@
             opacity: 0;
             transition: opacity 1s;
         }
-        
+
         .visible {
             opacity: 1;
         }
@@ -225,7 +225,7 @@
                     <!--header & video-->
                     <div class="col-9" style="height: 550px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
-                            
+
                             <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1" style="height: 75px; width: 110px;">
 
                             <div style="flex-grow: 1; display: flex; justify-content: center;">
@@ -236,58 +236,56 @@
 
                         </div>
                         @if (Request::is("index"))
-                            <div style="display: flex; justify-content:center; margin: 10px;">
-                                @if ($videodisplay && $videodisplay->tampil == 1)
-                                    @if ($videodisplay->youtubelinks)
-                                        {{-- Jika video dari YouTube --}}
-                                        <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
-                                    @elseif ($videodisplay->videolokal)
-                                        {{-- Jika video dari lokal --}}
-                                        <video id="localVideo" width="800" height="375" controls autoplay>
-                                            <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    @else
-                                        {{-- Jika tidak ada video dari YouTube atau lokal --}}
-                                        <video width="800" height="375" controls autoplay muted loop>
-                                            <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    @endif
+                        <div style="display: flex; justify-content:center; margin: 10px;">
+                            @if ($videodisplay && $videodisplay->tampil == 1)
+                                @if ($videodisplay->youtubelinks)
+                                    {{-- Jika video dari YouTube --}}
+                                    <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
+                                @elseif ($videodisplay->videolokal)
+                                    {{-- Jika video dari lokal --}}
+                                    <video id="localVideo" width="800" height="375" controls autoplay>
+                                        <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
                                 @else
-                                    {{-- Jika tidak ada video yang tersedia --}}
+                                    {{-- Jika tidak ada video dari YouTube atau lokal --}}
                                     <video width="800" height="375" controls autoplay muted loop>
                                         <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                 @endif
+                            @else
+                                {{-- Jika tidak ada video yang tersedia --}}
+                                <video width="800" height="375" controls autoplay muted loop>
+                                    <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @endif
+                        </div>
 
-                            </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', (event) => {
+                                const videoElement = document.getElementById('localVideo');
+                                const videoSource = document.getElementById('videoSource');
+                                const videoList = @json($videoList); // Assuming $videoList is passed from the controller
 
-                            <script>
-                                document.addEventListener('DOMContentLoaded', (event) => {
-                                    const videoElement = document.getElementById('localVideo');
-                                    const videoSource = document.getElementById('videoSource');
-                                    const videoList = @json($videoList); // Assuming $videoList is passed from the controller
+                                let currentVideoIndex = 0;
 
-                                    let currentVideoIndex = 0;
+                                if (videoElement) {
+                                    videoElement.play().catch(error => {
+                                        console.error('Autoplay was prevented:', error);
+                                    });
 
-                                    if (videoElement) {
-                                        videoElement.play().catch(error => {
-                                            console.error('Autoplay was prevented:', error);
-                                        });
-
-                                        videoElement.onended = () => {
-                                            currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-                                            videoSource.src = '{{ asset('storage/videolokal') }}/' + videoList[currentVideoIndex].videolokal;
-                                            videoElement.load();
-                                            videoElement.play();
-                                        };
-                                    }
-                                });
-                            </script>
-                        @endif
-
+                                    videoElement.onended = () => {
+                                        currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+                                        videoSource.src = '{{ asset('storage/videolokal') }}/' + videoList[currentVideoIndex].videolokal;
+                                        videoElement.load();
+                                        videoElement.play();
+                                    };
+                                }
+                            });
+                        </script>
+                    @endif
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
                         </div>
@@ -295,19 +293,19 @@
 
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
-                        
+
                         <div id="info-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
-                            INFO PPDB
-                        </div>
-                        
-                        <div id="quotes-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
-                            QUOTES
-                        </div>
-                        
-                        <div id="jadwal-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
                             JADWAL SHALAT
                         </div>
-                        
+
+                        <div id="quotes-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                            INFO PPDB
+                        </div>
+
+                        <div id="jadwal-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                            QUOTES
+                        </div>
+
 
                         <div class="container mt-3" style="border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
                             <div id="gambar-jadwal-quotes" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
@@ -323,11 +321,11 @@
                                     <div>_______________</div>
                                     <div style="font-size: 45px">🕌</div>
                                 </div>
-                    
+
                                 @foreach ($slideinfo as $item)
                                 <!-- Gambar -->
                                 <img id="gambar-info" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 400px;">
-                    
+
                                 <!-- Quotes -->
                                 <div id="quotes-container" style="border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
                                     <p id="quotes" style="font-family: 'Helvetica Neue', sans-serif; color: #ffffff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
@@ -386,7 +384,7 @@
 
     <script>
 
-// Agenda
+    // Agenda
 
 var currentAgendaIndex = 0;
 var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
@@ -416,30 +414,12 @@ function createDummyAgenda() {
     ];
 }
 
+function updateAgenda() {
+    var agendaContent = document.getElementById('agenda-content');
+    var tanggalHariIni = new Date();
 
-    function formatTanggal(tanggal) {
-        var options = { day: 'numeric', month: 'long', year: 'numeric' };
-        return new Intl.DateTimeFormat('id-ID', options).format(new Date(tanggal));
-    }
-
-    function createDummyAgenda() {
-        return [
-            {
-                nama_kegiatan: "Tidak ada agenda saat ini",
-                tempat: "N/A",
-                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-            },
-            {
-                nama_kegiatan: "Tidak ada agenda saat ini",
-                tempat: "N/A",
-                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-            },
-            {
-                nama_kegiatan: "Tidak ada agenda saat ini",
-                tempat: "N/A",
-                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-            }
-        ];
+    if (agendaItems.length === 0) {
+        agendaItems = createDummyAgenda();
     }
 
     // Tambahkan kelas fade-out sebelum mengubah konten
@@ -473,34 +453,32 @@ function createDummyAgenda() {
                             <hr>
                             <div class="card-text mb-2">&#128205; Tempat: ${agenda.tempat}</div>
                             <div>&#128197; Tanggal: ${formatTanggal(agenda.tanggal)}</div>
-
                         </div>
                     </div>
-                `;
-            }
-
-            agendaContent.innerHTML = newHTML;
-
-            // Hapus kelas fade-out dan tambahkan kelas fade-in setelah mengubah konten
-            agendaContent.classList.remove('fade-out');
-            agendaContent.classList.add('fade-in');
-        }, 500); // Durasi sesuai dengan durasi transisi CSS
-
-        currentAgendaIndex += 3;
-        if (currentAgendaIndex >= agendaItems.length) {
-            currentAgendaIndex = 0; // Reset index jika sudah mencapai akhir data
+                </div>
+            `;
         }
-    }
 
+        agendaContent.innerHTML = newHTML;
+
+        // Hapus kelas fade-out dan tambahkan kelas fade-in setelah mengubah konten
+        agendaContent.classList.remove('fade-out');
+        agendaContent.classList.add('fade-in');
+    }, 500); // Durasi sesuai dengan durasi transisi CSS
+
+    currentAgendaIndex += 3;
+    if (currentAgendaIndex >= agendaItems.length) {
+        currentAgendaIndex = 0; // Reset index jika sudah mencapai akhir data
+    }
+}
 
 // Panggil fungsi pertama kali saat halaman dimuat
 updateAgenda();
 
 // Periksa jumlah item sebelum mengatur interval pembaruan
 if (agendaItems.length > 3) {
-    setInterval(updateAgenda, 1000); // Update agenda setiap 15 detik
+    setInterval(updateAgenda, 20000); // Update agenda setiap 15 detik
 }
-
 
         // Berita
         $(document).ready(function() {
@@ -574,9 +552,9 @@ if (agendaItems.length > 3) {
         function showNextElement() {
             elements[currentIndex].classList.remove('visible');
             elements[currentIndex].classList.add('fade');
-            
+
             currentIndex = (currentIndex + 1) % elements.length;
-            
+
             setTimeout(() => {
                 elements.forEach((el, index) => el.style.display = index === currentIndex ? 'block' : 'none');
                 elements[currentIndex].classList.remove('fade');
@@ -593,19 +571,20 @@ if (agendaItems.length > 3) {
 
     // Title Jadwal Shalat, Gambar dan Quotes
     document.addEventListener("DOMContentLoaded", function() {
-        const Title01 = document.getElementById('Title01');
-        const Title02 = document.getElementById('Title02');
-        const Title03 = document.getElementById('Title03');
 
-        let titles = [Title01, Title02, Title03];
+        const infoTitle = document.getElementById('info-title');
+        const quotesTitle = document.getElementById('quotes-title');
+        const jadwalTitle = document.getElementById('jadwal-title');
+
+        let titles = [infoTitle, quotesTitle, jadwalTitle];
         let currentIndex = 0;
 
         function showNextTitle() {
             titles[currentIndex].classList.remove('visible');
             titles[currentIndex].classList.add('fade');
-            
+
             currentIndex = (currentIndex + 1) % titles.length;
-            
+
             setTimeout(() => {
                 titles.forEach((el, index) => el.style.display = index === currentIndex ? 'flex' : 'none');
                 titles[currentIndex].classList.remove('fade');
