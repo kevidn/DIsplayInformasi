@@ -263,17 +263,6 @@
                                 </video>
                             @endif
                         </div>
-
-
-=======
-                            @else
-                                {{-- Jika tidak ada video yang tersedia --}}
-                                <video width="800" height="375" controls autoplay muted loop>
-                                    <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            @endif
-                        </div>
                         @endif
 
 
@@ -308,7 +297,6 @@
                         @endif
 
 
-
                         <script>
                             document.addEventListener('DOMContentLoaded', (event) => {
                                 const videoElement = document.getElementById('localVideo');
@@ -331,42 +319,6 @@
                                 }
                             });
                         </script>
-
-                  
-
-
-
-
-
-
-
-
-                            </div>
-
-                            <script>
-                                document.addEventListener('DOMContentLoaded', (event) => {
-                                    const videoElement = document.getElementById('localVideo');
-                                    const videoSource = document.getElementById('videoSource');
-                                    const videoList = @json($videoList); // Assuming $videoList is passed from the controller
-
-                                    let currentVideoIndex = 0;
-
-                                    if (videoElement) {
-                                        videoElement.play().catch(error => {
-                                            console.error('Autoplay was prevented:', error);
-                                        });
-
-                                        videoElement.onended = () => {
-                                            currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-                                            videoSource.src = '{{ asset('storage/videolokal') }}/' + videoList[currentVideoIndex].videolokal;
-                                            videoElement.load();
-                                            videoElement.play();
-                                        };
-                                    }
-                                });
-                            </script>
-                        @endif
-
 
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
