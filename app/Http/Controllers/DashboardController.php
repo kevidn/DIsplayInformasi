@@ -48,20 +48,27 @@ class DashboardController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
 
         $berita = Berita::all();
-        $videodisplay = Video::where('tampil', 1)->first();
         $total_berita = count($berita);
+
+        $videodisplay = Video::where('tampil', 1)->first();
+        $video = Video::all();
+        $total_video = count($video);
+        
         $agendadisplay = $this->agendadisplay();
         $agenda = Agenda::all();
         $total_agenda = count($agenda);
-        $video = Video::all();
-        $total_video = count($video);
+        
         $header = Header::all();
+
         $RTs = RT::all();
+
         $jadwalSholat = $this->getJadwalSholat();
-        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
         $slideinfo = Slideinformation::all();
 
-        return view('dashboard.index', compact('slideinfo', 'date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
+        $videoList = Video::where('tampil', 1)->get();
+        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
+
+        return view('dashboard.index', compact('videoList' ,'slideinfo', 'date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
     public function agendaNow()

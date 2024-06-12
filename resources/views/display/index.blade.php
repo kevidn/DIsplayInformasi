@@ -25,6 +25,15 @@
             animation: fadeOut 1s forwards;
         }
 
+        .fade {
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        
+        .visible {
+            opacity: 1;
+        }
+
         @keyframes fadeIn {
             from {
             opacity: 0;
@@ -216,11 +225,15 @@
                     <!--header & video-->
                     <div class="col-9" style="height: 550px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
+                            
                             <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1" style="height: 75px; width: 110px;">
+
                             <div style="flex-grow: 1; display: flex; justify-content: center;">
                                 SMK FATAHILLAH CILEUNGSI
                             </div>
+
                             <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2" style="height: 75px; width: 75px;">
+
                         </div>
                         @if (Request::is("index"))
                         <div style="display: flex; justify-content:center; margin: 10px;">
@@ -273,13 +286,6 @@
                             });
                         </script>
                     @endif
-
-
-
-
-
-
-
                         <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
                             SELAMAT DATANG
                         </div>
@@ -287,34 +293,47 @@
 
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
-                        <div style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
-                        JADWAL SHALAT QUOTES & INFO PPDB
+                        
+                        <div id="info-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                            INFO PPDB
                         </div>
+                        
+                        <div id="quotes-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                            QUOTES
+                        </div>
+                        
+                        <div id="jadwal-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                            JADWAL SHALAT
+                        </div>
+                        
 
                         <div class="container mt-3" style="border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
-                        <div id="content-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
-                            @foreach ($slideinfo as $item)
-                            <img id="image-element" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 400px;">
-
-                            <div style="border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
-                                <p id="text-element" style="font-family: 'Helvetica Neue', sans-serif; color: #ffffff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
-                                {{ $item->quotes }}
-                                </p>
+                            <div id="gambar-jadwal-quotes" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                                <!-- Jadwal Shalat -->
+                                <div id="jadwal-shalat" style="color: white; margin: 5px; text-align: center; font-size: 22px;">
+                                    <div>_______________</div>
+                                    <div style="margin-top: 9px;">Subuh: {{ $jadwalSholat['subuh'] }}</div>
+                                    <div style="margin-top: 9px;">Dhuha: {{ $jadwalSholat['dhuha'] }}</div>
+                                    <div style="margin-top: 9px;">Dzuhur: {{ $jadwalSholat['dzuhur'] }}</div>
+                                    <div style="margin-top: 9px;">Ashar: {{ $jadwalSholat['ashar'] }}</div>
+                                    <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
+                                    <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
+                                    <div>_______________</div>
+                                    <div style="font-size: 45px">🕌</div>
+                                </div>
+                    
+                                @foreach ($slideinfo as $item)
+                                <!-- Gambar -->
+                                <img id="gambar-info" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 400px;">
+                    
+                                <!-- Quotes -->
+                                <div id="quotes-container" style="border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
+                                    <p id="quotes" style="font-family: 'Helvetica Neue', sans-serif; color: #ffffff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
+                                        {{ $item->quotes }}
+                                    </p>
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
-
-                            <div id="jadwal-shalat" style="display: none; color: white; margin: 5px; text-align: center; font-size: 22px;">
-                            <div>_______________</div>
-                            <div style="margin-top: 9px;">Subuh: {{ $jadwalSholat['subuh'] }}</div>
-                            <div style="margin-top: 9px;">Dhuha: {{ $jadwalSholat['dhuha'] }}</div>
-                            <div style="margin-top: 9px;">Dzuhur: {{ $jadwalSholat['dzuhur'] }}</div>
-                            <div style="margin-top: 9px;">Ashar: {{ $jadwalSholat['ashar'] }}</div>
-                            <div style="margin-top: 9px;">Maghrib: {{ $jadwalSholat['maghrib'] }}</div>
-                            <div style="margin-top: 9px;">Isya: {{ $jadwalSholat['isya'] }}</div>
-                            <div>_______________</div>
-                            <div style="font-size: 45px">🕌</div>
-                            </div>
-                        </div>
                         </div>
                     </div>
 
@@ -368,84 +387,82 @@
     //Agenda
 
     var currentAgendaIndex = 0;
-var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
+    var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
 
-function formatTanggal(tanggal) {
-    var options = { day: 'numeric', month: 'long', year: 'numeric' };
-    return new Intl.DateTimeFormat('id-ID', options).format(new Date(tanggal));
-}
-
-function createDummyAgenda() {
-    return [
-        {
-            nama_kegiatan: "Tidak ada agenda saat ini",
-            tempat: "N/A",
-            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-        },
-        {
-            nama_kegiatan: "Tidak ada agenda saat ini",
-            tempat: "N/A",
-            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-        },
-        {
-            nama_kegiatan: "Tidak ada agenda saat ini",
-            tempat: "N/A",
-            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-        }
-    ];
-}
-
-function updateAgenda() {
-    var agendaContent = document.getElementById('agenda-content');
-    var tanggalHariIni = new Date();
-
-    if (agendaItems.length === 0) {
-        agendaItems = createDummyAgenda();
+    function formatTanggal(tanggal) {
+        var options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return new Intl.DateTimeFormat('id-ID', options).format(new Date(tanggal));
     }
 
-    // Tambahkan kelas fade-out sebelum mengubah konten
-    agendaContent.classList.add('fade-out');
-    agendaContent.classList.remove('fade-in');
+    function createDummyAgenda() {
+        return [
+            {
+                nama_kegiatan: "Tidak ada agenda saat ini",
+                tempat: "N/A",
+                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+            },
+            {
+                nama_kegiatan: "Tidak ada agenda saat ini",
+                tempat: "N/A",
+                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+            },
+            {
+                nama_kegiatan: "Tidak ada agenda saat ini",
+                tempat: "N/A",
+                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+            }
+        ];
+    }
 
-    // Gunakan setTimeout untuk menunggu transisi selesai
-    setTimeout(function() {
-        var newHTML = '';
-        for (var i = currentAgendaIndex; i < currentAgendaIndex + 3 && i < agendaItems.length; i++) {
-            var agenda = agendaItems[i];
-            var agendaTanggal = new Date(agenda.tanggal); // Konversi tanggal agenda ke objek Date
-            newHTML += `
-                <div class="col-4 card-transition fade-in">
-                    <div class="card" style="height: 140px; font-size: 12px; margin: 5px;">
-                        <div class="card-body">
-                            <h6 class="card-title">${agenda.nama_kegiatan}</h6>
-                            <hr>
-                            <div class="card-text mb-2">&#128205; Tempat: ${agenda.tempat}</div>
-                            <div>&#128197; Tanggal: ${formatTanggal(agenda.tanggal)}</div>
+    function updateAgenda() {
+        var agendaContent = document.getElementById('agenda-content');
+        var tanggalHariIni = new Date();
+
+        if (agendaItems.length === 0) {
+            agendaItems = createDummyAgenda();
+        }
+
+        // Tambahkan kelas fade-out sebelum mengubah konten
+        agendaContent.classList.add('fade-out');
+        agendaContent.classList.remove('fade-in');
+
+        // Gunakan setTimeout untuk menunggu transisi selesai
+        setTimeout(function() {
+            var newHTML = '';
+            for (var i = currentAgendaIndex; i < currentAgendaIndex + 3 && i < agendaItems.length; i++) {
+                var agenda = agendaItems[i];
+                var agendaTanggal = new Date(agenda.tanggal); // Konversi tanggal agenda ke objek Date
+                newHTML += `
+                    <div class="col-4 card-transition fade-in">
+                        <div class="card" style="height: 140px; font-size: 12px; margin: 5px;">
+                            <div class="card-body">
+                                <h6 class="card-title">${agenda.nama_kegiatan}</h6>
+                                <hr>
+                                <div class="card-text mb-2">&#128205; Tempat: ${agenda.tempat}</div>
+                                <div>&#128197; Tanggal: ${formatTanggal(agenda.tanggal)}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
+                `;
+            }
+
+            agendaContent.innerHTML = newHTML;
+
+            // Hapus kelas fade-out dan tambahkan kelas fade-in setelah mengubah konten
+            agendaContent.classList.remove('fade-out');
+            agendaContent.classList.add('fade-in');
+        }, 500); // Durasi sesuai dengan durasi transisi CSS
+
+        currentAgendaIndex += 3;
+        if (currentAgendaIndex >= agendaItems.length) {
+            currentAgendaIndex = 0; // Reset index jika sudah mencapai akhir data
         }
-
-        agendaContent.innerHTML = newHTML;
-
-        // Hapus kelas fade-out dan tambahkan kelas fade-in setelah mengubah konten
-        agendaContent.classList.remove('fade-out');
-        agendaContent.classList.add('fade-in');
-    }, 500); // Durasi sesuai dengan durasi transisi CSS
-
-    currentAgendaIndex += 3;
-    if (currentAgendaIndex >= agendaItems.length) {
-        currentAgendaIndex = 0; // Reset index jika sudah mencapai akhir data
     }
-}
 
-setInterval(updateAgenda, 20000); // Update agenda setiap 20 detik
-updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
+    setInterval(updateAgenda, 20000); // Update agenda setiap 20 detik
+    updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
 
-
-
-    // Berita
+        // Berita
         $(document).ready(function() {
             var currentNewsIndex = -
                 1; // Mulai dari -1 untuk menampilkan berita pertama segera setelah fungsi dijalankan
@@ -471,74 +488,97 @@ updateAgenda(); // Panggil fungsi pertama kali saat halaman dimuat
             setInterval(updateNews, 20000);
         });
 
-        //cuaca
-        function updateWeather() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        var weatherIcon = response.days[0].hours[parseInt(response.currentHour)].icon;
-                        var datetime = response.days[0].datetime;
-                        var conditions = response.days[0].hours[parseInt(response.currentHour)].conditions;
+    //cuaca
+    function updateWeather() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var weatherIcon = response.days[0].hours[parseInt(response.currentHour)].icon;
+                    var datetime = response.days[0].datetime;
+                    var conditions = response.days[0].hours[parseInt(response.currentHour)].conditions;
 
-                        document.getElementById('weather-icon-indeks').src = "{{ asset('images/icon/') }}" + '/' +
-                            weatherIcon + '.png';
-                        document.getElementById('datetime').innerHTML = datetime;
-                        document.getElementById('conditions').innerHTML = conditions;
-                    } else {
-                        console.error('Gagal memperbarui cuaca');
-                    }
-                }
-            };
-            xhr.open('GET', 'URL_ENDPOINT', true);
-            xhr.send();
-        }
-
-        setInterval(updateWeather, 1800000); // Setiap 30 menit (1800000 ms)
-
-
-         //auto refresh
-
-         function autoRefresh() {
-            location.reload();
-        }
-
-        // Set interval untuk memanggil fungsi autoRefresh setiap 30 menit
-        setInterval(autoRefresh, 1800000);
-
-        const imageElement = document.getElementById('image-element');
-        const textElement = document.getElementById('text-element');
-        const jadwalSholatElement = document.getElementById('jadwal-shalat');
-
-        let currentElement = imageElement; // Start with image
-
-        function switchContent( ) {
-            currentElement.classList.add('fade-out');
-
-            setTimeout(() => {
-                currentElement.style.display = 'none';
-                currentElement.classList.remove('fade-out');
-
-                if (currentElement === imageElement) {
-                    currentElement = textElement;
-                } else if (currentElement === textElement) {
-                    currentElement = jadwalSholatElement;
+                    document.getElementById('weather-icon-indeks').src = "{{ asset('images/icon/') }}" + '/' +
+                        weatherIcon + '.png';
+                    document.getElementById('datetime').innerHTML = datetime;
+                    document.getElementById('conditions').innerHTML = conditions;
                 } else {
-                    currentElement = imageElement;
+                    console.error('Gagal memperbarui cuaca');
                 }
+            }
+        };
+        xhr.open('GET', 'URL_ENDPOINT', true);
+        xhr.send();
+    }
 
-                currentElement.style.display = 'block';
-                currentElement.classList.add('fade-in');
+    setInterval(updateWeather, 1800000); // Setiap 30 menit (1800000 ms)
 
-                setTimeout(() => {
-                    currentElement.classList.remove('fade-in');
-                }, 1000);
-            }, 1000); // Match the duration of fade-out animation
+        //auto refresh
+    function autoRefresh() {
+        location.reload();
+    }
+
+    // Set interval untuk memanggil fungsi autoRefresh setiap 30 menit
+    setInterval(autoRefresh, 1800000);
+
+    // Jadwal Shalat, Gambar dan Quotes
+    document.addEventListener("DOMContentLoaded", function() {
+        const jadwalShalat = document.getElementById('jadwal-shalat');
+        const gambarInfo = document.getElementById('gambar-info');
+        const quotesContainer = document.getElementById('quotes-container');
+
+        let elements = [jadwalShalat, gambarInfo, quotesContainer];
+        let currentIndex = 0;
+
+        function showNextElement() {
+            elements[currentIndex].classList.remove('visible');
+            elements[currentIndex].classList.add('fade');
+            
+            currentIndex = (currentIndex + 1) % elements.length;
+            
+            setTimeout(() => {
+                elements.forEach((el, index) => el.style.display = index === currentIndex ? 'block' : 'none');
+                elements[currentIndex].classList.remove('fade');
+                elements[currentIndex].classList.add('visible');
+            }, 1000);
         }
 
-        // Set an interval to switch content every 15 seconds
-        setInterval(switchContent, 3000);
+        elements.forEach(el => el.classList.add('fade'));
+        elements[0].classList.add('visible');
+        elements[0].style.display = 'block';
+
+        setInterval(showNextElement, 20000);
+    });
+
+    // Title Jadwal Shalat, Gambar dan Quotes
+    document.addEventListener("DOMContentLoaded", function() {
+        const Title01 = document.getElementById('Title01');
+        const Title02 = document.getElementById('Title02');
+        const Title03 = document.getElementById('Title03');
+
+        let titles = [Title01, Title02, Title03];
+        let currentIndex = 0;
+
+        function showNextTitle() {
+            titles[currentIndex].classList.remove('visible');
+            titles[currentIndex].classList.add('fade');
+            
+            currentIndex = (currentIndex + 1) % titles.length;
+            
+            setTimeout(() => {
+                titles.forEach((el, index) => el.style.display = index === currentIndex ? 'flex' : 'none');
+                titles[currentIndex].classList.remove('fade');
+                titles[currentIndex].classList.add('visible');
+            }, 1000);
+        }
+
+        titles.forEach(el => el.classList.add('fade'));
+        titles[0].classList.add('visible');
+        titles[0].style.display = 'flex';
+
+        setInterval(showNextTitle, 20000);
+    });
     </script>
 </body>
 
