@@ -38,30 +38,35 @@ class DisplayController extends Controller
         $cuaca = $this->cuacaService->getWeather($city);
 
         //Ambil Data
-
         $berita = Berita::all();
+
         $videodisplay = Video::where('tampil', 1)->first();
-        $header = Header::all();
-        $RTs = RT::all();
-        $jadwalSholat = $this->getJadwalSholat();
-        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
         $video = Video::all();
+
+        $header = Header::all();
+
+        $RTs = RT::all();
+        
         $agendadisplay = $this->agendadisplay();
+
+        $jadwalSholat = $this->getJadwalSholat();
         $slideinfo = Slideinformation::all();
+
         $videoList = Video::where('tampil', 1)->get();
+        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
         return view('display.index', compact('videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
 
     }
 
-public function agendadisplay()
-{
-    $today = Carbon::today()->toDateString(); // Ambil hanya tanggal tanpa jam dan menit
-    $agendaNow = Agenda::whereDate('tanggal', '>=', $today)->get(); // Hanya ambil agenda dengan tanggal setelah atau sama dengan hari ini
+    public function agendadisplay()
+    {
+        $today = Carbon::today()->toDateString(); // Ambil hanya tanggal tanpa jam dan menit
+        $agendaNow = Agenda::whereDate('tanggal', '>=', $today)->get(); // Hanya ambil agenda dengan tanggal setelah atau sama dengan hari ini
 
 
-    return $agendaNow;
-}
+        return $agendaNow;
+    }
 
 
     public function getJadwalSholat()
@@ -90,6 +95,7 @@ public function agendadisplay()
             return null;
         }
     }
+
     public function nextVideo()
     {
         // Dapatkan video yang sedang ditampilkan saat ini
