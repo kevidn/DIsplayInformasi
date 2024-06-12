@@ -59,14 +59,14 @@ class DisplayController extends Controller
 
     }
 
-public function agendadisplay()
-{
-    $today = Carbon::today()->toDateString(); // Ambil hanya tanggal tanpa jam dan menit
-    $agendaNow = Agenda::whereDate('tanggal', '>=', $today)->get(); // Hanya ambil agenda dengan tanggal setelah atau sama dengan hari ini
+    public function agendadisplay()
+    {
+        $today = Carbon::today()->toDateString(); // Ambil hanya tanggal tanpa jam dan menit
+        $agendaNow = Agenda::whereDate('tanggal', '>=', $today)->get(); // Hanya ambil agenda dengan tanggal setelah atau sama dengan hari ini
 
 
-    return $agendaNow;
-}
+        return $agendaNow;
+    }
 
 
     public function getJadwalSholat()
@@ -95,6 +95,7 @@ public function agendadisplay()
             return null;
         }
     }
+
     public function nextVideo()
     {
         // Dapatkan video yang sedang ditampilkan saat ini
