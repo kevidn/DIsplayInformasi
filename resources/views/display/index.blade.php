@@ -328,15 +328,15 @@
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
 
-                        <div id="info-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        <div id="title-a" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
                             JADWAL SHALAT
                         </div>
 
-                        <div id="quotes-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        <div id="title-b" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
                             INFO PPDB
                         </div>
 
-                        <div id="jadwal-title" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        <div id="title-c" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
                             QUOTES
                         </div>
 
@@ -576,61 +576,57 @@ if (agendaItems.length > 3) {
 
     // Jadwal Shalat, Gambar dan Quotes
     document.addEventListener("DOMContentLoaded", function() {
-        const jadwalShalat = document.getElementById('jadwal-shalat');
-        const gambarInfo = document.getElementById('gambar-info');
-        const quotesContainer = document.getElementById('quotes-container');
 
-        let elements = [jadwalShalat, gambarInfo, quotesContainer];
-        let currentIndex = 0;
+    // Elements for Jadwal Shalat, Gambar, and Quotes
+    const jadwalShalat = document.getElementById('jadwal-shalat');
+    const gambarInfo = document.getElementById('gambar-info');
+    const quotesContainer = document.getElementById('quotes-container');
+    let elements = [jadwalShalat, gambarInfo, quotesContainer];
 
-        function showNextElement() {
-            elements[currentIndex].classList.remove('visible');
-            elements[currentIndex].classList.add('fade');
+    // Titles for Jadwal Shalat, Gambar, and Quotes
+    const titleA = document.getElementById('title-a');
+    const titleB = document.getElementById('title-b');
+    const titleC = document.getElementById('title-c');
+    let titles = [titleA, titleB, titleC];
 
-            currentIndex = (currentIndex + 1) % elements.length;
+    let currentIndex = 0;
+    const firstDisplayDuration = 1000; // 1 second for the first display
+    const displayDuration = 20000; // 20 seconds for subsequent displays
 
-            setTimeout(() => {
-                elements.forEach((el, index) => el.style.display = index === currentIndex ? 'block' : 'none');
-                elements[currentIndex].classList.remove('fade');
-                elements[currentIndex].classList.add('visible');
-            }, 1000);
-        }
+    function showNext() {
+        // Hide current element and title
+        elements[currentIndex].classList.remove('visible');
+        elements[currentIndex].classList.add('fade');
+        titles[currentIndex].classList.remove('visible');
+        titles[currentIndex].classList.add('fade');
 
-        elements.forEach(el => el.classList.add('fade'));
-        elements[0].classList.add('visible');
-        elements[0].style.display = 'block';
+        currentIndex = (currentIndex + 1) % elements.length;
 
-        setInterval(showNextElement, 20000);
-    });
+        // Show next element and title after fade out
+        setTimeout(() => {
+            elements.forEach((el, index) => el.style.display = index === currentIndex ? 'block' : 'none');
+            titles.forEach((el, index) => el.style.display = index === currentIndex ? 'flex' : 'none');
+            elements[currentIndex].classList.remove('fade');
+            elements[currentIndex].classList.add('visible');
+            titles[currentIndex].classList.remove('fade');
+            titles[currentIndex].classList.add('visible');
+        }, 1000); // 1 second fade out duration
+    }
 
-    // Title Jadwal Shalat, Gambar dan Quotes
-    document.addEventListener("DOMContentLoaded", function() {
+    // Initialize elements and titles
+    elements.forEach(el => el.classList.add('fade'));
+    titles.forEach(el => el.classList.add('fade'));
+    elements[0].classList.add('visible');
+    titles[0].classList.add('visible');
+    elements[0].style.display = 'block';
+    titles[0].style.display = 'flex';
 
-        const infoTitle = document.getElementById('info-title');
-        const quotesTitle = document.getElementById('quotes-title');
-        const jadwalTitle = document.getElementById('jadwal-title');
-
-        let titles = [infoTitle, quotesTitle, jadwalTitle];
-        let currentIndex = 0;
-
-        function showNextTitle() {
-            titles[currentIndex].classList.remove('visible');
-            titles[currentIndex].classList.add('fade');
-
-            currentIndex = (currentIndex + 1) % titles.length;
-
-            setTimeout(() => {
-                titles.forEach((el, index) => el.style.display = index === currentIndex ? 'flex' : 'none');
-                titles[currentIndex].classList.remove('fade');
-                titles[currentIndex].classList.add('visible');
-            }, 1000);
-        }
-
-        titles.forEach(el => el.classList.add('fade'));
-        titles[0].classList.add('visible');
-        titles[0].style.display = 'flex';
-
-        setInterval(showNextTitle, 20000);
+    // First display
+    setTimeout(() => {
+        showNext();
+        // Subsequent displays
+        setInterval(showNext, displayDuration);
+    }, firstDisplayDuration);
     });
     </script>
 </body>
