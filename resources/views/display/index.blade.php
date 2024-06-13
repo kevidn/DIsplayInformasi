@@ -590,7 +590,7 @@ if (agendaItems.length > 3) {
     let titles = [titleA, titleB, titleC];
 
     let currentIndex = 0;
-    const firstDisplayDuration = 100; // 1 second for the first display
+    const firstDisplayDuration = 1; // 1 second for the first display
     const displayDuration = 20000; // 20 seconds for subsequent displays
 
     function showNext() {
