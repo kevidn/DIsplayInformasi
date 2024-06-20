@@ -422,9 +422,16 @@
 var currentAgendaIndex = 0;
 var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
 
+function getHari(tanggal) {
+    const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    return hari[tanggal.getDay()];
+}
+
 function formatTanggal(tanggal) {
     var options = { day: 'numeric', month: 'long', year: 'numeric' };
-    return new Intl.DateTimeFormat('id-ID', options).format(new Date(tanggal));
+    var tanggalObj = new Date(tanggal);
+    var formattedDate = tanggalObj.toLocaleDateString('id-ID', options);
+    return `${getHari(tanggalObj)}, ${formattedDate}`;
 }
 
 function createDummyAgenda() {

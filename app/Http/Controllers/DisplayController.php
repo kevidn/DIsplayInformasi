@@ -53,7 +53,8 @@ class DisplayController extends Controller
         $slideinfo = Slideinformation::all();
 
         $videoList = Video::where('tampil', 1)->get();
-        $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
+
+        $date = Carbon::now()->locale('id')->isoFormat('dddd, D MMMM YYYY');
 
         return view('display.index', compact('videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
 
