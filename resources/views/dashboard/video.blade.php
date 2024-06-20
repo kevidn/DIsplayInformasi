@@ -6,7 +6,6 @@
     <div class="header text-center">
         <h2 class="title">Daftar Video</h2>
         <p class="category">Kamu Bisa Menambah, Mengubah Dan Menghapus Video Disini</p>
-
     </div>
 </div>
 <div class="content">
@@ -24,14 +23,18 @@
                 </div>
                 <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                     <form action="{{ route('simpanVideolokal') }}" method="POST" class="d-flex align-items-center mb-3 flex-grow-1"
-                    enctype="multipart/form-data" onsubmit="return validateFileSize()">
+                    enctype="multipart/form-data" onsubmit="return validateFile()">
                     @csrf
                     <div class="custom-file mr-2 flex-grow-1">
-                        <input type="file" name="video_file" class="custom-file-input" id="video_file">
+                        <input type="file" name="video_file" class="custom-file-input" id="video_file" accept="video/*">
                         <label class="custom-file-label" for="video_file" id="file_label">Video Lokal</label>
                     </div>
                     <button type="submit" class="badge badge-success custom-badge">TAMBAH VIDEO</button>
-                </form>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <small id="error_message" class="form-text text-danger"></small>
+                </div>
                 @endif
                 </div>
 
@@ -157,16 +160,41 @@
         document.getElementById('file_label').innerText = fileName;
     });
 
-    function validateFileSize() {
+    function validateFile() {
         var fileInput = document.getElementById('video_file');
         var fileSize = fileInput.files[0].size;
         var maxSize = 100 * 1024 * 1024; // 100MB
+        var errorMessage = document.getElementById('error_message');
+        errorMessage.innerText = '';
 
         if (fileSize > maxSize) {
-            alert('Ukuran file melebihi 100MB.');
+            errorMessage.innerText = 'Ukuran file melebihi 100MB.';
             return false;
         }
-        return true;
+
+        return new Promise((resolve, reject) => {
+            var video = document.createElement('video');
+            video.preload = 'metadata';
+
+            video.onloadedmetadata = function() {
+                window.URL.revokeObjectURL(video.src);
+                var duration = video.duration;
+
+                if (duration > 1800) { // 1800 detik = 30 menit
+                    errorMessage.innerText = 'Durasi video melebihi 30 menit.';
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            };
+
+            video.onerror = function() {
+                errorMessage.innerText = 'Tidak dapat memuat video. Silakan coba lagi.';
+                resolve(false);
+            };
+
+            video.src = URL.createObjectURL(fileInput.files[0]);
+        });
     }
 </script>
 
