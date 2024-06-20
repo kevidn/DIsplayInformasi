@@ -165,8 +165,7 @@
                                         @if (Request::is('index'))
                                         <div class="card berita p-1">
 
-                                            <img style="max-height: 150px;" class="card-img-top"
-                                                src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}"></img>
+                                            <img style="max-height: 150px; width: auto; object-fit: contain;" class="card-img-top" src="{{ asset('/storage/beritas/upload/' . $item->gambar) }}" />
 
                                             @if (Request::is("index"))
                                                 <div class="card-body">
