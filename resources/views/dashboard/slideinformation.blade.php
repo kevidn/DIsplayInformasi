@@ -16,72 +16,68 @@
                     <h4 class="card-title">Image Viewer</h4>
                 </div>
                 @foreach ($slideinformation as $singleSlideinformation)
-                    <div class="card-body text-center">
-                        <!-- Gambar yang ingin ditampilkan -->
-                        <div class="text-center">
-                            <img src="{{ asset('/storage/slideinformation/upload/' . $singleSlideinformation->gambar) }}"
-                                class="img-thumbnail img-portrait bordered-image" data-toggle="modal"
-                                data-target="#imageModal">
-                        </div>
-                        <div class="d-flex justify-content-center mt-3">
-                            <form id="update-image-form-{{ $singleSlideinformation->id }}"
-                                action="{{ route('updategambarslide', ['id' => $singleSlideinformation->id]) }}"
-                                method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-                                <div class="form-group" style="display: none;">
-                                    <input type="file" name="gambar" class="form-control-file" accept="image/*"
-                                        onchange="document.getElementById('update-image-form-{{ $singleSlideinformation->id }}').submit();">
-                                </div>
-                                @if (auth()->user()->userlevel === 'Admin')
-                                    <button type="button" class="btn btn-warning"
+                <div class="card-body text-center">
+                    <div class="text-center">
+                        <img src="{{ asset('/storage/slideinformation/upload/' . $singleSlideinformation->gambar) }}"
+                             class="img-thumbnail img-portrait bordered-image" data-toggle="modal"
+                             data-target="#imageModal">
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <form id="update-image-form-{{ $singleSlideinformation->id }}"
+                              action="{{ route('updategambarslide', ['id' => $singleSlideinformation->id]) }}"
+                              method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group" style="display: none;">
+                                <input type="file" name="gambar" class="form-control-file" accept="image/*"
+                                       onchange="validateImageUpload('{{ $singleSlideinformation->id }}');">
+                            </div>
+                            @if (auth()->user()->userlevel === 'Admin')
+                                <button type="button" class="btn btn-warning"
                                         onclick="document.getElementById('file-upload-{{ $singleSlideinformation->id }}').click();">&#9998;
-                                        Ganti Gambar</button>
-                                    <input id="file-upload-{{ $singleSlideinformation->id }}" type="file"
-                                        name="gambar" class="form-control-file"
-                                        accept="image/jpeg, image/png, image/jpg, image/gif, image/svg+xml"
-                                        style="display: none;"
-                                        onchange="validateImageUpload('{{ $singleSlideinformation->id }}')">
-                                    <span id="image-error-{{ $singleSlideinformation->id }}"
-                                        style="color: red; display: none;">Ukuran file gambar tidak boleh lebih dari
-                                        2MB dan harus dalam format JPEG, PNG, JPG, GIF, atau SVG</span>
-                                    <button id="update-image-form-{{ $singleSlideinformation->id }}" type="submit"
-                                        style="display: none;"></button>
-                            </form>
-                @endif
-
-
-            </div>
-        </div>
+                                    Ganti Gambar</button>
+                                <input id="file-upload-{{ $singleSlideinformation->id }}" type="file"
+                                       name="gambar" class="form-control-file"
+                                       accept="image/jpeg, image/png, image/jpg, image/gif, image/svg+xml"
+                                       style="display: none;"
+                                       onchange="validateImageUpload('{{ $singleSlideinformation->id }}');">
+                                <span id="image-error-{{ $singleSlideinformation->id }}"
+                                      style="color: red; display: none;">Ukuran file gambar tidak boleh lebih dari
+                                    2MB dan harus dalam format JPEG, PNG, JPG, GIF, atau SVG</span>
+                            @endif
+                        </form>
+                    </div>
+                </div>
         @endforeach
 
     </div>
     <script>
         function validateImageUpload(id) {
-            var fileInput = document.getElementById('file-upload-' + id);
-            var file = fileInput.files[0];
-            var errorMessage = document.getElementById('image-error-' + id);
+    var fileInput = document.getElementById('file-upload-' + id);
+    var file = fileInput.files[0];
+    var errorMessage = document.getElementById('image-error-' + id);
 
-            // Validasi tipe dan ukuran file gambar
-            var validExtensions = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
-            if (file) {
-                if (!validExtensions.includes(file.type)) {
-                    errorMessage.innerHTML = "Tipe file gambar harus berupa JPEG, PNG, JPG, GIF, atau SVG";
-                    errorMessage.style.display = "block"; // Menampilkan pesan kesalahan
-                    return false;
-                }
-
-                var maxSize = 2 * 1024 * 1024; // 2MB
-                if (file.size > maxSize) {
-                    errorMessage.innerHTML = "Ukuran file gambar tidak boleh lebih dari 2MB";
-                    errorMessage.style.display = "block"; // Menampilkan pesan kesalahan
-                    return false;
-                }
-            }
-
-            // Submit form jika lolos validasi
-            document.getElementById('update-image-form-' + id).click();
+    // Validasi tipe dan ukuran file gambar
+    var validExtensions = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
+    if (file) {
+        if (!validExtensions.includes(file.type)) {
+            errorMessage.innerHTML = "Tipe file gambar harus berupa JPEG, PNG, JPG, GIF, atau SVG";
+            errorMessage.style.display = "block"; // Menampilkan pesan kesalahan
+            return false;
         }
+
+        var maxSize = 2 * 1024 * 1024; // 2MB
+        if (file.size > maxSize) {
+            errorMessage.innerHTML = "Ukuran file gambar tidak boleh lebih dari 2MB";
+            errorMessage.style.display = "block"; // Menampilkan pesan kesalahan
+            return false;
+        }
+    }
+
+    // Submit form jika lolos validasi
+    document.getElementById('update-image-form-' + id).submit();
+}
+
 
 
         // Menambahkan event listener untuk membatasi karakter saat user mengetik
