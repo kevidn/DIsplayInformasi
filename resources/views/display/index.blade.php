@@ -357,11 +357,11 @@
 
                                 @foreach ($slideinfo as $item)
                                 <!-- Gambar -->
-                                <img id="gambar-info" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 400px;">
+                                <img id="gambar-info" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 249px; height: 400px;">
 
                                 <!-- Quotes -->
                                 <div id="quotes-container" style="border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
-                                    <p id="quotes" style="font-family: 'Helvetica Neue', sans-serif; color: #ffffff; font-size: 18px; text-align: center; line-height: 1.6; padding: 10px;">
+                                    <p id="quotes" style="font-family: 'Helvetica Neue', sans-serif; color: #ffffff; font-size: 17px; text-align: center; line-height: 1.6; padding: 10px;">
                                         {{ $item->quotes }}
                                     </p>
                                 </div>
@@ -419,48 +419,48 @@
 
     // Agenda
 
-var currentAgendaIndex = 0;
-var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
+    var currentAgendaIndex = 0;
+    var agendaItems = {!! json_encode($agendadisplay) !!}; // Ambil data agenda dari PHP
 
-function getHari(tanggal) {
-    const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-    return hari[tanggal.getDay()];
-}
-
-function formatTanggal(tanggal) {
-    var options = { day: 'numeric', month: 'long', year: 'numeric' };
-    var tanggalObj = new Date(tanggal);
-    var formattedDate = tanggalObj.toLocaleDateString('id-ID', options);
-    return `${getHari(tanggalObj)}, ${formattedDate}`;
-}
-
-function createDummyAgenda() {
-    return [
-        {
-            nama_kegiatan: "Tidak ada agenda saat ini",
-            tempat: "N/A",
-            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-        },
-        {
-            nama_kegiatan: "Tidak ada agenda saat ini",
-            tempat: "N/A",
-            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-        },
-        {
-            nama_kegiatan: "Tidak ada agenda saat ini",
-            tempat: "N/A",
-            tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
-        }
-    ];
-}
-
-function updateAgenda() {
-    var agendaContent = document.getElementById('agenda-content');
-    var tanggalHariIni = new Date();
-
-    if (agendaItems.length === 0) {
-        agendaItems = createDummyAgenda();
+    function getHari(tanggal) {
+        const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        return hari[tanggal.getDay()];
     }
+
+    function formatTanggal(tanggal) {
+        var options = { day: 'numeric', month: 'long', year: 'numeric' };
+        var tanggalObj = new Date(tanggal);
+        var formattedDate = tanggalObj.toLocaleDateString('id-ID', options);
+        return `${getHari(tanggalObj)}, ${formattedDate}`;
+    }
+
+    function createDummyAgenda() {
+        return [
+            {
+                nama_kegiatan: "Tidak ada agenda saat ini",
+                tempat: "N/A",
+                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+            },
+            {
+                nama_kegiatan: "Tidak ada agenda saat ini",
+                tempat: "N/A",
+                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+            },
+            {
+                nama_kegiatan: "Tidak ada agenda saat ini",
+                tempat: "N/A",
+                tanggal: new Date().toISOString().split('T')[0] // Tanggal hari ini
+            }
+        ];
+    }
+
+    function updateAgenda() {
+        var agendaContent = document.getElementById('agenda-content');
+        var tanggalHariIni = new Date();
+
+        if (agendaItems.length === 0) {
+            agendaItems = createDummyAgenda();
+        }
 
     // Tambahkan kelas fade-out sebelum mengubah konten
     agendaContent.classList.add('fade-out');
@@ -541,6 +541,10 @@ if (agendaItems.length > 3) {
 
             // Panggil fungsi pertama kali
             updateNews();
+
+            // if ($newsContainers < 2) {
+            //     setInterval(updateNews, 2000); // Update agenda setiap 15 detik
+            // }
 
             // Update berita setiap 20 detik menggunakan setInterval
             setInterval(updateNews, 20000);
