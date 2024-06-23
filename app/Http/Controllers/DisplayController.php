@@ -32,6 +32,8 @@ class DisplayController extends Controller
     public function index(Request $request)
     {
 
+        date_default_timezone_set('Asia/Jakarta');
+
         //array untuk cuaca
         $currentHour = Carbon::now('Asia/Jakarta')->format('H'); // Mendapatkan jam saat ini dalam format 24 jam dari zona waktu Asia/Jakarta
         $city = 'Cileungsi'; // Ganti dengan kota yang ingin Anda cek cuacanya
