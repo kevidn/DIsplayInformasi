@@ -82,7 +82,7 @@
 
 </head>
 
-<body style="background-image: url('/images/bg.jpg'); background-size: 100%;">
+<body style="background-image: url('/images/bg-blue.jpg'); background-size: 100%;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
@@ -357,7 +357,7 @@
 
                                 @foreach ($slideinfo as $item)
                                 <!-- Gambar -->
-                                <img id="gambar-info" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 249px; height: 400px;">
+                                <img id="gambar-info" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 260px; height: 400px;">
 
                                 <!-- Quotes -->
                                 <div id="quotes-container" style="border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
