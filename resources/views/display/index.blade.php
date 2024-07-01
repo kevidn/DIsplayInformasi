@@ -222,106 +222,110 @@
                 <div class="row">
 
                     <!--header & video-->
-                    <div class="col-9" style="height: 550px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
+                        <div class="col-9" style="height: 550px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
 
-                            <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1" style="height: 75px; width: 110px;">
+                            {{-- logo 1 --}}
+                            <img src="{{ asset('images/header/logo1/' . $header[0]->logo1) }}" style="height: 75px; width: 75px;">
 
+                            {{-- nama sekolah --}}
                             <div style="flex-grow: 1; display: flex; justify-content: center;">
-                                SMK FATAHILLAH CILEUNGSI
+                                {{ $header[0]->nama_sekolah }}
                             </div>
 
-                            <img src="{{ asset('/images/fatahillah.png') }}" alt="Logo 2" style="height: 75px; width: 75px;">
+                            {{-- logo 2 --}}
+                            <img src="{{ asset('images/header/logo2/' . $header[0]->logo2) }}" style="height: 75px; width: 75px;">
 
-                        </div>
-                        {{-- VIDEO DISPLAY --}}
-                        @if (Request::is("index"))
-                        <div style="display: flex; justify-content:center; margin: 10px;">
-                            @if ($videodisplay && $videodisplay->tampil == 1)
-                                @if ($videodisplay->youtubelinks)
-                                    {{-- Jika video dari YouTube --}}
-                                    <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
-                                @elseif ($videodisplay->videolokal)
-                                    {{-- Jika video dari lokal --}}
-                                    <video id="localVideo" width="800" height="375" controls autoplay>
-                                        <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
+                            </div>
+                            {{-- VIDEO DISPLAY --}}
+                            @if (Request::is("index"))
+                            <div style="display: flex; justify-content:center; margin: 10px;">
+                                @if ($videodisplay && $videodisplay->tampil == 1)
+                                    @if ($videodisplay->youtubelinks)
+                                        {{-- Jika video dari YouTube --}}
+                                        <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
+                                    @elseif ($videodisplay->videolokal)
+                                        {{-- Jika video dari lokal --}}
+                                        <video id="localVideo" width="800" height="375" controls autoplay>
+                                            <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @else
+                                        {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                        <video width="800" height="375" controls autoplay muted loop>
+                                            <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @endif
                                 @else
-                                    {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                    {{-- Jika tidak ada video yang tersedia --}}
                                     <video width="800" height="375" controls autoplay muted loop>
                                         <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                 @endif
-                            @else
-                                {{-- Jika tidak ada video yang tersedia --}}
-                                <video width="800" height="375" controls autoplay muted loop>
-                                    <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                            </div>
                             @endif
-                        </div>
-                        @endif
 
 
-                        {{-- VIDEO DASHBOARD --}}
-                        @if (Request::is("dashboard"))
-                        <div style="display: flex; justify-content:center; margin: 10px;">
-                            @if ($videodisplay && $videodisplay->tampil == 1)
-                                @if ($videodisplay->youtubelinks)
-                                    {{-- Jika video dari YouTube --}}
-                                    <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
-                                @elseif ($videodisplay->videolokal)
-                                    {{-- Jika video dari lokal --}}
-                                    <video id="localVideo" width="800" height="375" controls autoplay muted>
-                                        <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
+                            {{-- VIDEO DASHBOARD --}}
+                            @if (Request::is("dashboard"))
+                            <div style="display: flex; justify-content:center; margin: 10px;">
+                                @if ($videodisplay && $videodisplay->tampil == 1)
+                                    @if ($videodisplay->youtubelinks)
+                                        {{-- Jika video dari YouTube --}}
+                                        <iframe width="800" height="375" src="{{ $videodisplay->youtubelinks }}" allow="autoplay" frameborder="0"></iframe>
+                                    @elseif ($videodisplay->videolokal)
+                                        {{-- Jika video dari lokal --}}
+                                        <video id="localVideo" width="800" height="375" controls autoplay muted>
+                                            <source id="videoSource" src="{{ asset('storage/videolokal/' . $videodisplay->videolokal) }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @else
+                                        {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                        <video width="800" height="375" controls autoplay muted loop>
+                                            <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @endif
                                 @else
-                                    {{-- Jika tidak ada video dari YouTube atau lokal --}}
+                                    {{-- Jika tidak ada video yang tersedia --}}
                                     <video width="800" height="375" controls autoplay muted loop>
                                         <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                 @endif
-                            @else
-                                {{-- Jika tidak ada video yang tersedia --}}
-                                <video width="800" height="375" controls autoplay muted loop>
-                                    <source src="{{ asset('videos/dummy.mp4') }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                            </div>
                             @endif
-                        </div>
-                        @endif
 
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', (event) => {
-                                const videoElement = document.getElementById('localVideo');
-                                const videoSource = document.getElementById('videoSource');
-                                const videoList = @json($videoList); // Assuming $videoList is passed from the controller
+                            <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    const videoElement = document.getElementById('localVideo');
+                                    const videoSource = document.getElementById('videoSource');
+                                    const videoList = @json($videoList); // Assuming $videoList is passed from the controller
 
-                                let currentVideoIndex = 0;
+                                    let currentVideoIndex = 0;
 
-                                if (videoElement) {
-                                    videoElement.play().catch(error => {
-                                        console.error('Autoplay was prevented:', error);
-                                    });
+                                    if (videoElement) {
+                                        videoElement.play().catch(error => {
+                                            console.error('Autoplay was prevented:', error);
+                                        });
 
-                                    videoElement.onended = () => {
-                                        currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-                                        videoSource.src = '{{ asset('storage/videolokal') }}/' + videoList[currentVideoIndex].videolokal;
-                                        videoElement.load();
-                                        videoElement.play();
-                                    };
-                                }
-                            });
-                        </script>
+                                        videoElement.onended = () => {
+                                            currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+                                            videoSource.src = '{{ asset('storage/videolokal') }}/' + videoList[currentVideoIndex].videolokal;
+                                            videoElement.load();
+                                            videoElement.play();
+                                        };
+                                    }
+                                });
+                            </script>
 
-                        <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
-                            SELAMAT DATANG
-                        </div>
+                            {{-- sambutan --}}
+                            <div style="text-align: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; color: white; margin: 15px;">
+                                {{ $header[0]->sambutan }}
+                            </div>
                     </div>
 
                     <!--jadwal shalat-->

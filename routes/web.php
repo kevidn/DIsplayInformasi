@@ -33,6 +33,7 @@ Route::get('/agenda', [DashboardController::class, 'agenda'])->name('agenda');
 Route::get('/akun', [DashboardController::class, 'akun'])->name('akun');
 Route::get('/runningtext', [DashboardController::class, 'runningtext'])->name('runningtext');
 Route::get('/video', [DashboardController::class, 'video'])->name('video');
+Route::get('/header', [DashboardController::class, 'header'])->name('header');
 Route::get('/slideinformation', [DashboardController::class, 'slideinformation'])->name('slideinformation');
 
 
@@ -48,6 +49,9 @@ Route::post('/simpanVideo', [DashboardController::class, 'simpanVideo'])->name('
 Route::post('/simpanVideolokal', [DashboardController::class, 'simpanVideolokal'])->name('simpanVideolokal');
 Route::post('/simpanAgenda', [DashboardController::class, 'simpanAgenda'])->name('simpanAgenda');
 Route::post('/simpanBerita', [DashboardController::class, 'simpanBerita'])->name('simpanBerita');
+Route::post('/simpanRT', [DashboardController::class, 'simpanRT'])->name('simpanRT');
+Route::post('/simpanHeader', [DashboardController::class, 'simpanHeader'])->name('simpanHeader');
+
 Route::post('/create-user-account', [DashboardController::class, 'createUserAccount'])->name('create.user.account');
 
 

@@ -82,7 +82,11 @@ class DashboardController extends Controller
 
         return $agendaNow;
     }
-
+    public function header(Request $request)
+    {
+        $header = header::all();
+        return view('dashboard.header', compact('header'));
+    }
     public function berita(Request $request)
     {
         $berita = Berita::all();
@@ -335,6 +339,62 @@ class DashboardController extends Controller
         return redirect()->route('runningtext');
     }
 
+
+    public function simpanHeader(Request $request)
+    {
+         // Validate the request
+    $validator = Validator::make($request->all(), [
+        'logo1'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'logo2'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'nama_sekolah'  => 'required|string|max:255',
+        'sambutan'      => 'required|string|max:255',
+    ]);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    // Handle logo1 file upload
+    if ($request->hasFile('logo1')) {
+        $logo1 = $request->file('logo1');
+        $logo1Name = time() . '_' . $logo1->getClientOriginalName();
+        $logo1->move(public_path('images/header/logo1'), $logo1Name);
+    }
+
+    // Handle logo2 file upload
+    if ($request->hasFile('logo2')) {
+        $logo2 = $request->file('logo2');
+        $logo2Name = time() . '_' . $logo2->getClientOriginalName();
+        $logo2->move(public_path('images/header/logo2'), $logo2Name);
+    }
+
+    // Get the existing header or create a new one
+    $header = Header::find(1); // Assuming the header has ID 1
+
+    if (!$header) {
+        $header = new Header();
+    }
+
+    // Update nama_sekolah and sambutan
+    $header->nama_sekolah = $request->nama_sekolah;
+    $header->sambutan = $request->sambutan;
+
+    // Update logo1 and logo2 names if files were uploaded
+    if (isset($logo1Name)) {
+        $header->logo1 = $logo1Name;
+    }
+
+    if (isset($logo2Name)) {
+        $header->logo2 = $logo2Name;
+    }
+
+    // Save the headerf
+    $header->save();
+
+    // Redirect atau kirim respons sesuai kebutuhan aplikasi
+    return redirect()->route('dashboard');
+    }
 
 
     public function destroyberita($id)
