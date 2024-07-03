@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('logo1');
             $table->string('logo2');
+            $table->string('nama_sekolah');
+            $table->string('sambutan');
             $table->timestamps();
         });
     }

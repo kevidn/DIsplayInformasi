@@ -43,6 +43,8 @@ class DisplayController extends Controller
         //Ambil Data
         $berita = Berita::all();
 
+        $header = Header::all();
+
         $videodisplay = Video::where('tampil', 1)->first();
         $video = Video::all();
 
@@ -63,7 +65,7 @@ class DisplayController extends Controller
         $bg = $tema->bg;
         $color = $tema->color;
 
-        return view('display.index', compact('color', 'bg', 'videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
+        return view('display.index', compact('header', 'color', 'bg', 'videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
     }
 
 public function agendadisplay()

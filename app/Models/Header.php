@@ -17,22 +17,10 @@ class Header extends Model
     protected $fillable = [
         'logo1',
         'logo2',
+        'nama_sekolah',
+        'sambutan'
     ];
 
-    /**
-     * logo
-     *
-     * @return Attribute
-     */
-    protected function image(): Attribute
-    {
-        return Attribute::make(
-            get: function ($logo1, $logo2) {
-            return [
-                url('/storage/header/upload/' . $logo1),
-                url('/storage/header/upload/' . $logo2),
-            ];  
-        },
-    );
-    }
+
 }
+
