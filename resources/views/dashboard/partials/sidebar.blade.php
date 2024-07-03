@@ -37,7 +37,7 @@
     </li>
     <li class="{{ Request::is('header') ? 'active' : '' }}">
         <a href="{{ route('header') }}">
-            <i class="now-ui-icons files_paper"></i>
+            <i class="now-ui-icons business_badge"></i>
             <p>Header</p>
         </a>
     </li>
