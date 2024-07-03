@@ -42,6 +42,8 @@ class DisplayController extends Controller
         //Ambil Data
         $berita = Berita::all();
 
+        $header = Header::all();
+
         $videodisplay = Video::where('tampil', 1)->first();
         $video = Video::all();
 
@@ -58,7 +60,9 @@ class DisplayController extends Controller
 
         $date = Carbon::now()->locale('id')->isoFormat('dddd, D MMMM YYYY');
 
-        return view('display.index', compact('videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
+        // dd($slideinfo);
+
+        return view('display.index', compact('header','videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
 
     }
 

@@ -82,7 +82,11 @@ class DashboardController extends Controller
 
         return $agendaNow;
     }
-
+    public function header(Request $request)
+    {
+        $header = header::all();
+        return view('dashboard.header', compact('header'));
+    }
     public function berita(Request $request)
     {
         $berita = Berita::all();
@@ -334,6 +338,78 @@ class DashboardController extends Controller
         // Redirect atau kirim respons sesuai kebutuhan aplikasi
         return redirect()->route('runningtext');
     }
+
+
+    public function simpanHeader(Request $request)
+{
+    // Validate the request
+    $validator = Validator::make($request->all(), [
+        'logo1'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'logo2'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'nama_sekolah'  => 'nullable|string|max:255',
+        'sambutan'      => 'nullable|string|max:255',
+    ]);
+
+    // Check if validation fails
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    // Get the existing header or create a new one
+    $header = Header::find(1); // Assuming the header has ID 1
+
+    if (!$header) {
+        $header = new Header();
+    }
+
+    // Handle logo1 file upload
+    if ($request->hasFile('logo1')) {
+        // Delete old logo1 if exists
+        $oldLogo1Path = public_path('images/header/logo1/' . $header->logo1);
+        if (file_exists($oldLogo1Path)) {
+            unlink($oldLogo1Path); // Delete old file
+        }
+
+        $logo1 = $request->file('logo1');
+        $logo1Name = time() . '_' . $logo1->getClientOriginalName();
+        $logo1->move(public_path('images/header/logo1'), $logo1Name);
+
+        // Update logo1 name
+        $header->logo1 = $logo1Name;
+    }
+
+    // Handle logo2 file upload
+    if ($request->hasFile('logo2')) {
+        // Delete old logo2 if exists
+        $oldLogo2Path = public_path('images/header/logo2/' . $header->logo2);
+        if (file_exists($oldLogo2Path)) {
+            unlink($oldLogo2Path); // Delete old file
+        }
+
+        $logo2 = $request->file('logo2');
+        $logo2Name = time() . '_' . $logo2->getClientOriginalName();
+        $logo2->move(public_path('images/header/logo2'), $logo2Name);
+
+        // Update logo2 name
+        $header->logo2 = $logo2Name;
+    }
+
+    // Update nama_sekolah and sambutan if they are set
+    if ($request->filled('nama_sekolah')) {
+        $header->nama_sekolah = $request->nama_sekolah;
+    }
+
+    if ($request->filled('sambutan')) {
+        $header->sambutan = $request->sambutan;
+    }
+
+    // Save the header
+    $header->save();
+
+    // Redirect atau kirim respons sesuai kebutuhan aplikasi
+    return redirect()->route('dashboard');
+}
+
 
 
 

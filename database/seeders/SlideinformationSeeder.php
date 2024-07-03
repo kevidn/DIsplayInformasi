@@ -15,9 +15,8 @@ class SlideinformationSeeder extends Seeder
     public function run(): void
     {
         Slideinformation::create([
-            'quotes' => 'kamu bisa menambahkan Quotes Disini Untuk Ditampilkan Pada Display',
-            'gambar' => 'aa',
-
+            'quotes' => 'Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya',
+            'gambar' => 'aa.jpg',
         ]);
     }
 }

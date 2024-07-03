@@ -35,6 +35,12 @@
             <p>Slide Information</p>
         </a>
     </li>
+    <li class="{{ Request::is('header') ? 'active' : '' }}">
+        <a href="{{ route('header') }}">
+            <i class="now-ui-icons business_badge"></i>
+            <p>Header</p>
+        </a>
+    </li>
           <li class="{{ Request::is('video') ? 'active' : '' }}">
             <a href="{{ route('video') }}">
               <i class="now-ui-icons media-1_button-play"></i>
