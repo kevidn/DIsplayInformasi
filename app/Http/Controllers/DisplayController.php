@@ -7,6 +7,7 @@ use App\Services\Cuaca;
 use App\Models\Header;
 use Illuminate\Support\Facades\Http;
 use App\Models\Agenda;
+use App\Models\Tema;
 use App\Models\Slideinformation;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -58,8 +59,11 @@ class DisplayController extends Controller
 
         $date = Carbon::now()->locale('id')->isoFormat('dddd, D MMMM YYYY');
 
-        return view('display.index', compact('videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
+        $tema = Tema::first(); // Ambil data tema pertama
+        $bg = $tema->bg;
+        $color = $tema->color;
 
+        return view('display.index', compact('color', 'bg', 'videoList','slideinfo', 'video', 'date', 'currentHour', 'cuaca', 'berita', 'header', 'RTs', 'agendadisplay', 'videodisplay', 'jadwalSholat'));
     }
 
 public function agendadisplay()

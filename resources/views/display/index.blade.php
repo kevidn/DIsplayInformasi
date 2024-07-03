@@ -82,7 +82,7 @@
 
 </head>
 
-<body style="background-image: url('/images/bg-blue.jpg'); background-size: 100%;">
+<body style="background-image: url('{{ $bg }}'); background-size: 100%;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
@@ -103,7 +103,7 @@
                     </script>
 
                         <div class="row mb-3" style="height: 100%; width: 100%;">
-                            <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
+                            <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: {{ $color }}; margin: 10px; border-radius: 15px; padding: 5px;" class="col-11 d-flex align-items-center text-white">
                                 <div class="d-flex align-items-center" style="width: 100%;">
                                     <img id="weather-icon-indeks" class="ml-2" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" style="margin-left: 15px; width: 30%; height: 30%;" >
 
@@ -129,7 +129,7 @@
 
                     @else
                         <div class="row mb-3" style="height: 100%; width: 100%;">
-                            <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: #00324946; margin: 10px; border-radius: 15px; padding: 2px;" class="col-11 d-flex align-items-center text-white">
+                            <div style="width: 100%; height: 16%; margin-bottom: 3mm; background-color: {{ $color }}; margin: 10px; border-radius: 15px; padding: 2px;" class="col-11 d-flex align-items-center text-white">
                                 <div class="d-flex align-items-center" style="width: 100%;">
                                     <img id="weather-icon-indeks" src="{{ asset('images/icon/' . $weatherIcon . '.png') }}" alt="Weather Icon" class="ml-4" style="width: 45%; height: 45%;">
                                     <div class="row" style="width: 100%; margin-left: 10px;">
@@ -143,7 +143,7 @@
 
                                         <!-- Tanggal dan kondisi cuaca -->
                                         <div class="col-12 text-center mt-2" style="font-family: 'Segoe UI'; font-size: 13px; margin-bottom: 15px;">
-                                            <span id="datetime">{{ $date}}</span>
+                                            <span id="datetime">{{ $date }}</span>
                                             <br>
                                             <span id="conditions">{{ $cuaca['days'][0]['hours'][intval($currentHour)]['conditions'] }}</span>
                                         </div>
@@ -158,7 +158,7 @@
                     <!--berita-->
                     <div class="container" style="height: 530px; width: 100%;">
                         <div class="row" style="width: 100%;">
-                            <div id="news-container" style="background-color: #00324946; padding: 10px; border-radius: 15px; height: 565px">
+                            <div id="news-container" style="background-color: {{ $color }}; padding: 10px; border-radius: 15px; height: 565px">
                                 <div style="background-color: #ffffff; padding: 10px; border-radius: 15px; height: 540px;">
                                     @foreach ($berita as $item)
 
@@ -223,7 +223,7 @@
 
                     <!--header & video-->
                     <div class="col-9" style="height: 550px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: #00324946; padding: 5px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 25px; font-family: 'Segoe UI'; font-weight: bold; text-align: center; color: white; margin: 10px; border-radius: 15px; background-color: {{ $color }}; padding: 5px;">
 
                             <img src="{{ asset('/images/bogor.png') }}" alt="Logo 1" style="height: 75px; width: 110px;">
 
@@ -327,20 +327,20 @@
                     <!--jadwal shalat-->
                     <div class="col-3" style="height: 410px; font-family: 'Segoe UI'; font-weight: bold;">
 
-                        <div id="title-a" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        <div id="title-a" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: {{ $color }}; padding: 5px; width: 100%; height: 85px;">
                             JADWAL SHALAT
                         </div>
 
-                        <div id="title-b" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        <div id="title-b" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: {{ $color }}; padding: 5px; width: 100%; height: 85px;">
                             INFO PPDB
                         </div>
 
-                        <div id="title-c" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: #00324946; padding: 5px; width: 100%; height: 85px;">
+                        <div id="title-c" style="display: flex; justify-content: center; align-items: center; font-size: 20px; text-align: center; color: white; margin-top: 10px; border-radius: 15px; background-color: {{ $color }}; padding: 5px; width: 100%; height: 85px;">
                             QUOTES
                         </div>
 
 
-                        <div class="container mt-3" style="border-radius: 15px; background-color: #00324946; width: 100%; height: 400px;">
+                        <div class="container mt-3" style="border-radius: 15px; background-color: {{ $color }}; width: 100%; height: 400px;">
                             <div id="gambar-jadwal-quotes" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                                 <!-- Jadwal Shalat -->
                                 <div id="jadwal-shalat" style="color: white; margin: 5px; text-align: center; font-size: 22px;">
@@ -373,7 +373,7 @@
                 </div>
 
                 <!-- agenda -->
-                <div id="agenda-container" class="row" style="background-color: #00324946; border-radius: 18px; padding: 8px; width: 98%; overflow: auto;">
+                <div id="agenda-container" class="row" style="background-color: {{ $color }}; border-radius: 18px; padding: 8px; width: 98%; overflow: auto;">
                     <div class="col-12 d-flex flex-row" id="agenda-content">
                         @php
                             $counter = 0;
@@ -402,7 +402,7 @@
                 <div class="row">
                     <div class="col-12" style="height: 35px;">
                         <div class="container"
-                            style="background-color: #00324946; border-radius: 18px; width: 94%; height: 35px; margin: 5px; color:white; text-align:center;">
+                            style="background-color: {{ $color }}; border-radius: 18px; width: 94%; height: 35px; margin: 5px; color:white; text-align:center;">
                             <marquee behavior="" scrollamount='' direction="" class="p-2">
                                 @foreach ($RTs as $item)
                                     {{ $item->RT }}

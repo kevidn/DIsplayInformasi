@@ -13,6 +13,7 @@ use App\Models\Agenda;
 use App\Models\Video;
 use App\Models\User;
 use App\Models\Slideinformation;
+use App\Models\Tema;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Http;
@@ -66,12 +67,14 @@ class DashboardController extends Controller
         $slideinfo = Slideinformation::all();
         $videoList = Video::where('tampil', 1)->get();
 
-
         $videoList = Video::where('tampil', 1)->get();
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
 
-        return view('dashboard.index', compact('videoList' ,'slideinfo', 'date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
+        $tema = Tema::first(); // Ambil data tema pertama
+        $bg = $tema ? $tema->bg : '';
+        $color = $tema ? $tema->color : '';
 
+        return view('dashboard.index', compact('color', 'bg', 'videoList' ,'slideinfo', 'date', 'currentHour', 'videodisplay', 'agendadisplay', 'cuaca', 'berita', 'header', 'RTs', 'agenda', 'total_berita', 'total_agenda', 'total_video', 'video', 'jadwalSholat'));
     }
 
     public function agendadisplay()

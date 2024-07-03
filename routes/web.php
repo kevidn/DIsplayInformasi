@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisplayController;
+use App\Http\Controllers\TemaController;
 use App\Http\Controllers\Api\BeritaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -74,6 +75,7 @@ Route::put('/updatequotes/{id}', [DashboardController::class, 'updateQuotes'])->
 Route::put('/updategambarslide/{id}', [DashboardController::class, 'updateImage'])->name('updategambarslide');
 Route::post('/tampilkan-video-ke-display/{id}', [DashboardController::class, 'updateTampilStatus'])->name('tampilkanVideoKeDisplay');
 Route::post('/hapus-video-ke-display/{id}', [DashboardController::class, 'hapusTampilStatus'])->name('hapusVideoKeDisplay');
+Route::post('/tema/update', [TemaController::class, 'updateTema'])->name('updateTema');
 
 
 

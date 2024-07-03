@@ -15,7 +15,7 @@
 <div class="">
     <div class="row mx-auto mt-4 mb-4">
         <div class="col-md-12">
-            <div class="card" style="background-image: url('/images/bg.jpg'); background-size: 140%; font-size: small;">
+            <div class="card" style="background-image: url('{{ $bg }}'); background-size: 140%; font-size: small;">
                 <div class="card-body" id="preview">
                     @include('display.index')
                 </div>
@@ -96,6 +96,42 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">
+                               {{-- Tampilkan pesan sukses jika ada --}}
+                               @if (session('success'))
+                                   <div class="alert alert-success">
+                                       {{ session('success') }}
+                                   </div>
+                               @endif
+                       
+                               {{-- Form untuk memilih tema --}}
+                               <form method="POST" action="{{ route('updateTema') }}">
+                                   @csrf
+                                   <div class="form-group">
+                                       <label for="theme_choice">Pilih Tema:</label>
+                                       <select name="theme_choice" id="theme_choice" class="form-control">
+                                           @foreach ([
+                                               'blue' => [
+                                                   'bg' => '/images/bg-blue.jpg',
+                                                   'color' => '#00324946'
+                                               ],
+                                               'green' => [
+                                                   'bg' => '/images/bg-green.jpg',
+                                                   'color' => '#00491646'
+                                               ]
+                                           ] as $key => $option)
+                                               <option value="{{ $key }}" @if (isset($tema) && $option['bg'] == $tema->bg) selected @endif>{{ ucfirst($key) }} Theme</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                                   <button type="submit" class="btn btn-primary">Simpan Tema</button>
+                               </form>
+                            </div>
+                         </div>
                     </div>
                 </div>
             </div>
