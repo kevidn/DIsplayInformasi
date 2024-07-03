@@ -361,7 +361,11 @@
 
                                 @foreach ($slideinfo as $item)
                                 <!-- Gambar -->
-                                <img id="gambar-info" src="{{ asset('/storage/slideinformation/upload/' . $item->gambar) }}" alt="Image" style="display: none; border-radius: 18px; background-color: #000000; width: 249px; height: 400px;">
+                                <img id="gambar-info"
+                                src="{{ file_exists(public_path('storage/slideinformation/upload/' . $item->gambar)) && !empty($item->gambar) ? asset('storage/slideinformation/upload/' . $item->gambar) : asset('images/slide/aa.jpg') }}"
+                                alt="Image"
+                                style="display: none; border-radius: 18px; background-color: #000000; width: 249px; height: 400px; object-fit: contain;">
+
 
                                 <!-- Quotes -->
                                 <div id="quotes-container" style="border-radius: 18px; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
