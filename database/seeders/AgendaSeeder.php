@@ -16,7 +16,7 @@ class AgendaSeeder extends Seeder
     {
         Agenda::create([
             'nama_kegiatan' => 'Acara Kelulusan',
-            'tempat' => 'SMK Fatahillah CIleungsi',
+            'tempat' => 'SMK Fatahillah Cileungsi',
             'tanggal' => '2024-06-21',
         ]);
     }
