@@ -14,7 +14,7 @@ class TemaSeeder extends Seeder
      */
     public function run(): void
     {
-        Agenda::create([
+        Tema::create([
             'bg' => '/images/bg-blue.jpg',
             'color' => '#00324946',
         ]);
