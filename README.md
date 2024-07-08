@@ -66,4 +66,3 @@ npm run dev
 
 
 Now, you can access your Laravel application by visiting `http://localhost:8000` in your web browser.
-```
