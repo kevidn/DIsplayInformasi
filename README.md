@@ -58,5 +58,3 @@ php artisan serve
 
 Now, you can access your Laravel application by visiting `http://localhost:8000` in your web browser.
 ```
-
-Save the above content in the `README.md` file in the root directory of your project. This will provide clear instructions for setting up the Laravel application from cloning the repository to running the application.
