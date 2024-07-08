@@ -1,3 +1,8 @@
+# Display Informasi Sekolah 
+
+Display informasi merupakan media yang digunakan untuk memajang gambar, kartu, poster dan benda kecil tiga dimensi atau yang lainnya. 
+
+
 ## Clone the Repository
 
 ```sh
