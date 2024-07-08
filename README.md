@@ -6,10 +6,14 @@ git clone https://github.com/kevidn/DisplayInformasi.git
 cd DisplayInformasi
 ```
 
-## Install Composer (Dependencies)
+## Install Composer & NPM (Dependencies)
 
 ```sh
 composer install
+```
+
+```sh
+npm run build
 ```
 
 ## Create `.env` File
@@ -55,6 +59,11 @@ php artisan db:seed
 ```sh
 php artisan serve
 ```
+
+```sh
+npm run dev
+```
+
 
 Now, you can access your Laravel application by visiting `http://localhost:8000` in your web browser.
 ```
