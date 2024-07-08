@@ -2,8 +2,8 @@
 ## Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/your-repository.git
-cd your-repository
+git clone https://github.com/kevidn/DisplayInformasi.git
+cd DisplayInformasi
 ```
 
 ## Install Composer (Dependencies)
