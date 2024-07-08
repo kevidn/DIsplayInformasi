@@ -1,5 +1,3 @@
-Tentu, berikut adalah teks yang dapat Anda masukkan ke dalam file `README.md` di GitHub Anda:
-
 ```markdown
 # Laravel Project Setup
 
