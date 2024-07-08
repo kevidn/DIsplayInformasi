@@ -1,5 +1,3 @@
-```markdown
-# Laravel Project Setup
 
 ## Clone the Repository
 
