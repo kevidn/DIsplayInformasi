@@ -23,10 +23,15 @@ cp .env.example .env
 ```
 
 ## Generate Application Key
-Generate the application key, which will be used for encryption.
 
 ```sh
 php artisan key:generate
+```
+
+## Run the Storage Link
+
+```sh
+php artisan storage:link
 ```
 
 ## Configure Database (optional)
