@@ -1,6 +1,6 @@
 # Display Informasi Sekolah 
 
-Display informasi merupakan media yang digunakan untuk memajang gambar, kartu, poster dan benda kecil tiga dimensi atau yang lainnya. 
+DisplayInformasi merupakan media yang digunakan untuk memajang berita, agenda, poster, dan beberapa informasi lainnya terkait sekolah. Aplikasi ini dibuat menggunakan Laravel 11 dan memiliki fitur yang memungkinkan tema untuk diubah menjadi biru dan hijau.
 
 
 ## Clone the Repository
